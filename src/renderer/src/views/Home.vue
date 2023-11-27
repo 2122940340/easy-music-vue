@@ -1,0 +1,104 @@
+<template>
+  <div class="home">
+    <div class="top">
+      <playcard title="随便听点" backdrop="rgba(0, 0, 0, 0.5)" :icon=PlayCard[0]>
+      </playcard>
+      <playcard title="每日必听" backdrop="#0148ee" :icon=PlayCard[1]>
+      </playcard>
+      <playcard title="随机歌单" backdrop="#00b7ee" :icon=PlayCard[2]>
+      </playcard>
+    </div>
+
+
+    <div class="center">
+      <hotsearch @setValue="play" :array="HotSearchList" class="hot_search"></hotsearch>
+      <div>
+        <RecommendedPlaylist title="热门歌单" :array="RecommendedPlayList"></RecommendedPlaylist>
+        <RecommendedPlaylist title="心动歌曲推荐" :array="HitSongList"></RecommendedPlaylist>
+      </div>
+    </div>
+
+  </div>
+</template>
+
+<script>
+import playcard from './PlayCard.vue' //头部卡片
+import hotsearch from './HotSearch.vue' //热门歌曲
+import RecommendedPlaylist from './RecommendedPlaylist.vue' //推荐歌单
+import _global_ from '../global.js' //配置
+export default {
+  name: 'app',
+  components: {
+    playcard,
+    hotsearch,
+    RecommendedPlaylist
+  },
+  data() {
+    return {
+      HotSearchList: [],
+      RecommendedPlayList: [],
+      PlayCard: [null, null, null],
+      HitSongList: []
+    }
+  },
+  methods: {
+    play(value) {
+      console.log(value)
+      // this.$emit('play', i)
+    }
+  },
+  mounted() {
+    window.a = 1
+    console.log(window)
+    // 推荐歌单
+    fetch(_global_.APIURL + 'personalized?limit=6')
+      .then(response => response.json())
+      .then(json => {
+        this.RecommendedPlayList = json.result;
+      })
+
+    // 推荐歌曲
+    fetch(_global_.APIURL + 'personalized/newsong?limit=30')
+      .then(response => response.json())
+      .then(json => {
+        this.HitSongList = json.result;
+      })
+      .catch(err => console.log('Request Failed', err));
+    fetch(_global_.APIURL + 'recommend/songs')
+      .then(response => response.json())
+      .then(json => {
+        this.HotSearchList = json.data.dailySongs
+        this.PlayCard[0] = this.HotSearchList[6].al.picUrl
+        this.PlayCard[1] = this.HotSearchList[7].al.picUrl
+        this.PlayCard[2] = this.HotSearchList[8].al.picUrl
+      })
+      .catch(err => console.log('Request Failed', err));
+  }
+}
+</script>
+<style>
+.home {
+  width: 100%;
+  height: 100%;
+}
+
+.top {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+}
+
+.center {
+  display: flex;
+  overflow: scroll;
+}
+
+.hot_search {
+  margin-top: 20px;
+  flex-shrink: 0;
+}
+
+.RecommendedPlaylist {
+  margin-top: 20px;
+}
+</style>

@@ -1,0 +1,86 @@
+{
+  "name": "electron-music",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "serve": "vue-cli-service serve",
+    "build": "vue-cli-service build",
+    "lint": "vue-cli-service lint",
+    "dist": "electron-builder --win --x64",
+    "dista": "vite build && electron-builder",
+    "electron:build": "vue-cli-service electron:build",
+    "electron:generate-icons": "electron-icon-builder --input=./static/icon/icon.png --output=build --flatten",
+    "electron:serve": "vue-cli-service electron:serve",
+    "packager": "electron-packager ./ testapp --win --out ./outputs",
+    "postinstall": "electron-builder install-app-deps",
+    "postuninstall": "electron-builder install-app-deps",
+    "serveserve": "vue-cli-service build && electron .",
+    "start": "node app.js"
+  },
+  "main": "./background.js",
+  "dependencies": {
+    "axios": "^1.2.2",
+    "core-js": "^3.8.3",
+    "express": "^4.17.1",
+    "express-fileupload": "^1.1.9",
+    "md5": "^2.3.0",
+    "music-metadata": "^7.5.3",
+    "pac-proxy-agent": "^7.0.0",
+    "qrcode": "^1.4.4",
+    "safe-decode-uri-component": "^1.2.1",
+    "tunnel": "^0.0.6",
+    "vue": "^3.2.13",
+    "xml2js": "^0.6.2",
+    "yargs": "^17.1.1"
+  },
+  "devDependencies": {
+    "@babel/core": "^7.12.16",
+    "@babel/eslint-parser": "^7.12.16",
+    "@types/express": "^4.17.13",
+    "@types/express-fileupload": "^1.2.2",
+    "@types/mocha": "^9.1.0",
+    "@types/node": "16.11.19",
+    "@typescript-eslint/eslint-plugin": "5.0.0",
+    "@typescript-eslint/parser": "5.0.0",
+    "@vue/cli-plugin-babel": "~5.0.0",
+    "@vue/cli-plugin-eslint": "~5.0.0",
+    "@vue/cli-service": "~5.0.0",
+    "electron": "^10.4.7",
+    "electron-devtools-installer": "^3.1.0",
+    "eslint": "8.7.0",
+    "eslint-config-prettier": "8.5.0",
+    "eslint-plugin-html": "7.1.0",
+    "eslint-plugin-prettier": "4.0.0",
+    "eslint-plugin-vue": "^8.0.3",
+    "husky": "7.0.4",
+    "intelli-espower-loader": "1.1.0",
+    "lint-staged": "12.1.7",
+    "mocha": "10.0.0",
+    "pkg": "^5.8.0",
+    "power-assert": "1.6.1",
+    "prettier": "2.7.1",
+    "typescript": "4.5.2",
+    "vue-cli-plugin-electron-builder": "~2.1.1"
+  },
+  "eslintConfig": {
+    "root": true,
+    "env": {
+      "node": true
+    },
+    "extends": [
+      "plugin:vue/vue3-essential",
+      "eslint:recommended"
+    ],
+    "parserOptions": {
+      "parser": "@babel/eslint-parser"
+    },
+    "rules": {}
+  },
+  "browserslist": [
+    "> 1%",
+    "last 2 versions",
+    "not dead",
+    "not ie 11"
+  ],
+  "bin": "./api/app.js"
+}

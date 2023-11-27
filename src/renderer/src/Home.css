@@ -1,0 +1,146 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+#end {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  top: 25px;
+  right: 25px;
+}
+
+* {
+  -webkit-user-select: none;
+}
+
+input {
+  border: none;
+  outline: none;
+}
+
+.main {
+  width: calc(100% - 50px);
+  height: calc(100% - 80px);
+  display: flex;
+  margin-left: 25px;
+  padding-right: 0px;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.main .Home{
+  width: 100%;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+.playcard {
+  width: 235px;
+  height: 235px;
+  /* margin-right: 20px; */
+  border-radius: 5px;
+}
+#router{
+  width: 100vw;
+  height: 100vh;
+}
+.index {
+  width: 100vw;
+  height: calc(100vh - 80px);
+  display: flex;
+  overflow-y: scroll;
+  overflow-x: hidden;
+}
+
+
+
+.titleBar {
+  display: flex;
+  width: 100%;
+  height: 80px;
+  align-items: center;
+  padding: 0 25px;
+  -webkit-app-region: drag;
+}
+
+.titleBar .search {
+  width: 20%;
+  min-width: 250px;
+  display: flex;
+  height: 40px;
+  align-items: center;
+  position: relative;
+  -webkit-app-region: no-drag;
+}
+
+.titleBar .search input {
+  width: 100%;
+  height: 100%;
+  background-color: #eeeeee;
+  border-radius: 25px;
+  padding: 0 0 0 50px;
+}
+
+.titleBar .search svg {
+  width: 25px;
+  height: 25px;
+  position: absolute;
+  left: 15px;
+}
+
+.titleBar .search path {
+  fill: #717171;
+}
+
+.index>.right {
+  width: calc(100vw - 250px);
+}
+
+.index>.left>.nav {
+  margin-top: 20px;
+}
+
+.index>.left .nav>.title {
+  font-size: 0.9em;
+  color: #717171;
+  margin-left: 40px;
+  margin-top: 25px;
+}
+
+.index>.left {
+  width: 250px;
+  min-width: 250px;
+  height: 100%;
+  background-color: #eee;
+}
+
+.index>.left>.icon {
+  width: 100%;
+  display: flex;
+  padding: 20px 0;
+  align-items: center;
+  justify-content: center;
+}
+
+.index>.left>.icon img {
+  width: 40px;
+  height: 40px;
+}
+
+.index>.left>.icon p {
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-left: 15px;
+}
+
+
+#bottom {
+  width: 100vw;
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* padding: 0 25px; */
+}
+
