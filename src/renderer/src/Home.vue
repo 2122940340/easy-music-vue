@@ -17,6 +17,21 @@
 		</div>
 		<div class="right">
 			<div class="titleBar">
+
+				<div class="return">
+					<svg t="1701170637427" @click="$router.go(-1)" class="end" viewBox="0 0 1024 1024" version="1.1"
+						xmlns="http://www.w3.org/2000/svg" p-id="7047" width="25" height="25">
+						<path
+							d="M624.788992 204.047974 585.205965 164.464026 219.560038 530.185011 585.205965 895.864013 624.788992 856.280986 298.663014 530.16105Z"
+							p-id="7048" fill="#8a8a8a"></path>
+					</svg>
+					<svg t="1701170637427" @click="$router.go(1)" class="next" viewBox="0 0 1024 1024" version="1.1"
+						xmlns="http://www.w3.org/2000/svg" p-id="7047" width="25" height="25">
+						<path
+							d="M624.788992 204.047974 585.205965 164.464026 219.560038 530.185011 585.205965 895.864013 624.788992 856.280986 298.663014 530.16105Z"
+							p-id="7048" fill="#8a8a8a"></path>
+					</svg>
+				</div>
 				<div class="search">
 					<input type="text" placeholder="搜索音乐" />
 					<svg t="1700459104253" class="icon" viewBox="0 0 1024 1024" version="1.1"
@@ -28,7 +43,11 @@
 				</div>
 			</div>
 			<div class="main">
-				<router-view></router-view>
+				<router-view v-slot="{ Component }">
+					<keep-alive>
+						<component ref="Main" :is="Component"></component>
+					</keep-alive>
+				</router-view>
 			</div>
 		</div>
 	</div>
@@ -41,9 +60,10 @@ import home from './views/Home.vue'
 import Play from './views/Play.vue'
 import MusicStatusBar from './views/MusicStatusBar.vue' //播放条
 // import { Music } from './modules/music'
-import { useRouter, useRoute } from 'vue-router'
 import router from './router/index'
-router.push("/")
+// router.push({
+// 	path: "/home/index",
+// })
 // const music = new Music(new Audio())
 export default {
 	name: 'app',
@@ -54,6 +74,14 @@ export default {
 		Play
 	},
 	setup() {
+
+	},
+	activated() {
+		console.log(this.$route)
+		if (!this.$route.meta.keepAlive) {
+			// 如果该页面不需要缓存，则在页面激活时销毁缓存
+			console.log(this.$destroy())
+		}
 	},
 	data() {
 		return {
@@ -180,7 +208,7 @@ export default {
 		// this.music = new Music(this.audio);
 		// this.music.start()
 		console.log(window)
-        console.log(this)
+		console.log(this)
 	}
 }
 </script>

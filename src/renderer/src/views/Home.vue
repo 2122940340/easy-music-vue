@@ -14,7 +14,7 @@
       <hotsearch @setValue="play" :array="HotSearchList" class="hot_search"></hotsearch>
       <div>
         <RecommendedPlaylist title="热门歌单" :array="RecommendedPlayList"></RecommendedPlaylist>
-        <RecommendedPlaylist title="心动歌曲推荐" :array="HitSongList"></RecommendedPlaylist>
+        <HotSearchList title="心动歌曲推荐" :array="HitSongList"></HotSearchList>
       </div>
     </div>
 
@@ -25,13 +25,15 @@
 import playcard from './PlayCard.vue' //头部卡片
 import hotsearch from './HotSearch.vue' //热门歌曲
 import RecommendedPlaylist from './RecommendedPlaylist.vue' //推荐歌单
+import HotSearchList from './HotSongList.vue' //热门歌曲
 import _global_ from '../global.js' //配置
 export default {
   name: 'app',
   components: {
     playcard,
     hotsearch,
-    RecommendedPlaylist
+    RecommendedPlaylist,
+    HotSearchList
   },
   data() {
     return {
@@ -48,7 +50,6 @@ export default {
     }
   },
   mounted() {
-    window.a = 1
     console.log(window)
     // 推荐歌单
     fetch(_global_.APIURL + 'personalized?limit=6')
@@ -82,23 +83,23 @@ export default {
   height: 100%;
 }
 
-.top {
+.home .top {
   width: 100%;
   display: flex;
   justify-content: space-between;
 }
 
-.center {
+.home .center {
   display: flex;
   overflow: scroll;
 }
 
-.hot_search {
+.home .hot_search {
   margin-top: 20px;
   flex-shrink: 0;
 }
 
-.RecommendedPlaylist {
+.home .RecommendedPlaylist {
   margin-top: 20px;
 }
 </style>

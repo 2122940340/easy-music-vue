@@ -1,23 +1,44 @@
 const routes = [
+    // {
+    //     path: '/',
+    //     name: 'index',
+    //     title: '主页',
+    //     component: () => import('../Home.vue'),
+    //     children:[
+    //         {
+    //             path:'/'
+    //         }
+    //     ]
+    // },
     {
         path: '/',
+        name: 'home',
         title: '主页',
         component: () => import('../Home.vue'),
+        meta: {
+            keepAlive: true
+        },
         children: [
             {
-                path: '/',
+                path: '',
                 component: () => import('../views/Home.vue'),
+                meta: {
+                    keepAlive: true
+                },
             },
-        ]
-    },
-    {
-        path: '/home',
-        title: '主页',
-        component: () => import('../Home.vue'),
-        children: [
             {
-                path: '/',
+                path: 'home',
                 component: () => import('../views/Home.vue'),
+                meta: {
+                    keepAlive: true
+                },
+            },
+            {
+                path: 'songlist',
+                component: () => import('../views/SongList.vue'),
+                meta: {
+                    keepAlive: false
+                },
             }
         ]
     },
@@ -26,12 +47,7 @@ const routes = [
         name: 'play',
         title: '主页',
         component: () => import('../views/Play.vue'),
-        children: [
-            {
-                path: 'aaa',
-                component: () => import('../views/Home.vue'),
-            }
-        ]
     },
+
 ]
 export default routes

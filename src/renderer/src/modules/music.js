@@ -47,7 +47,7 @@ export class Music {
         if (typeof data === String) {
             data = JSON.parse(data)
         }
-        data.id -= 1
+        data.id += 1
         if (data.id >= data.data.length) {
             data.id = 0
         } else if (data.id < 0) {
@@ -111,7 +111,7 @@ export class Music {
                 if (typeof data === String) {
                     data = JSON.parse(data)
                 }
-                data.id += 1
+                data.id = data.data.length
                 for (let i = 0; i <= data.data.length; i++) {
                     if (data.data[i] != undefined) {
                         if (data.data[i].songid == this.array.songid) {
@@ -234,6 +234,33 @@ export class Music {
         // 添加播放列表
         this.songAdd()
         this.time();
+    }
+    getURL(i){
+        let data = {
+            "input": "https://music.163.com/#/song?id=" + i.id,
+            "filter": "url",
+            "type": '_',
+            "page": 1,
+        }
+        const formData = new FormData();
+        Object.keys(data).map((key) => {
+            formData.append(key, data[key])
+        })
+        // myHeaders.append("Hm_lpvt_50027a9c88cdde04a70f5272a88a10fa", "1587636659");
+        fetch('https://music.liuzhijin.cn/', {
+            method: 'post',
+            headers: {
+                "X-Requested-With": "XMLHttpRequest",
+                "Hm_lpvt_50027a9c88cdde04a70f5272a88a10fa": "1587636659",
+            },
+            credentials: 'include',
+            body: formData
+        })
+            .then((response) => response.json())
+            .then((response) => {
+                console.log(response)
+                this.play(response.data[0], {});
+            })
     }
 }
 // console.log(new Music())

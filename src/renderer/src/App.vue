@@ -2,7 +2,10 @@
     <div class="region"></div>
     <router-view ref="Plays" class="App" v-slot="{ Component }">
         <Transition name="fade">
-            <component ref="Main" :is="Component"></component>
+            <keep-alive>
+                <component ref="Main" :is="Component"></component>
+            </keep-alive>
+
         </Transition>
     </router-view>
     <MusicStatusBar ref="MusicStatusBar" class="MusicStatusBar"></MusicStatusBar>
@@ -14,29 +17,51 @@ import { Music } from "./modules/music";
 import router from "./router/index";
 import MusicStatusBar from './views/MusicStatusBar.vue'
 import { ref } from 'vue'
-// router.push('/')
+import { useRouter, useRoute } from 'vue-router'
+
 // music.start()
 // console.log(new music())
 // const a =  new music()
 // console.log(Vue)
-let audio = new Audio()
 
+let audio = new Audio()
 window.Music = new Music(audio);
+
 export default {
+
     components: {
         MusicStatusBar
     },
     methods: {
-        
+
+    },
+    activated() {
+        if (!this.$route.meta.keepAlive) {
+            // 如果该页面不需要缓存，则在页面激活时销毁缓存
+            this.$destroy()
+        }
+        console.log(this.destroy)
     },
     mounted() {
         this.home = this.$refs.Main
         window.Music.start()
 
+        setTimeout(() => {
+            router.push({
+                path: '/home'
+            })
+        }, 100)
     },
     watch: {
         async $route(to, from) {
-            console.log(to.path);//到哪去
+            console.log(to);//到哪去
+            console.log(from)
+            if (to.path != '/play') {
+                this.$refs.MusicStatusBar.styleColor = {
+                    color: '#000',
+                    fill: '#000'
+                }
+            }
             switch (to.path) {
                 case '/play':
                     this.$refs.MusicStatusBar.styleColor = {
@@ -47,9 +72,11 @@ export default {
                     let home = this.$refs
                     const Play = Main.Main
                     window.Play = Play
-                    Play.start(window.Music.lrcList)
+                    // console.log(window.Music.lrcList)
+                    if (window.Music.lrcList != undefined) Play.start(window.Music.lrcList)
+
                     break
-                case '/':
+                case '/home':
                     this.$refs.MusicStatusBar.styleColor = {
                         color: '#000',
                         fill: '#000'
@@ -69,11 +96,16 @@ export default {
     box-sizing: content-box;
 }
 
+svg:hover path {
+    fill: #0ccfb1;
+}
+
 .App {
     width: 100%;
     height: calc(100vh - 80px);
 }
-.region{
+
+.region {
     width: 100vw;
     height: 25px;
     position: absolute;
@@ -81,6 +113,7 @@ export default {
     left: 0px;
     -webkit-app-region: drag;
 }
+
 html,
 body {
     width: 100vw;

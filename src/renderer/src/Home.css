@@ -30,21 +30,25 @@ input {
   overflow-y: scroll;
   overflow-x: hidden;
 }
-.main .Home{
+
+.main .Home {
   width: 100%;
   overflow-y: scroll;
   overflow-x: hidden;
 }
+
 .playcard {
   width: 235px;
   height: 235px;
   /* margin-right: 20px; */
   border-radius: 5px;
 }
-#router{
+
+#router {
   width: 100vw;
   height: 100vh;
 }
+
 .index {
   width: 100vw;
   height: calc(100vh - 80px);
@@ -61,7 +65,19 @@ input {
   height: 80px;
   align-items: center;
   padding: 0 25px;
-  -webkit-app-region: drag;
+}
+
+.titleBar .return {
+  display: flex;
+  align-items: center;
+}
+
+.titleBar .return svg {
+  margin-right: 25px;
+}
+
+.titleBar .return svg:nth-child(2) {
+  transform: rotate(180deg);
 }
 
 .titleBar .search {
@@ -143,4 +159,3 @@ input {
   justify-content: space-between;
   /* padding: 0 25px; */
 }
-

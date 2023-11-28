@@ -56,6 +56,7 @@ if (process.contextIsolated) {
     contextBridge.exposeInMainWorld('electron', electronAPI)
     contextBridge.exposeInMainWorld('api', api)
     contextBridge.exposeInMainWorld('fs', fs)
+    contextBridge.exposeInMainWorld('APIURL', 'http://localhost:3000/')
   } catch (error) {
     console.error(error)
   }
@@ -64,8 +65,7 @@ if (process.contextIsolated) {
   window.electron = electronAPI
   window.api = api
   window.fs = fs
-  window.music = '111'
-  console.log(888888)
+  window.APPURL = 'http://localhost:3000/'
 
   contextBridge.exposeInMainWorld('electron', {
     ping: () => ipcRenderer.invoke('ping')

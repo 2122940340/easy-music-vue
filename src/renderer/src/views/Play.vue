@@ -1,13 +1,11 @@
 <template>
     <div class="Play">
-        <router-link class="end" to="/">
-            <svg t="1701086358349" class="icon" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
+            <svg class="end icon" @click="$router.go(-1)" t="1701086358349" viewBox="0 0 1024 1024" version="1.1" xmlns="http://www.w3.org/2000/svg"
                 p-id="9375" width="30" height="30">
                 <path
                     d="M624.788992 204.047974 585.205965 164.464026 219.560038 530.185011 585.205965 895.864013 624.788992 856.280986 298.663014 530.16105Z"
                     p-id="9376" fill="#ffffff"></path>
             </svg>
-        </router-link>
         <img class="back" :src=icon alt="">
         <div class="mask"></div>
         <div class="left">
@@ -45,18 +43,20 @@ export default {
     },
     methods: {
         start(list) {
-            this.list = list
-            console.log(list)
-            this.time()
-            this.icon = window.Music._pic
-            // console.log
-            this.name = window.Music._name
-            this.title = window.Music._title
+            this.list = window.Music.lrcList
+            // console.log(list)
+            if (window.Music.lrcList != undefined || window.Music.lrcList != '') {
+                this.time()
+                this.icon = window.Music._pic
+                this.name = window.Music._name
+                this.title = window.Music._title
+            }
         },
         time(lrc) {
             const ul = this.$refs.scroll
             let list;
-            setInterval(() => {
+            clearInterval(window.set)
+            window.set = setInterval(() => {
                 //vue实在不道咋写，只能操作原生了 by 11.27  tiank
                 list = document.querySelectorAll('li')
                 list.forEach((item, index) => {
@@ -69,11 +69,16 @@ export default {
                         item.classList.remove('selected')
                     }
                 });
-                let chang = ul.scrollHeight / list.length
-                // if (ul.scrollTop == 300){
+                if (ul != null) {
+                    let chang = ul.scrollHeight / list.length
+                    //无视性能，拥抱结果  by tiank 11.28
+                    this.list = window.Music.lrcList
+                    this.time()
+                    this.icon = window.Music._pic
+                    this.name = window.Music._name
+                }
 
-                // }
-                //     console.log(ul.scroll)
+                this.title = window.Music._title
             }, 1000)
 
         },

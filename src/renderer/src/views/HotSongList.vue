@@ -2,7 +2,7 @@
   <div class="RecommendedPlaylist">
     <p class="title">{{ title }}</p>
     <ul>
-      <li @click="songList(i)" v-for="i in array" v-bind:key="i">
+      <li @click="play(i)" v-for="i in array" v-bind:key="i">
         <img v-on:mouseleave="none" v-on:mouseover="ant" :src="i.picUrl" alt="" />
         <p class="titles">
           {{ i.name }}
@@ -15,8 +15,6 @@
 <script>
 import { Music } from '../modules/music'
 import overlay from './RecommendedPlayListOverlay.vue'
-
-import router from "../router/index";
 import { ref, h, render } from 'vue'
 export default {
   props: {
@@ -36,14 +34,9 @@ export default {
   },
 
   methods: {
-    songList(i) {
-      console.log(i)
-      router.push({
-        path:'/songlist',
-        state:{
-          id:i.id
-        }
-      })
+    play(i) {
+      // this.$parent.$parent.$parent.play(i)
+      window.Music.getURL(i)
     },
     ant(event) {
       let img = event.target
