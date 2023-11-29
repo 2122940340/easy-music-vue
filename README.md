@@ -1,34 +1,28 @@
-# music
+# 轻松音乐 v1.1.2
 
-An Electron application with Vue
+基于electron-vue + vite 开发桌面端免费音乐软件替代方案
 
-## Recommended IDE Setup
-
-- [VSCode](https://code.visualstudio.com/) + [ESLint](https://marketplace.visualstudio.com/items?itemName=dbaeumer.vscode-eslint) + [Prettier](https://marketplace.visualstudio.com/items?itemName=esbenp.prettier-vscode) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar)
-
-## Project Setup
-
-### Install
+### 安装
 
 ```bash
 $ npm install
 ```
 
-### Development
+### 运行
 
 ```bash
 $ npm run dev
 ```
 
-### Build
+### 打包
 
 ```bash
-# For windows
+# windows
 $ npm run build:win
 
-# For macOS
+# macOS
 $ npm run build:mac
 
-# For Linux
+# Linux
 $ npm run build:linux
 ```

@@ -17,7 +17,7 @@
 		</div>
 		<div class="right">
 			<div class="titleBar">
-
+				<!-- 路由返回 -->
 				<div class="return">
 					<svg t="1701170637427" @click="$router.go(-1)" class="end" viewBox="0 0 1024 1024" version="1.1"
 						xmlns="http://www.w3.org/2000/svg" p-id="7047" width="25" height="25">
@@ -32,21 +32,42 @@
 							p-id="7048" fill="#8a8a8a"></path>
 					</svg>
 				</div>
+
+				<!-- 搜索 -->
 				<div class="search">
-					<input type="text" placeholder="搜索音乐" />
+					<input v-on:input="searchRecommended" v-model="searchValue" @keydown.enter="search()"
+						v-on:blur="recommendedListNone()" v-on:focus="recommendedList()" type="text" placeholder="搜索音乐" />
 					<svg t="1700459104253" class="icon" viewBox="0 0 1024 1024" version="1.1"
 						xmlns="http://www.w3.org/2000/svg" p-id="3282" width="20" height="20">
 						<path
 							d="M490.666667 810.666667C315.733333 810.666667 170.666667 665.6 170.666667 490.666667S315.733333 170.666667 490.666667 170.666667 810.666667 315.733333 810.666667 490.666667 665.6 810.666667 490.666667 810.666667z m0-42.666667c153.6 0 277.333333-123.733333 277.333333-277.333333S644.266667 213.333333 490.666667 213.333333 213.333333 337.066667 213.333333 490.666667 337.066667 768 490.666667 768z m264.533333-42.666667l119.466667 119.466667-29.866667 29.866667-119.466667-119.466667 29.866667-29.866667z"
 							fill="#707070" p-id="3283"></path>
 					</svg>
+
+
+					<div v-if="searchCode" ref="searchBox" class="searchBox">
+						<ul class="historyList">
+							<p class="title">
+								联想搜索
+							</p>
+							<li @mousedown="searchPush" v-for="i in historyList" v-bind:key="i">
+								<p>{{ i.name }}</p>
+								<p>{{ i.artists[0].name }}</p>
+							</li>
+						</ul>
+						<ul class="historyList">
+							<p class="title">
+								搜索历史
+							</p>
+							<li>空</li>
+							<li>空</li>
+						</ul>
+					</div>
 				</div>
 			</div>
 			<div class="main">
 				<router-view v-slot="{ Component }">
-					<keep-alive>
-						<component ref="Main" :is="Component"></component>
-					</keep-alive>
+					<component ref="Main" :is="Component"></component>
 				</router-view>
 			</div>
 		</div>
@@ -86,6 +107,9 @@ export default {
 	data() {
 		return {
 			apptitle: '轻松music',
+			searchValue: '',
+			historyList: {},
+			searchCode:false,
 			tagList: [
 				{
 					title: '在线音乐',
@@ -167,6 +191,49 @@ export default {
 		}
 	},
 	methods: {
+		searchPush() {
+			// router.push({
+			// 	path: '/search',
+			// 	state: {
+			// 		value: this.searchValue
+			// 	}
+			// })
+			this.search()
+		},
+		// 搜索推荐
+		searchRecommended() {
+			// console.log(this.searchValue)
+			fetch(window.APIURL + 'search/suggest?keywords=' + this.searchValue)
+				.then((response) => response.json())
+				.then((response) => {
+					console.log(response)
+					this.historyList = response.result.songs
+				})
+		},
+		// 开始搜索
+		search() {
+			if (this.searchValue != '' || this.searchValue != null) {
+				this.$refs.searchBox.blur()
+				router.push({
+					path: '/search',
+					state: {
+						value: this.searchValue
+					}
+				})
+			}
+		},
+		//搜索隐藏
+		recommendedListNone() {
+			// setTimeout(() => {
+				// this.$refs.searchBox.style.display = 'none'
+				this.searchCode = false
+			// }, 1000)
+		},
+		//搜索显示
+		recommendedList() {
+			// this.$refs.searchBox.style.display = 'flex'
+			this.searchCode = true
+		},
 		nextSong() {
 			music.nextSong();
 		},

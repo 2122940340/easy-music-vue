@@ -39,6 +39,10 @@ const routes = [
                 meta: {
                     keepAlive: false
                 },
+            },
+            {
+                path:'search',
+                component:() => import('../views/Search.vue')
             }
         ]
     },

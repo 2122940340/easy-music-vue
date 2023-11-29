@@ -35,7 +35,6 @@ export default {
 
   methods: {
     play(i) {
-      // this.$parent.$parent.$parent.play(i)
       window.Music.getURL(i)
     },
     ant(event) {

@@ -65,6 +65,7 @@ input {
   height: 80px;
   align-items: center;
   padding: 0 25px;
+  position: relative;
 }
 
 .titleBar .return {
@@ -107,6 +108,54 @@ input {
 
 .titleBar .search path {
   fill: #717171;
+}
+
+.titleBar .searchBox {
+  width: 400px;
+  height: 450px;
+  background-color: #fff;
+  box-shadow: 0px 0px 10px #aaaaaa;
+  position: absolute;
+  top: 50px;
+  z-index: 100;
+  border-radius: 10px;
+  display: flex;
+}
+
+.titleBar .searchBox ul {
+  width: 50%;
+  list-style: none;
+}
+
+.titleBar .searchBox ul:nth-child(1) {
+  border-right: 1px solid #e6e6e6;
+}
+
+.titleBar .searchBox ul li {
+  display: flex;
+  padding: 10px 25px;
+  justify-content: space-between;
+}
+
+.titleBar .searchBox ul li:hover {
+  background-color: #eee;
+}
+
+.titleBar .searchBox ul li p {
+  font-size: 1em;
+}
+
+.titleBar .searchBox ul li p:nth-child(2) {
+  color: #717171;
+  font-size: 0.9em;
+
+}
+
+.titleBar .searchBox .title {
+  font-size: 1.0em;
+  padding: 15px 25px;
+  border-bottom: 1px solid #e6e6e6;
+  border-right: 1px solid #e6e6e6;
 }
 
 .index>.right {

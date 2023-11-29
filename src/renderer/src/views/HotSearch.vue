@@ -43,7 +43,6 @@ export default {
 
 .HotSearch {
   width: 270px;
-  /* height: 100px; */
   position: relative;
   overflow: scroll;
 }
