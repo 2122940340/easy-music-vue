@@ -21,28 +21,28 @@ const routes = [
         children: [
             {
                 path: '',
-                component: () => import('../views/Home.vue'),
+                component: () => import('../views/Index/Home/Home.vue'),
                 meta: {
                     keepAlive: true
                 },
             },
             {
                 path: 'home',
-                component: () => import('../views/Home.vue'),
+                component: () => import('../views/Index/Home/Home.vue'),
                 meta: {
                     keepAlive: true
                 },
             },
             {
                 path: 'songlist',
-                component: () => import('../views/SongList.vue'),
+                component: () => import('../views/Song/SongList.vue'),
                 meta: {
                     keepAlive: false
                 },
             },
             {
                 path:'search',
-                component:() => import('../views/Search.vue')
+                component:() => import('../views/Search/Search.vue')
             }
         ]
     },
@@ -50,7 +50,7 @@ const routes = [
         path: '/play',
         name: 'play',
         title: '主页',
-        component: () => import('../views/Play.vue'),
+        component: () => import('../views/Play/Play.vue'),
     },
 
 ]

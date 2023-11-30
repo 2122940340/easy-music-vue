@@ -15,7 +15,7 @@
 // import { Music } from "./modules/music";
 import { Music } from "./modules/music";
 import router from "./router/index";
-import MusicStatusBar from './views/MusicStatusBar.vue'
+import MusicStatusBar from './views/Play/MusicStatusBar.vue'
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 

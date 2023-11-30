@@ -76,10 +76,10 @@
 	<!-- <router-view id="router"></router-view> -->
 </template>
 <script>
-import tag from './views/tag.vue'
-import home from './views/Home.vue'
-import Play from './views/Play.vue'
-import MusicStatusBar from './views/MusicStatusBar.vue' //播放条
+import tag from './views/Index/Home/tag.vue'
+import home from './views/Index/Home/Home.vue'
+import Play from './views/Play/Play.vue'
+import MusicStatusBar from './views/Play/MusicStatusBar.vue' //播放条
 // import { Music } from './modules/music'
 import router from './router/index'
 export default {
