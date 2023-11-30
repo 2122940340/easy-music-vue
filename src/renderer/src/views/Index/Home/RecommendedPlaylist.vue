@@ -7,13 +7,14 @@
         <p class="titles">
           {{ i.name }}
         </p>
+      
       </li>
     </ul>
   </div>
 </template>
 
 <script>
-// import overlay from './RecommendedPlayListOverlay.vue'
+import overlay from './RecommendedPlayListOverlay.vue'
 
 import router from "/src/router/index";
 import { ref, h, render } from 'vue'
@@ -26,6 +27,7 @@ export default {
     }
   },
   components: {
+    overlay
   },
   data() {
     return {

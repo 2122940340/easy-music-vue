@@ -22,7 +22,7 @@
                 </li>
             </ul>
         </div>
-        <img class="load" src="../assets/lo.gif" alt="">
+        <img class="load" src="/src/assets/lo.gif" alt="">
     </div>
 </template>
 <script>

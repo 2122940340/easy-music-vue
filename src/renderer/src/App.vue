@@ -94,6 +94,7 @@ export default {
     margin: 0;
     padding: 0;
     box-sizing: content-box;
+    outline: none;
 }
 
 svg:hover path {
@@ -119,7 +120,9 @@ body {
     width: 100vw;
     height: 100vh;
 }
-
+ul{
+    list-style: none;
+}
 .fade-enter-active,
 .fade-leave-active {
     transition: all 0.1s ease;

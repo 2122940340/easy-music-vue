@@ -269,10 +269,6 @@ export default {
 		}
 	},
 	mounted() {
-		// this.audio = new Audio();
-		// // audios = new Audio();
-		// this.music = new Music(this.audio);
-		// this.music.start()
 		console.log(window)
 		console.log(this)
 	}

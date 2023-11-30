@@ -24,7 +24,7 @@ const fileList = [
     content: JSON.stringify({
       code: 1,
       data: [],
-      id: 0,
+      id: -1,
     })
   }
 ]

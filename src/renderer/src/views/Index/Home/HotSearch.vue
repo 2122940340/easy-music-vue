@@ -68,21 +68,20 @@ export default {
   overflow: hidden;
   /* margin-top: 10px; */
   padding: 15px 0px;
-  transition: all 0.5s;
 }
 
 .HotSearch li p:hover {
   /* color: #; */
 }
 
-.HotSearch li img:hover {
+/* .HotSearch li img:hover {
   transition: all 0.3s;
   width: 60px;
   height: 60px;
-}
+} */
 
 .HotSearch li:hover img {
-  transition: all 0.3s;
+  /* transition: all 0.3s; */
   width: 60px;
   height: 60px;
 }
@@ -91,6 +90,8 @@ export default {
   width: 50px;
   height: 50px;
   border-radius: 5px;
+  transition: all 0.3s;
+
 }
 
 .HotSearch div {

@@ -20,17 +20,22 @@ export class Music {
         this.title = this.items.querySelector('#title');
         this.play_ = this.items.querySelector('#play');
         this.pause_ = this.items.querySelector('#pause');
-        console.log(this.items)
+        
 
+        this.inception()
+
+        // 播放
         this.play_.addEventListener('click', () => {
             this.resume()
 
         });
+        // 暂停
         this.pause_.addEventListener('click', () => {
             this.pause()
 
         })
 
+        // 跳转播放
         this.icon.addEventListener('click', () => {
             // console.log(111)
             router.push({
@@ -39,7 +44,20 @@ export class Music {
 
         })
 
+
+    
     }
+    inception(){
+        const path = './user/data/playlist.json'
+         const datas = fs.readFileSync(path,'utf-8',err =>{})
+        let data = JSON.parse(datas)
+        if (typeof data === String) {
+            data = JSON.parse(data)
+        }
+        this.play(data.data[data.id])
+        this.pause()
+    }
+    // 下一首
     nextSong() {
         const path = './user/data/playlist.json'
         let datas = window.fs.readFileSync(path, 'utf-8', err => { })
@@ -111,7 +129,6 @@ export class Music {
                 if (typeof data === String) {
                     data = JSON.parse(data)
                 }
-                data.id = data.data.length
                 for (let i = 0; i <= data.data.length; i++) {
                     if (data.data[i] != undefined) {
                         if (data.data[i].songid == this.array.songid) {
@@ -123,7 +140,9 @@ export class Music {
                         }
                     }
                 }
-                data.data.push(this.array);
+                data.id = data.id + 1
+                data.data.splice(data.id,0,this.array)
+                // data.data.push(this.array);
                 window.fs.writeFile(path, JSON.stringify(data), (err) => { })
             }
 

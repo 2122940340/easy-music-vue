@@ -7,6 +7,9 @@
         <p class="titles">
           {{ i.name }}
         </p>
+        <p class="name">
+          {{ i.song.artists[0].name }}
+        </p>
       </li>
     </ul>
   </div>
@@ -118,12 +121,21 @@ export default {
   transition: all 0.3s;
 }
 
-.RecommendedPlaylist li p {
+.RecommendedPlaylist li .titles {
   font-size: 1.1em;
   margin-top: 10px;
   width: 133px;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+.RecommendedPlaylist li .name {
+  font-size: 0.9em;
+  margin-top: 5px;
+  width: 133px;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  color: #717171;
 }
 </style>

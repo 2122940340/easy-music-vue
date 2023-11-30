@@ -17,7 +17,7 @@
         <HotSearchList title="心动歌曲推荐" :array="HitSongList"></HotSearchList>
       </div>
     </div>
-
+    <img class="load" src="/src/assets/lo.gif" alt="">
   </div>
 </template>
 
@@ -56,11 +56,11 @@ export default {
       .then(json => {
         this.RecommendedPlayList = json.result;
       })
-
     // 推荐歌曲
     fetch(window.APIURL + 'personalized/newsong?limit=30')
       .then(response => response.json())
       .then(json => {
+        console.log(json)
         this.HitSongList = json.result;
       })
       .catch(err => console.log('Request Failed', err));
@@ -80,6 +80,13 @@ export default {
 .home {
   width: 100%;
   height: 100%;
+  display: flex;
+  flex-direction: column;
+  overflow: scroll;
+}
+
+.home>div {
+  flex-shrink: 0;
 }
 
 .home .top {
@@ -101,4 +108,9 @@ export default {
 .home .RecommendedPlaylist {
   margin-top: 20px;
 }
-</style>
+
+.load {
+  width: 150px;
+  height: 150px;
+  margin: auto;
+}</style>
