@@ -82,10 +82,6 @@ import Play from './views/Play.vue'
 import MusicStatusBar from './views/MusicStatusBar.vue' //播放条
 // import { Music } from './modules/music'
 import router from './router/index'
-// router.push({
-// 	path: "/home/index",
-// })
-// const music = new Music(new Audio())
 export default {
 	name: 'app',
 	components: {
@@ -98,18 +94,14 @@ export default {
 
 	},
 	activated() {
-		console.log(this.$route)
-		if (!this.$route.meta.keepAlive) {
-			// 如果该页面不需要缓存，则在页面激活时销毁缓存
-			console.log(this.$destroy())
-		}
+		
 	},
 	data() {
 		return {
 			apptitle: '轻松music',
 			searchValue: '',
 			historyList: {},
-			searchCode:false,
+			searchCode: false,
 			tagList: [
 				{
 					title: '在线音乐',
@@ -206,27 +198,34 @@ export default {
 			fetch(window.APIURL + 'search/suggest?keywords=' + this.searchValue)
 				.then((response) => response.json())
 				.then((response) => {
-					console.log(response)
-					this.historyList = response.result.songs
+					if (response.code == 200) this.historyList = response.result.songs
 				})
 		},
 		// 开始搜索
 		search() {
 			if (this.searchValue != '' || this.searchValue != null) {
 				this.$refs.searchBox.blur()
+				this.$nextTick(function () {
+					this.isRouterAlive = true
+				})
 				router.push({
 					path: '/search',
 					state: {
 						value: this.searchValue
+					},
+					query: {
+						id: Math.ceil(Math.random() * 100)
 					}
 				})
+				// this.$router.go(0)
+
 			}
 		},
 		//搜索隐藏
 		recommendedListNone() {
 			// setTimeout(() => {
-				// this.$refs.searchBox.style.display = 'none'
-				this.searchCode = false
+			// this.$refs.searchBox.style.display = 'none'
+			this.searchCode = false
 			// }, 1000)
 		},
 		//搜索显示

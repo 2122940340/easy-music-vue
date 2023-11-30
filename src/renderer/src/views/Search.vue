@@ -1,5 +1,5 @@
 <template>
-    <div @scroll="pageUp" class="search">
+    <div @scroll="pageUp" class="searchOutcome">
         <div class="tab">
             <p>歌曲</p>
             <p>歌手</p>
@@ -26,7 +26,6 @@
     </div>
 </template>
 <script>
-import { V_ON_WITH_KEYS } from '@vue/compiler-dom'
 
 export default {
     data() {
@@ -37,19 +36,22 @@ export default {
             page: 0,
         }
     },
+    watch: {
+        $route(to, from) {
+            this.pageNext(true)
+        }
+    },
     methods: {
         play(i) {
             window.Music.getURL(i)
         },
         pageUp(e) {
-            console.log(e)
             const { scrollTop, clientHeight, scrollHeight } = e.target
-            // console.log(scrollTop, clientHeight, scrollHeight)
             if (scrollTop + clientHeight === scrollHeight) {
                 this.pageNext()
             }
         },
-        pageNext() {
+        pageNext(code) {
             if (this.isPage != true) {
                 this.isPage = true
                 this.searchValue = history.state.value
@@ -61,8 +63,12 @@ export default {
                         console.log(response)
                         this.isPage = false
                         // Object.assign(this.list,response.result.songs)
-                        let list = this.list
-                        this.list = [...list, ...response.result.songs]
+                        if (code) {
+                            this.list = response.result.songs
+                        } else {
+                            let list = this.list
+                            this.list = [...list, ...response.result.songs]
+                        }
                     })
             }
 
@@ -74,7 +80,7 @@ export default {
 }
 </script>
 <style>
-.search {
+.searchOutcome {
     width: 100%;
     height: 100%;
     display: flex;
@@ -82,40 +88,40 @@ export default {
     overflow: scroll;
 }
 
-.search>.tab {
+.searchOutcome>.tab {
     display: flex;
     flex-wrap: wrap;
     margin-top: 15px;
 }
 
-.search>.tab>p {
+.searchOutcome>.tab>p {
     width: calc(100% / 3);
     color: #717171;
 }
 
-.search>.tab>ul {
+.searchOutcome>.tab>ul {
     width: 100%;
 }
 
-.search>.tab>ul li {
+.searchOutcome>.tab>ul li {
     width: 100%;
     display: flex;
     align-items: center;
     padding: 15px 10px;
 }
 
-.search>.tab>ul li:hover {
+.searchOutcome>.tab>ul li:hover {
     background-color: #eeeeee;
 }
 
-.search>.tab>ul li img {
+.searchOutcome>.tab>ul li img {
     width: 60px;
     height: 60px;
     margin-right: 10px;
     border-radius: 5px;
 }
 
-.search>.tab>ul li span {
+.searchOutcome>.tab>ul li span {
     display: flex;
     flex: 1;
     height: 100%;
@@ -123,7 +129,7 @@ export default {
     margin-right: 10px;
 }
 
-.search>.tab>ul li span p {
+.searchOutcome>.tab>ul li span p {
     display: -webkit-box;
     -webkit-line-clamp: 1;
     -webkit-box-orient: vertical;
@@ -131,7 +137,7 @@ export default {
     /* text-overflow: ellipsis; */
 }
 
-.search .load {
+.searchOutcome .load {
     width: 150px;
     height: 150px;
     margin: auto;
