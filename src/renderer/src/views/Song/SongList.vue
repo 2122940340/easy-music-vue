@@ -6,7 +6,7 @@
                 <p class="title">{{ title }}</p>
                 <p class="content">介绍:{{ content }}</p>
                 <div>
-                    <span>
+                    <span @click="addSongList()">
                         <svg t="1701134542971" class="icon" viewBox="0 0 1024 1024" version="1.1"
                             xmlns="http://www.w3.org/2000/svg" p-id="3438" width="20" height="20">
                             <path
@@ -47,12 +47,6 @@
                     <span>
                         <p>{{ i.alia[0] }}</p>
                     </span>
-                    <!-- <img :src=icon alt="">
-                    <span>
-                        <p>轻松音乐</p>
-                        <p>未知歌手</p>
-                        <p>未知专辑</p>
-                    </span> -->
                 </li>
             </ul>
         </div>
@@ -81,6 +75,9 @@ export default {
     methods: {
         play(i){
             window.Music.getURL(i)
+        },
+        addSongList(){
+            window.Music.addSongList(this.list)
         }
     },
     mounted() {

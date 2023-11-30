@@ -26,6 +26,15 @@ const fileList = [
       data: [],
       id: -1,
     })
+  },
+  {
+    path: './user/data',
+    name: 'songlist.json',
+    content: JSON.stringify({
+      code: 1,
+      data: [],
+      id: -1,
+    })
   }
 ]
 

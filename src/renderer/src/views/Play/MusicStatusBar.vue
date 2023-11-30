@@ -113,7 +113,6 @@ export default {
             }, 500)
         },
         playLists() {
-            console.log(88889)
         }
     }
 }

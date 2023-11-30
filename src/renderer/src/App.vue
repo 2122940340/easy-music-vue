@@ -19,14 +19,9 @@ import MusicStatusBar from './views/Play/MusicStatusBar.vue'
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
-// music.start()
-// console.log(new music())
-// const a =  new music()
-// console.log(Vue)
 
 let audio = new Audio()
 window.Music = new Music(audio);
-
 export default {
 
     components: {
@@ -43,6 +38,7 @@ export default {
         console.log(this.destroy)
     },
     mounted() {
+
         this.home = this.$refs.Main
         window.Music.start()
 
@@ -120,9 +116,11 @@ body {
     width: 100vw;
     height: 100vh;
 }
-ul{
+
+ul {
     list-style: none;
 }
+
 .fade-enter-active,
 .fade-leave-active {
     transition: all 0.1s ease;

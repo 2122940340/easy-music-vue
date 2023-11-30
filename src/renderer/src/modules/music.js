@@ -2,7 +2,7 @@ import router from '../router/index'
 
 
 export class Music {
-    constructor(audio) {
+    constructor(audio, $refs) {
         this.audio = audio
         // const fs = require('fs')
         // const fs = require('fs')
@@ -10,7 +10,8 @@ export class Music {
     }
     // 下一首
     start() {
-        // this.audio = audio;
+        // this.listPath = './user/data/songlist.json'
+        this.listPath = './user/data/playlist.json'
         this.items = document.querySelector(".MusicStatusBar");
         this.duration = this.items.querySelector('.right p:nth-child(3)');
         this.currentTime = this.items.querySelector('.right p:nth-child(1)');
@@ -20,7 +21,7 @@ export class Music {
         this.title = this.items.querySelector('#title');
         this.play_ = this.items.querySelector('#play');
         this.pause_ = this.items.querySelector('#pause');
-        
+        this.playList = document.querySelector('.playList');
 
         this.inception()
 
@@ -41,26 +42,50 @@ export class Music {
             router.push({
                 name: 'play',
             })
-
         })
 
 
-    
     }
-    inception(){
+
+    // 新增歌单
+    addSongList(list){
+        this.listPath= './user/data/songlist.json'
+        const datas = fs.readFileSync(this.listPath, 'utf-8', err => { })
+        let data = JSON.parse(datas)
+        if (typeof data === String) {
+            data = JSON.parse(data)
+        }
+        data.data = {...list}
+        window.fs.writeFile(this.listPath, JSON.stringify(data), (err) => { })
+        this.list = data
+    }
+    // 初始化歌单
+    inception() {
         const path = './user/data/playlist.json'
-         const datas = fs.readFileSync(path,'utf-8',err =>{})
+        const datas = fs.readFileSync(this.listPath, 'utf-8', err => { })
         let data = JSON.parse(datas)
         if (typeof data === String) {
             data = JSON.parse(data)
         }
         this.play(data.data[data.id])
         this.pause()
+        this.list = data
+    }
+    // 删除歌单的歌
+    songListDelete(id) {
+        const path = './user/data/playlist.json'
+        const datas = fs.readFileSync(this.listPath, 'utf-8', err => { })
+        let data = JSON.parse(datas)
+        if (typeof data === String) {
+            data = JSON.parse(data)
+        }
+        data.data.splice(id, 1)
+        window.fs.writeFile(this.listPath, JSON.stringify(data), (err) => { })
     }
     // 下一首
     nextSong() {
         const path = './user/data/playlist.json'
-        let datas = window.fs.readFileSync(path, 'utf-8', err => { })
+        let datas = window.fs.readFileSync(this.listPath, 'utf-8', err => { })
         let data = JSON.parse(datas)
         if (typeof data === String) {
             data = JSON.parse(data)
@@ -75,7 +100,7 @@ export class Music {
                 data.id = data.data.length - 1
             }
         }
-        window.fs.writeFile(path, JSON.stringify(data), (err) => { })
+        window.fs.writeFile(this.listPath, JSON.stringify(data), (err) => { })
         if (data.data[data.id] === undefined) {
 
         } else {
@@ -85,7 +110,7 @@ export class Music {
     // 上一首
     previousSong() {
         const path = './user/data/playlist.json'
-        let datas = window.fs.readFileSync(path, 'utf-8', err => { })
+        let datas = window.fs.readFileSync(this.listPath, 'utf-8', err => { })
         let data = JSON.parse(datas)
         if (typeof data === String) {
             data = JSON.parse(data)
@@ -100,7 +125,7 @@ export class Music {
                 data.id = data.data.length - 1
             }
         }
-        window.fs.writeFile(path, JSON.stringify(data), (err) => { })
+        window.fs.writeFile(this.listPath, JSON.stringify(data), (err) => { })
         if (data.data[data.id] === undefined) {
 
         } else {
@@ -122,7 +147,7 @@ export class Music {
     // 添加到播放列表
     songAdd() {
         const path = './user/data/playlist.json'
-        window.fs.readFile(path, 'utf-8', (err, data) => {
+        window.fs.readFile(this.listPath, 'utf-8', (err, data) => {
             if (err) {
             } else {
                 data = JSON.parse(data)
@@ -133,7 +158,8 @@ export class Music {
                     if (data.data[i] != undefined) {
                         if (data.data[i].songid == this.array.songid) {
                             console.log(data.data[i].songid);
-                            data.id = i + 1;
+                            data.id = i;
+                            window.fs.writeFile(this.listPath, JSON.stringify(data), (err) => { })
                             return void 0;
                             // break;
                         } else {
@@ -141,9 +167,8 @@ export class Music {
                     }
                 }
                 data.id = data.id + 1
-                data.data.splice(data.id,0,this.array)
-                // data.data.push(this.array);
-                window.fs.writeFile(path, JSON.stringify(data), (err) => { })
+                data.data.splice(data.id, 0, this.array)
+                window.fs.writeFile(this.listPath, JSON.stringify(data), (err) => { })
             }
 
         })
@@ -216,7 +241,7 @@ export class Music {
         this._pic = array.pic
         this._name = array.author
         this.array = array
-
+        this._songid = array.songid;
         this.pause();
 
         this.icon.src = this._pic
@@ -241,9 +266,8 @@ export class Music {
                 }
             }
         }
-
         // 写入链接
-        this.audio.src = this._url
+        this.audio.src = this._url;
         this.audio.title = array.title;
         this.audio.author = array.author;
         this.audio.load();
@@ -254,7 +278,7 @@ export class Music {
         this.songAdd()
         this.time();
     }
-    getURL(i){
+    getURL(i) {
         let data = {
             "input": "https://music.163.com/#/song?id=" + i.id,
             "filter": "url",
@@ -282,5 +306,3 @@ export class Music {
             })
     }
 }
-// console.log(new Music())
-// export const music = new Music();
