@@ -29,7 +29,7 @@ const fileList = [
   },
   {
     path: './user/data',
-    name: 'songlist.json',
+    name: 'likelist.json',
     content: JSON.stringify({
       code: 1,
       data: [],

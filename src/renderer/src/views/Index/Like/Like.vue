@@ -36,11 +36,16 @@ export default {
       list: [],
     };
   },
-  mounted () {
+  mounted() {
     if (this.$refs[Music._songid]) {
       this.$refs[Music._songid][0].classList.add("a");
     }
-    this.list = Music.list.data
+      const datas = fs.readFileSync(Music.likeListPath, "utf-8", (err) => {});
+      let data = JSON.parse(datas);
+      if (typeof data === String) {
+        data = JSON.parse(data);
+      }
+      this.list = data.data
   },
   methods: {
     play(i) {

@@ -11,6 +11,7 @@ export class Music {
     // 下一首
     start() {
         this.listPath = './user/data/playlist.json'
+        this.likeListPath = './user/data/likelist.json'
         // this.listPath = './user/data/songlist.json'
         this.items = document.querySelector(".MusicStatusBar");
         this.duration = this.items.querySelector('.right p:nth-child(3)');
@@ -22,9 +23,15 @@ export class Music {
         this.play_ = this.items.querySelector('#play');
         this.pause_ = this.items.querySelector('#pause');
         this.playList = document.querySelector('.playList');
-
+        this.like = this.items.querySelector('.likes')
+        this.likes = this.items.querySelector('.islike')
         this.inception()
+        // 绑定事件
+        this.click()
+    }
 
+    // 按钮事件
+    click() {
         // 播放
         this.play_.addEventListener('click', () => {
             this.resume()
@@ -35,16 +42,68 @@ export class Music {
             this.pause()
 
         })
-
         // 跳转播放
         this.icon.addEventListener('click', () => {
-            // console.log(111)
             router.push({
                 name: 'play',
             })
         })
 
-
+        // 收藏
+        this.like.addEventListener('click', () => {
+            this.like.style.display = 'none'
+            this.likes.style.display = 'block'
+            this.songLike(this.array);
+        })
+        // 取消收藏
+        this.likes.addEventListener('click', () => {
+            this.like.style.display = 'block'
+            this.likes.style.display = 'none'
+        })
+    }
+    // 是否收藏
+    isLike(id) {
+        const datas = fs.readFileSync(this.likeListPath, 'utf-8', err => { })
+        let data = JSON.parse(datas)
+        if (typeof data === String) {
+            data = JSON.parse(data)
+        }
+        for (let i in data.data) {
+            if (data.data[i].songid == id) {
+                this.like.style.display = 'none'
+                this.likes.style.display = 'block'
+                break
+            } else {
+                this.like.style.display = 'block'
+                this.likes.style.display = 'none'
+                this.songLikeDelete(this._songid)
+            }
+        }
+    }
+    // 取消收藏歌曲
+    songLikeDelete(id) {
+        const datas = fs.readFileSync(this.likeListPath, 'utf-8', err => { })
+        let data = JSON.parse(datas)
+        if (typeof data === String) {
+            data = JSON.parse(data)
+        }
+        for(let i in data.data){
+            let item = data.data[i]
+            if(item.songid == id){
+                data.data.splice(i,1)
+            }
+        }
+        window.fs.writeFile(this.likeListPath, JSON.stringify(data), (err) => { })
+    }
+    // 收藏歌曲
+    songLike(array) {
+        const datas = fs.readFileSync(this.likeListPath, 'utf-8', err => { })
+        let data = JSON.parse(datas)
+        if (typeof data === String) {
+            data = JSON.parse(data)
+        }
+        data.data.unshift(array);
+        window.fs.writeFile(this.likeListPath, JSON.stringify(data), (err) => { })
     }
     // 新增歌单
     addSongList(list) {
@@ -166,7 +225,7 @@ export class Music {
                 data.id = data.id + 1
                 if (this.array.songid != undefined) {
                     data.data.splice(data.id, 0, this.array)
-                }else{
+                } else {
 
                 }
                 window.fs.writeFile(this.listPath, JSON.stringify(data), (err) => { })
@@ -248,15 +307,6 @@ export class Music {
         this.title.innerHTML = this._title
         this.name.innerHTML = this._name
 
-        // this.data = array
-        // console.log(array)
-        // //是否添加歌单
-        // if (previousCode = false) {
-
-        // } else {
-        // }
-
-
         // 模拟播放
         const AudioTime = async () => {
             while (isNaN(this.audio.duration) || this.audio.duration === Infinity) {
@@ -276,8 +326,12 @@ export class Music {
         this.resume();
         // 添加播放列表
         this.songAdd()
+        //记时
         this.time();
+        // 歌单更新
         this.inception()
+        //是否收藏
+        this.isLike(this._songid)
     }
     getURL(i) {
         let data = {
