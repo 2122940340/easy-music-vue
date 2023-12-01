@@ -27,22 +27,27 @@ const routes = [
                 },
             },
             {
-                path: 'home',
+                path: 'home', //首页
                 component: () => import('../views/Index/Home/Home.vue'),
                 meta: {
                     keepAlive: true
                 },
             },
             {
-                path: 'songlist',
+                path: 'songlist',//歌单
                 component: () => import('../views/Song/SongList.vue'),
                 meta: {
                     keepAlive: false
                 },
             },
             {
-                path:'search',
-                component:() => import('../views/Search/Search.vue')
+                path: 'search', // 搜索
+                component: () => import('../views/Search/Search.vue')
+            },
+            {
+                path:'like', // 喜欢
+                component:()=> import('/src/views/Index/Like/Like.vue')
+
             }
         ]
     },

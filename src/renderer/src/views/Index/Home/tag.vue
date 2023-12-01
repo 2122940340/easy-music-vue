@@ -1,5 +1,5 @@
 <template>
-  <div class="nav">
+  <div @click="tag($event)" class="nav">
     <svg
       t="1700457083002"
       class="icon"
@@ -16,12 +16,12 @@
 </template>
 
 <script>
+import router from '../../../router';
 export default {
-  name: 'HelloWorld',
   props: {
     title: {
       type: String,
-      default: '暂无功能'
+      default: "暂无功能",
     },
     icon: {
       type: String,
@@ -30,10 +30,18 @@ export default {
 				fill="#333333" p-id="2156"></path>
 				<path
 				d="M376.959445 365.141075C362.42773 363.478683 333.143847 368.802773 311.511958 390.433276c-17.411438 17.412825-28.059619 42.591334-28.389601 67.439861-0.221837 7.094627 5.545927 12.976083 12.640555 13.084229l0.221837 0c6.986482 0 12.754246-5.654073 12.97747-12.754246C309.184055 439.902946 317.057886 421.380936 329.819064 408.625303c15.413518-15.419064 36.708492-18.743847 44.144194-17.860659 6.986482 0.779203 13.529289-4.213518 14.309879-11.315078C389.046794 372.354939 384.054073 365.921664 376.959445 365.141075z"
-				fill="#333333" p-id="2157"></path>`
+				fill="#333333" p-id="2157"></path>`,
+    },
+  },
+  methods:{
+    tag(e){
+      console.log(e.currentTarget )
+      router.push({
+        path:e.currentTarget.dataset.path
+      })
     }
   }
-}
+};
 </script>
 <style scoped>
 .nav {

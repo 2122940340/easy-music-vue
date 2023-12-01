@@ -10,8 +10,8 @@ export class Music {
     }
     // 下一首
     start() {
-        // this.listPath = './user/data/songlist.json'
         this.listPath = './user/data/playlist.json'
+        // this.listPath = './user/data/songlist.json'
         this.items = document.querySelector(".MusicStatusBar");
         this.duration = this.items.querySelector('.right p:nth-child(3)');
         this.currentTime = this.items.querySelector('.right p:nth-child(1)');
@@ -46,29 +46,27 @@ export class Music {
 
 
     }
-
     // 新增歌单
-    addSongList(list){
-        this.listPath= './user/data/songlist.json'
+    addSongList(list) {
+        this.listPath = './user/data/songlist.json'
         const datas = fs.readFileSync(this.listPath, 'utf-8', err => { })
         let data = JSON.parse(datas)
         if (typeof data === String) {
             data = JSON.parse(data)
         }
-        data.data = {...list}
+        data.data = [...list]
         window.fs.writeFile(this.listPath, JSON.stringify(data), (err) => { })
         this.list = data
     }
     // 初始化歌单
     inception() {
-        const path = './user/data/playlist.json'
         const datas = fs.readFileSync(this.listPath, 'utf-8', err => { })
         let data = JSON.parse(datas)
         if (typeof data === String) {
             data = JSON.parse(data)
         }
-        this.play(data.data[data.id])
-        this.pause()
+        // this.play(data.data[data.id])
+        // this.pause()
         this.list = data
     }
     // 删除歌单的歌
@@ -146,7 +144,6 @@ export class Music {
     }
     // 添加到播放列表
     songAdd() {
-        const path = './user/data/playlist.json'
         window.fs.readFile(this.listPath, 'utf-8', (err, data) => {
             if (err) {
             } else {
@@ -167,15 +164,15 @@ export class Music {
                     }
                 }
                 data.id = data.id + 1
-                data.data.splice(data.id, 0, this.array)
+                if (this.array.songid != undefined) {
+                    data.data.splice(data.id, 0, this.array)
+                }else{
+
+                }
                 window.fs.writeFile(this.listPath, JSON.stringify(data), (err) => { })
             }
-
         })
-        // console.log(datas)
     }
-
-
     // 歌词
     lyric() {
 
@@ -233,9 +230,12 @@ export class Music {
         }
     }
 
-    async play(array, coordinate = {}, previousCode = false) {
+    async play(array, isAnalysis = false) {
         console.log(array)
-        // console.log(audio)
+        if (isAnalysis) {
+            this.getURL(array)
+            return false
+        }
         this._url = array.url
         this._title = array.title
         this._pic = array.pic
@@ -277,6 +277,7 @@ export class Music {
         // 添加播放列表
         this.songAdd()
         this.time();
+        this.inception()
     }
     getURL(i) {
         let data = {
@@ -302,7 +303,7 @@ export class Music {
             .then((response) => response.json())
             .then((response) => {
                 console.log(response)
-                this.play(response.data[0], {});
+                this.play(response.data[0]);
             })
     }
 }

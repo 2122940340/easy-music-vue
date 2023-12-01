@@ -2,7 +2,6 @@
     <div ref="playList" class="playList">
         <ul class="tab">
             <li class="a">最近播放</li>
-            <li>歌单播放</li>
         </ul>
         <svg @click="remove()" t="1701340039245" class="remove" viewBox="0 0 1024 1024" version="1.1"
             xmlns="http://www.w3.org/2000/svg" p-id="4277" width="20" height="20">
@@ -69,15 +68,17 @@ export default {
                 if (this.removeCode != true) {
                     window.Music.play(i);
                     for (let i in this.$refs) {
-                        if (i != window.Music._songid || i != null || i != undefined) {
-                            this.$refs[i][0].classList.remove('a')
+                        if (i != window.Music._songid) {
+                            if (i != null || i != undefined) {
+                                this.$refs[i][0].classList.remove('a')
+                            }
                         } else {
                             this.$refs[i][0].classList.add('a')
                         }
                     }
                 }
             } else {
-                window.Music.getURL(i)
+                window.Music.play(i,true)
             }
         },
         remove() {
@@ -104,7 +105,8 @@ export default {
         elRemove(e, id) {
             e.currentTarget.parentNode.remove()
             window.Music.songListDelete(id)
-            this.list.splice(id, 1)
+            // this.list.splice(id, 1),
+            this.list = window.Music.list.data
         }
     }
 }
@@ -139,12 +141,12 @@ export default {
 }
 
 .playList .tab li {
-    flex: 1;
     display: flex;
     align-items: center;
     justify-content: center;
     color: #717171;
     position: relative;
+    padding-left: 25px;
 }
 
 .playList .tab li.a {
@@ -157,7 +159,7 @@ export default {
 .playList .tab li.a::before {
     content: '';
     bottom: -15px;
-    width: 80%;
+    width: 100%;
     height: 3px;
     background-image: linear-gradient(to left top, #42ffaa, #12d4bd);
     position: absolute;

@@ -4,7 +4,7 @@
             <p id="schedule"></p>
         </div>
         <div class="left">
-            <img id="icon" src="../assets/icon.png" alt="">
+            <img id="icon" src="/src/assets/icon.png" alt="">
             <div :style="styleColor">
                 <p id="title">
                     轻松音乐
@@ -94,22 +94,18 @@ export default {
     methods: {
         Code() {
             this.code = true
+            window.Music.inception();
             setTimeout(() => {
                 this.$refs.playList.$el.style.transform = ' translateX(0vw)';
-                // this.$nextTick(() => {
                 setTimeout(() => {
                     this.$refs.playList.$el.focus()
-
                 }, 500)
-                // })
             }, 100)
         },
         playListBlur() {
             this.$refs.playList.$el.style.transform = ' translateX(100vw)';
             setTimeout(() => {
                 this.code = false
-
-
             }, 500)
         },
         playLists() {
