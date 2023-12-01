@@ -4,6 +4,8 @@
 软件内所有内容均来源网络采集，请于下载后24小时内删除，
 
 软件开发初衷是为了学习和研究，至停止维护之前不收费！
+灵感来自：
+[NeteaseCloudMusicApi](https://github.com/Binaryify/NeteaseCloudMusicApi)
 
 ### 安装
 
