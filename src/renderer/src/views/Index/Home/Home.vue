@@ -51,7 +51,7 @@ export default {
   mounted() {
     console.log(window);
     // 推荐歌单
-    fetch(window.APIURL + "personalized?limit=6")
+    fetch(window.APIURL + "personalized?limit=8")
       .then((response) => response.json())
       .then((json) => {
         this.RecommendedPlayList = json.result;
@@ -67,6 +67,7 @@ export default {
     fetch(window.APIURL + "recommend/songs")
       .then((response) => response.json())
       .then((json) => {
+        console.log(json);
         this.HotSearchList = json.data.dailySongs;
         this.PlayCard[0] = this.HotSearchList[6].al.picUrl;
         this.PlayCard[1] = this.HotSearchList[7].al.picUrl;
@@ -90,9 +91,11 @@ export default {
 }
 
 .home .top {
-  width: 100%;
+  min-idth: 100%;
   display: flex;
   justify-content: space-between;
+  margin-left: -30px;
+  flex-wrap: wrap;
 }
 
 .home .center {

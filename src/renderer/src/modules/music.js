@@ -4,6 +4,7 @@ import router from '../router/index'
 export class Music {
     constructor(audio, $refs) {
         this.audio = audio
+        this.dataArray = {};
         // const fs = require('fs')
         // const fs = require('fs')
 
@@ -83,14 +84,15 @@ export class Music {
     // 取消收藏歌曲
     songLikeDelete(id) {
         const datas = fs.readFileSync(this.likeListPath, 'utf-8', err => { })
+        console.log(datas)
         let data = JSON.parse(datas)
         if (typeof data === String) {
             data = JSON.parse(data)
         }
-        for(let i in data.data){
+        for (let i in data.data) {
             let item = data.data[i]
-            if(item.songid == id){
-                data.data.splice(i,1)
+            if (item.songid == id) {
+                data.data.splice(i, 1)
             }
         }
         window.fs.writeFile(this.likeListPath, JSON.stringify(data), (err) => { })
@@ -302,7 +304,6 @@ export class Music {
         this.array = array
         this._songid = array.songid;
         this.pause();
-
         this.icon.src = this._pic
         this.title.innerHTML = this._title
         this.name.innerHTML = this._name
@@ -317,6 +318,7 @@ export class Music {
             }
         }
         // 写入链接
+        this.audio.crossOrigin = 'anonymous';
         this.audio.src = this._url;
         this.audio.title = array.title;
         this.audio.author = array.author;
@@ -329,9 +331,14 @@ export class Music {
         //记时
         this.time();
         // 歌单更新
-        this.inception()
+        // this.inception()
         //是否收藏
         this.isLike(this._songid)
+
+        //音频可视化
+       
+        // }, 1000)
+
     }
     getURL(i) {
         let data = {

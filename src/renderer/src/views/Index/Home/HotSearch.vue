@@ -14,25 +14,23 @@
 </template>
 
 <script>
-
 export default {
-  name: 'hotSearch',
+  name: "hotSearch",
   props: {
-    array: Array
+    array: Array,
   },
   data() {
     return {
-      list: []
-    }
+      list: [],
+    };
   },
   methods: {
     play(i) {
-      window.Music.getURL(i)
-    }
+      window.Music.getURL(i);
+    },
   },
-  mounted() {
-  }
-}
+  mounted() {},
+};
 </script>
 
 <style>
@@ -42,12 +40,12 @@ export default {
 }
 
 .HotSearch {
-  width: 270px;
+  width: 30%;
   position: relative;
   overflow: scroll;
 }
 
-.HotSearch>.title {
+.HotSearch > .title {
   font-weight: bold;
   font-size: 1.2em;
   position: sticky;
@@ -58,7 +56,7 @@ export default {
 .HotSearch ul {
   list-style: none;
   overflow: scroll;
-  width: 270px;
+  /* width: 270px; */
 }
 
 .HotSearch li {
@@ -81,22 +79,20 @@ export default {
 } */
 
 .HotSearch li:hover img {
-  /* transition: all 0.3s; */
-  width: 60px;
-  height: 60px;
+  width: 6vw;
+  aspect-ratio: 1/1;
 }
 
 .HotSearch img {
-  width: 50px;
-  height: 50px;
+  width: 5vw;
+  aspect-ratio: 1/1;
   border-radius: 5px;
   transition: all 0.3s;
-
 }
 
 .HotSearch div {
   width: 100%;
-  height: 50px;
+  height: calc(6vw - 15px);
   margin-left: 10px;
   display: flex;
   flex-direction: column;

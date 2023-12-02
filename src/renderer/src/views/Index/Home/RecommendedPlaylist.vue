@@ -111,18 +111,21 @@ export default {
   margin-top: 30px;
   justify-content: space-between;
   align-items: center;
+  margin-left: -40px;
 }
 
 .RecommendedPlaylist li {
+  width: calc(100% / 4 - 40px);
   display: flex;
   flex-direction: column;
   margin-bottom: 15px;
   position: relative;
+  margin-left: 40px;
 }
 
 .RecommendedPlaylist li img {
-  width: 133px;
-  height: 133px;
+  width: 100%;
+  aspect-ratio: 1/1;
   border-radius: 5px;
   transition: all 0.3s;
 }
@@ -130,7 +133,7 @@ export default {
 .RecommendedPlaylist li p {
   font-size: 1.1em;
   margin-top: 10px;
-  width: 133px;
+  width: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;

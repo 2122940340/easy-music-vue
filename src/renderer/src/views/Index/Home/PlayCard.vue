@@ -27,29 +27,31 @@
 
 <script>
 export default {
-  name: 'playCard',
+  name: "playCard",
   props: {
     title: {
       type: String,
-      default: '暂无标题'
+      default: "暂无标题",
     },
     icon: {
-      type: String
+      type: String,
     },
     backdrop: {
       type: String,
-      default: '#ee99b7'
-    }
-  }
-}
+      default: "#ee99b7",
+    },
+  },
+};
 </script>
 <style scoped>
 .playcard {
   background-image: linear-gradient(to top left, #85eebf, #00eaee);
   position: relative;
   overflow: hidden;
-  width: 250px;
-  height: 250px;
+  width: calc(100% / 3 - 30px);
+  aspect-ratio: 1/1;
+  border-radius: 5px;
+  margin-left: 30px;
 }
 .playcard .title {
   font-size: 1.8em;
@@ -61,7 +63,7 @@ export default {
   z-index: 2;
 }
 .playcard .back {
-  content: '';
+  content: "";
   width: 100px;
   height: 100px;
   background-color: #ee99b7;
