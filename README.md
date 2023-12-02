@@ -26,8 +26,16 @@
 ### 开发初衷
 方便自己听歌
 
-### 安装
+### 安装教程
+```bash
+git clone https://gitee.com/tiankongskya/easy-music-vue-edition.git (gitee)
+或者
+git  clone https://github.com/2122940340/easy-music-vue-edition.git (github)
+完成后
+cd easy-music-vue-edition
+```
 
+**安装依赖** 
 ```bash
 $ npm install
 ```
