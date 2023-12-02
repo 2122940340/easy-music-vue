@@ -53,11 +53,11 @@ $ npm run build:linux
 
 ### 图片介绍
 主页
-![输入图片说明](src/renderer/src/assets/b5.png)
+![输入图片说明](src/renderer/src/assets/b6.png)
 播放页
 ![输入图片说明](src/renderer/src/assets/b2.png)
 播放页(沉浸)
-![输入图片说明](src/renderer/src/assets/b6.png)
+![输入图片说明](src/renderer/src/assets/b5.png)
 歌单
 ![输入图片说明](src/renderer/src/assets/b3.png)
 搜索
