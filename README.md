@@ -27,7 +27,7 @@
 方便自己听歌
 
 ### 安装教程
-```bash
+```
 git clone https://gitee.com/tiankongskya/easy-music-vue-edition.git (gitee)
 或者
 git  clone https://github.com/2122940340/easy-music-vue-edition.git (github)
