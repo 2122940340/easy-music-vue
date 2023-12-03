@@ -30,6 +30,7 @@
     "qrcode": "^1.4.4",
     "safe-decode-uri-component": "^1.2.1",
     "tunnel": "^0.0.6",
+    "vue-lazyload": "^3.0.0",
     "vue-router": "^4.2.5",
     "xml2js": "^0.6.2",
     "yargs": "^17.1.1"

@@ -152,7 +152,7 @@ input {
 }
 
 .index>.right {
-  width: calc(100vw - 250px);
+  min-width: calc(100vw - 250px);
 }
 
 .index>.left>.nav {
@@ -167,7 +167,6 @@ input {
 }
 
 .index>.left {
-  width: 250px;
   min-width: 250px;
   height: 100%;
   background-color: #eee;

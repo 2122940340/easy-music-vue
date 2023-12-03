@@ -73,6 +73,7 @@ export class Music {
             if (data.data[i].songid == id) {
                 this.like.style.display = 'none'
                 this.likes.style.display = 'block'
+                console.console.log(('有'));
                 break
             } else {
                 this.like.style.display = 'block'

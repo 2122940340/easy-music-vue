@@ -3,7 +3,7 @@
     <p class="title">大家<br /><b style="font-size: 1.6em">都在搜</b></p>
     <ul>
       <li @click="play(i)" v-for="i in array" v-bind:key="i">
-        <img :src="i.al.picUrl" alt="" />
+        <img v-lazy="i.al.picUrl" alt="" />
         <div>
           <p class="title">{{ i.name }}</p>
           <p class="name">{{ i.ar[0].name }}</p>
@@ -93,7 +93,7 @@ export default {
 .HotSearch div {
   width: 100%;
   height: calc(6vw - 15px);
-  margin-left: 10px;
+  margin-left: 5%;
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -105,6 +105,7 @@ export default {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  font-size: 1.5cqw;
 }
 
 .HotSearch .name {
@@ -113,5 +114,6 @@ export default {
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;
+  font-size: 1.2cqw;
 }
 </style>

@@ -8,7 +8,7 @@
             <ul>
                 <li @click="play(i)" v-for="i in list" v-bind:key="i">
                     <span>
-                        <img :src=i.al.picUrl alt="">
+                        <img v-lazy=i.al.picUrl alt="">
                         <p>{{ i.name }}</p>
                     </span>
                     <span>

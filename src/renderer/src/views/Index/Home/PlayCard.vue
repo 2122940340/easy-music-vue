@@ -1,7 +1,7 @@
 <template>
   <div class="playcard">
     <p class="title">{{ title }}</p>
-    <img :src="icon" alt="" class="icon" />
+    <img v-lazy="icon" alt="" class="icon" />
     <div v-bind:style="{ backgroundColor: backdrop }" class="back"></div>
     <svg
       class="play"

@@ -3,7 +3,7 @@
     <p class="title">{{ title }}</p>
     <ul>
       <li @click="songList(i)" v-for="i in array" v-bind:key="i">
-        <img v-on:mouseleave="none" v-on:mouseover="ant" :src="i.picUrl" alt="" />
+        <img v-on:mouseleave="none" v-on:mouseover="ant" v-lazy="i.picUrl" alt="" />
         <p class="titles">
           {{ i.name }}
         </p>
@@ -37,7 +37,6 @@ export default {
 
   methods: {
     songList(i) {
-      console.log(i)
       router.push({
         path:'/songlist',
         state:{
@@ -131,7 +130,7 @@ export default {
 }
 
 .RecommendedPlaylist li p {
-  font-size: 1.1em;
+  font-size: 1.5cqw;
   margin-top: 10px;
   width: 100%;
   white-space: nowrap;

@@ -57,7 +57,7 @@ export default {
         this.RecommendedPlayList = json.result;
       });
     // 推荐歌曲
-    fetch(window.APIURL + "personalized/newsong?limit=30")
+    fetch(window.APIURL + "personalized/newsong?limit=32")
       .then((response) => response.json())
       .then((json) => {
         console.log(json);

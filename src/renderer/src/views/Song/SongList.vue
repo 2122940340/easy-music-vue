@@ -1,7 +1,7 @@
 <template>
   <div class="SongList">
     <div class="top">
-      <img class="icon" :src="icon" alt="" />
+      <img class="icon" v-lazy="icon" alt="" />
       <div>
         <p class="title">{{ title }}</p>
         <p class="content">介绍:{{ content }}</p>

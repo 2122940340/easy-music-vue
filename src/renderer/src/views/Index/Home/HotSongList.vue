@@ -3,7 +3,7 @@
     <p class="title">{{ title }}</p>
     <ul>
       <li @click="play(i)" v-for="i in array" v-bind:key="i">
-        <img v-on:mouseleave="none" v-on:mouseover="ant" :src="i.picUrl" alt="" />
+        <img  v-lazy="i.picUrl" v-on:mouseleave="none" v-on:mouseover="ant"  alt="" />
         <p class="titles">
           {{ i.name }}
         </p>
@@ -126,6 +126,7 @@ export default {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  font-size: 1.5cqw;
 }
 .HotSongList li .name {
   font-size: 0.9em;
@@ -135,5 +136,6 @@ export default {
   overflow: hidden;
   text-overflow: ellipsis;
   color: #717171;
+  font-size: 1.3cqw;
 }
 </style>
