@@ -1,3 +1,11 @@
+/*
+ * @Author: '天空' '2122940340@qq.com'
+ * @Date: 2023-12-03 18:59:36
+ * @LastEditors: '天空' '2122940340@qq.com'
+ * @LastEditTime: 2023-12-04 16:43:55
+ * @FilePath: \easy-music-vue-edition\src\preload\index.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 import { contextBridge, ipcRenderer, ipcMain, } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 // import { Music } from '../renderer/src/modules/music.js'
@@ -29,7 +37,25 @@ const fileList = [
   },
   {
     path: './user/data',
+    name: 'songlist.json',
+    content: JSON.stringify({
+      code: 1,
+      data: [],
+      id: -1,
+    })
+  },
+  {
+    path: './user/data',
     name: 'likelist.json',
+    content: JSON.stringify({
+      code: 1,
+      data: [],
+      id: -1,
+    })
+  },
+  {
+    path: './user/data',
+    name: 'likesonglist.json',
     content: JSON.stringify({
       code: 1,
       data: [],

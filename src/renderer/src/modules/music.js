@@ -1,19 +1,19 @@
 import router from '../router/index'
+import { MusicTool } from './musicTool';
 
 
-export class Music {
+export class Music extends MusicTool{
     constructor(audio, $refs) {
+        super() 
         this.audio = audio
         this.dataArray = {};
-        // const fs = require('fs')
-        // const fs = require('fs')
-
     }
     // 下一首
     start() {
         this.listPath = './user/data/playlist.json'
+        this.platListPath = './user/data/playlist.json'
         this.likeListPath = './user/data/likelist.json'
-        // this.listPath = './user/data/songlist.json'
+        this.likeSongListPath = './user/data/likesonglist.json'
         this.items = document.querySelector(".MusicStatusBar");
         this.duration = this.items.querySelector('.right p:nth-child(3)');
         this.currentTime = this.items.querySelector('.right p:nth-child(1)');
@@ -24,8 +24,10 @@ export class Music {
         this.play_ = this.items.querySelector('#play');
         this.pause_ = this.items.querySelector('#pause');
         this.playList = document.querySelector('.playList');
+        this.playListIcon = this.items.querySelector('.playListIcon')
         this.like = this.items.querySelector('.likes')
         this.likes = this.items.querySelector('.islike')
+        this.downloadIcon = this.items.querySelector('.download')
         this.inception()
         // 绑定事件
         this.click()
@@ -62,179 +64,7 @@ export class Music {
             this.likes.style.display = 'none'
         })
     }
-    // 是否收藏
-    isLike(id) {
-        const datas = fs.readFileSync(this.likeListPath, 'utf-8', err => { })
-        let data = JSON.parse(datas)
-        if (typeof data === String) {
-            data = JSON.parse(data)
-        }
-        for (let i in data.data) {
-            if (data.data[i].songid == id) {
-                this.like.style.display = 'none'
-                this.likes.style.display = 'block'
-                console.console.log(('有'));
-                break
-            } else {
-                this.like.style.display = 'block'
-                this.likes.style.display = 'none'
-                this.songLikeDelete(this._songid)
-            }
-        }
-    }
-    // 取消收藏歌曲
-    songLikeDelete(id) {
-        const datas = fs.readFileSync(this.likeListPath, 'utf-8', err => { })
-        console.log(datas)
-        let data = JSON.parse(datas)
-        if (typeof data === String) {
-            data = JSON.parse(data)
-        }
-        for (let i in data.data) {
-            let item = data.data[i]
-            if (item.songid == id) {
-                data.data.splice(i, 1)
-            }
-        }
-        window.fs.writeFile(this.likeListPath, JSON.stringify(data), (err) => { })
-    }
-    // 收藏歌曲
-    songLike(array) {
-        const datas = fs.readFileSync(this.likeListPath, 'utf-8', err => { })
-        let data = JSON.parse(datas)
-        if (typeof data === String) {
-            data = JSON.parse(data)
-        }
-        data.data.unshift(array);
-        window.fs.writeFile(this.likeListPath, JSON.stringify(data), (err) => { })
-    }
-    // 新增歌单
-    addSongList(list) {
-        this.listPath = './user/data/songlist.json'
-        const datas = fs.readFileSync(this.listPath, 'utf-8', err => { })
-        let data = JSON.parse(datas)
-        if (typeof data === String) {
-            data = JSON.parse(data)
-        }
-        data.data = [...list]
-        window.fs.writeFile(this.listPath, JSON.stringify(data), (err) => { })
-        this.list = data
-    }
-    // 初始化歌单
-    inception() {
-        const datas = fs.readFileSync(this.listPath, 'utf-8', err => { })
-        let data = JSON.parse(datas)
-        if (typeof data === String) {
-            data = JSON.parse(data)
-        }
-        // this.play(data.data[data.id])
-        // this.pause()
-        this.list = data
-    }
-    // 删除歌单的歌
-    songListDelete(id) {
-        const path = './user/data/playlist.json'
-        const datas = fs.readFileSync(this.listPath, 'utf-8', err => { })
-        let data = JSON.parse(datas)
-        if (typeof data === String) {
-            data = JSON.parse(data)
-        }
-        data.data.splice(id, 1)
-        window.fs.writeFile(this.listPath, JSON.stringify(data), (err) => { })
-    }
-    // 下一首
-    nextSong() {
-        const path = './user/data/playlist.json'
-        let datas = window.fs.readFileSync(this.listPath, 'utf-8', err => { })
-        let data = JSON.parse(datas)
-        if (typeof data === String) {
-            data = JSON.parse(data)
-        }
-        data.id += 1
-        if (data.id >= data.data.length) {
-            data.id = 0
-        } else if (data.id < 0) {
-            if (data.data.length == 0) {
-                data.id = data.data.length
-            } else {
-                data.id = data.data.length - 1
-            }
-        }
-        window.fs.writeFile(this.listPath, JSON.stringify(data), (err) => { })
-        if (data.data[data.id] === undefined) {
-
-        } else {
-            this.play(data.data[data.id])
-        }
-    }
-    // 上一首
-    previousSong() {
-        const path = './user/data/playlist.json'
-        let datas = window.fs.readFileSync(this.listPath, 'utf-8', err => { })
-        let data = JSON.parse(datas)
-        if (typeof data === String) {
-            data = JSON.parse(data)
-        }
-        data.id -= 1
-        if (data.id >= data.data.length) {
-            data.id = 0
-        } else if (data.id < 0) {
-            if (data.data.length == 0) {
-                data.id = data.data.length
-            } else {
-                data.id = data.data.length - 1
-            }
-        }
-        window.fs.writeFile(this.listPath, JSON.stringify(data), (err) => { })
-        if (data.data[data.id] === undefined) {
-
-        } else {
-            this.play(data.data[data.id])
-        }
-
-    }
-    resume() {
-        this.audio.play();
-        console.log(1111)
-        this.play_.style.display = 'none';
-        this.pause_.style.display = 'flex';
-    }
-    pause() {
-        this.audio.pause();
-        this.play_.style.display = 'flex';
-        this.pause_.style.display = 'none';
-    }
-    // 添加到播放列表
-    songAdd() {
-        window.fs.readFile(this.listPath, 'utf-8', (err, data) => {
-            if (err) {
-            } else {
-                data = JSON.parse(data)
-                if (typeof data === String) {
-                    data = JSON.parse(data)
-                }
-                for (let i = 0; i <= data.data.length; i++) {
-                    if (data.data[i] != undefined) {
-                        if (data.data[i].songid == this.array.songid) {
-                            console.log(data.data[i].songid);
-                            data.id = i;
-                            window.fs.writeFile(this.listPath, JSON.stringify(data), (err) => { })
-                            return void 0;
-                            // break;
-                        } else {
-                        }
-                    }
-                }
-                data.id = data.id + 1
-                if (this.array.songid != undefined) {
-                    data.data.splice(data.id, 0, this.array)
-                } else {
-
-                }
-                window.fs.writeFile(this.listPath, JSON.stringify(data), (err) => { })
-            }
-        })
-    }
+    
     // 歌词
     lyric() {
 
@@ -259,24 +89,28 @@ export class Music {
             //总
             let duration = audio_size(this.audio.duration);
             let currentTime = audio_size(this.audio.currentTime);
+
+            if (isNaN(this.audio.duration)) {
+                currentTime = '00:00'
+                duration = '00:00'
+            }
+
             this.currentTime.innerHTML = currentTime;
             this.duration.innerHTML = duration;
+
             if (this.audio.currentTime >= this.audio.duration) {
                 this.nextSong()
             }
+
+
             const value = (this.audio.currentTime / this.audio.duration * 100) * (this.schedule.parentNode.clientWidth / 100)
             this.schedule.style.width = value + 'px'
-
 
             this.lrcList.forEach(item => {
                 if (item.time == currentTime) {
                     this.lrc = item
                 }
             })
-            // console.log(this.lrcList.time[currentTime] )
-            // console.log(this.lrcList.time)
-            // this.lrc = this.lrcList[currentTime] 
-            // this.schedule.value = this.audio.currentTime / this.audio.duration * 100;
         }, 1000)
         // 时间转换
         function audio_size(num) {
@@ -293,8 +127,7 @@ export class Music {
     }
 
     async play(array, isAnalysis = false) {
-        console.log(array)
-        if (isAnalysis) {
+        if (array.songid == null || array.songid == undefined) {
             this.getURL(array)
             return false
         }
@@ -318,11 +151,14 @@ export class Music {
                 }
             }
         }
+
+
         // 写入链接
         this.audio.crossOrigin = 'anonymous';
-        this.audio.src = this._url;
         this.audio.title = array.title;
         this.audio.author = array.author;
+
+        this.audio.src = this._url;
         this.audio.load();
         this.audio.play(); //开始播放
 
@@ -336,9 +172,14 @@ export class Music {
         //是否收藏
         this.isLike(this._songid)
 
+        setTimeout(() => {
+            console.log(this.audio.duration)
+            if (isNaN(this.audio.duration)) {
+                this.nextSong()
+            }
+        }, 3000)
+
         //音频可视化
-       
-        // }, 1000)
 
     }
     getURL(i) {
@@ -364,7 +205,6 @@ export class Music {
         })
             .then((response) => response.json())
             .then((response) => {
-                console.log(response)
                 this.play(response.data[0]);
             })
     }

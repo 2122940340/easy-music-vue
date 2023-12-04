@@ -3,8 +3,6 @@ import router from '../renderer/src/router/index'
 
 export class Music {
     constructor(audio) {
-        // const fs = require('fs')
-        // const fs = require('fs')
         this.audio = audio;
         this.items = document.querySelector(".MusicStatusBar");
         this.duration = this.items.querySelector('.right p:nth-child(3)');
@@ -27,7 +25,6 @@ export class Music {
         })
 
         this.icon.addEventListener('click', () => {
-            // console.log(111)
             router.push({
                 name: 'play',
             })
@@ -175,16 +172,6 @@ export class Music {
         this.icon.src = this._pic
         this.title.innerHTML = this._title
         this.name.innerHTML = this._name
-
-        // this.data = array
-        // console.log(array)
-        // //是否添加歌单
-        // if (previousCode = false) {
-
-        // } else {
-        // }
-
-
         // 模拟播放
         const AudioTime = async () => {
             while (isNaN(this.audio.duration) || this.audio.duration === Infinity) {

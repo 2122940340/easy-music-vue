@@ -1,14 +1,30 @@
 <template>
   <div @scroll="pageUp" class="searchOutcome">
-    <div ref="tab" class="tag">
-      <p data-path="/search/music" @click="Tag($event)" class="a">歌曲</p>
-      <p data-path="/search/song" @click="Tag($event)">歌单</p>
+    <div class="tab">
+      <p>歌曲</p>
+      <p>歌手</p>
+      <p>专辑</p>
+      <ul>
+        <li @click="play(i)" v-for="i in list" v-bind:key="i">
+          <span>
+            <img v-lazy="i.al.picUrl" alt="" />
+            <p>{{ i.name }}</p>
+          </span>
+          <span>
+            <p v-for="x in i.ar" v-bind:key="x">
+              {{ x.name }}
+            </p>
+          </span>
+          <span>
+            <p>{{ i.al.name }}</p>
+          </span>
+        </li>
+      </ul>
     </div>
-    <router-view></router-view>
+    <img class="load" src="/src/assets/lo.gif" alt="" />
   </div>
 </template>
 <script>
-import router from '../../router'
 export default {
   data() {
     return {
@@ -20,20 +36,11 @@ export default {
   },
   watch: {
     $route(to, from) {
+      this.page = 0
       this.pageNext(true)
     }
   },
   methods: {
-    Tag(event) {
-      this.$refs.tab.querySelector('.a').classList.remove('a')
-      event.currentTarget.classList.add('a')
-      router.push({
-        path: event.currentTarget.dataset.path,
-        state: {
-          value: this.searchValue
-        }
-      })
-    },
     play(i) {
       window.Music.getURL(i)
     },
@@ -92,10 +99,8 @@ export default {
 }
 
 .searchOutcome > .tab > p {
-  flex: 1;
+  width: calc(100% / 3);
   color: #717171;
-  margin-left: 10px;
-  margin-top: 20px;
 }
 
 .searchOutcome > .tab > ul {
@@ -140,33 +145,5 @@ export default {
   width: 150px;
   height: 150px;
   margin: auto;
-}
-
-.searchOutcome .tag {
-  width: 100%;
-  display: flex;
-  margin-top: 20px;
-  margin-left: 10px;
-}
-.searchOutcome .tag a {
-  text-decoration: none;
-}
-.searchOutcome .tag p {
-  font-size: 1.2em;
-  color: #000;
-  position: relative;
-  margin-right: 20px;
-}
-.searchOutcome .tag p.a {
-  color: #12d4bd;
-}
-.searchOutcome .tag p.a::after {
-  content: '';
-  position: absolute;
-  bottom: -10px;
-  width: 80%;
-  height: 3px;
-  left: 5px;
-  background-color: #12d4bd;
 }
 </style>

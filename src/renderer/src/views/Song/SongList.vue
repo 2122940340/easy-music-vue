@@ -25,7 +25,7 @@
             </svg>
             <p>全部播放</p>
           </span>
-          <span>
+          <span @click="likeSongLike()">
             <svg
               t="1701134592879"
               class="icon"
@@ -72,45 +72,51 @@
     </div>
   </div>
 </template>
+
 <script>
-import router from "../../router/index";
-import { useRoute } from "vue-router";
+import router from '../../router/index'
+import { useRoute } from 'vue-router'
 
 export default {
   setup() {},
   data() {
     return {
-      title: "正在加载中",
-      content: "轻松音乐，听我想听",
-      icon: "",
+      title: '正在加载中',
+      content: '轻松音乐，听我想听',
+      icon: '',
       list: {},
-      id: false,
-    };
+      id: false
+    }
   },
   activated() {},
   methods: {
     play(i) {
-      window.Music.getURL(i);
+      window.Music.getURL(i)
     },
     addSongList() {
-      window.Music.addSongList(this.list);
+      window.Music.addSongList(this.list)
+      window.Music.play(this.list[0])
     },
-  },
-  mounted() {
-    const id = history.state.id;
-    if (id != undefined || id != "") {
-      fetch(APIURL + "playlist/detail?id=" + id)
-        .then((response) => response.json())
-        .then((json) => {
-          console.log(json);
-          this.list = json.playlist.tracks;
-          this.title = json.playlist.name;
-          this.icon = json.playlist.coverImgUrl;
-          this.content = json.playlist.description;
-        });
+    likeSongLike() {
+      window.Music.likeSongLike(this.data)
+      console.log(this.data)
     }
   },
-};
+  mounted() {
+    const id = history.state.id
+    if (id != undefined || id != '') {
+      fetch(APIURL + 'playlist/detail?id=' + id)
+        .then((response) => response.json())
+        .then((json) => {
+          this.data = json.playlist
+          this.list = json.playlist.tracks
+          this.title = json.playlist.name
+          this.icon = json.playlist.coverImgUrl
+          this.content = json.playlist.description
+        })
+    }
+  }
+}
 </script>
 <style>
 .SongList {

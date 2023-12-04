@@ -21,7 +21,7 @@
     <div ref="mask" class="mask"></div>
     <canvas ref="canvas" class="can"></canvas>
     <div class="left">
-      <img id="icon" :src="icon" alt="" />
+      <img ref="icon" id="icon" :src="icon" alt="" />
     </div>
     <div class="right">
       <p id="title">{{ title }}</p>
@@ -74,15 +74,6 @@ export default {
     }
   },
   methods: {
-    top() {
-      // if (this.tops) {
-      //   this.tops =35
-      //   console.log(this.tops)
-      // } else {
-      //   this.tops = Number(Math.floor(Math.random() * 400))
-      // }
-      // return this.tops + 'px'
-    },
     immerse() {
       this.$refs.mask.classList.add('masks')
       this.$refs.canvas.style.display = 'block'
@@ -92,12 +83,6 @@ export default {
       this.$refs.canvas.style.display = 'none'
     },
     start(list) {
-      fetch(window.APIURL + 'comment/hot?id=' + Music._songid + '&type=0&limit=20')
-        .then((response) => response.json())
-        .then((json) => {
-          this.hotList = json.hotComments
-        })
-
       const cvs = document.querySelector('canvas')
       this.list = window.Music.lrcList
       if (window.Music.lrcList != undefined || window.Music.lrcList != '') {
@@ -105,46 +90,6 @@ export default {
         this.icon = window.Music._pic
         this.name = window.Music._name
         this.title = window.Music._title
-        // console.log(Music.audio.dataArray);
-
-        const cvs = document.querySelector('canvas')
-        const ctx = cvs.getContext('2d')
-        // 初始化 canvas 尺寸
-        function initCvs() {
-          cvs.width = (window.innerWidth / 2) * devicePixelRatio
-          cvs.height = (window.innerHeight / 2) * devicePixelRatio
-        }
-        initCvs()
-
-        const audioCtx = new AudioContext()
-        const source = audioCtx.createMediaElementSource(Music.audio) // 创建音频源节点
-        let analyser = audioCtx.createAnalyser() // 创建分析器
-        analyser.fftSize = 512 // 设置分析器的 fft 大小
-        Music.audio.dataArray = new Uint8Array(analyser.frequencyBinCount)
-        source.connect(analyser) // 连接分析器
-        analyser.connect(audioCtx.destination) // 连接音频上下文和分析器
-        const draw = () => {
-          requestAnimationFrame(draw)
-          const { width, height } = cvs
-          ctx.clearRect(0, 0, width, height)
-          analyser.getByteFrequencyData(Music.audio.dataArray)
-
-          const len = Music.audio.dataArray.length / 2
-          // 每个柱子的宽度
-          const barWidth = width / len / 1
-          for (let i = 0; i < len; i++) {
-            const data = Music.audio.dataArray[i] // <256
-            const barHeight = (data / 250) * height
-            // 二个 x 点画出对称图形
-            const x1 = i * barWidth + width / 2
-            const x2 = width / 2 - i * barWidth
-            const y = height - barHeight
-            ctx.fillStyle = '#00ffd9'
-            ctx.fillRect(x1, y, barWidth - 0, barHeight)
-            ctx.fillRect(x2, y, barWidth - 0, barHeight)
-          }
-        }
-        draw()
       }
     },
     time(lrc) {
@@ -166,9 +111,17 @@ export default {
           let chang = ul.scrollHeight / list.length
           //无视性能，拥抱结果  by tiank 11.28
           this.list = window.Music.lrcList
-          this.time()
           this.icon = window.Music._pic
           this.name = window.Music._name
+          if (this.$refs.icon.src != window.Music._pic) {
+            fetch(window.APIURL + 'comment/hot?id=' + Music._songid + '&type=0&limit=20')
+              .then((response) => response.json())
+              .then((json) => {
+                this.hotList = json.hotComments
+                console.log(json)
+              })
+          }
+          this.time()
         }
 
         this.title = window.Music._title
@@ -176,7 +129,45 @@ export default {
     }
   },
   mounted() {
-    console.log(window)
+    // console.log(window)
+    const cvs = document.querySelector('canvas')
+    const ctx = cvs.getContext('2d')
+    // 初始化 canvas 尺寸
+    function initCvs() {
+      cvs.width = (window.innerWidth / 2) * devicePixelRatio
+      cvs.height = (window.innerHeight / 2) * devicePixelRatio
+    }
+    initCvs()
+
+    const audioCtx = new AudioContext()
+    const source = audioCtx.createMediaElementSource(Music.audio) // 创建音频源节点
+    let analyser = audioCtx.createAnalyser() // 创建分析器
+    analyser.fftSize = 512 // 设置分析器的 fft 大小
+    Music.audio.dataArray = new Uint8Array(analyser.frequencyBinCount)
+    source.connect(analyser) // 连接分析器
+    analyser.connect(audioCtx.destination) // 连接音频上下文和分析器
+    const draw = () => {
+      requestAnimationFrame(draw)
+      const { width, height } = cvs
+      ctx.clearRect(0, 0, width, height)
+      analyser.getByteFrequencyData(Music.audio.dataArray)
+
+      const len = Music.audio.dataArray.length / 2
+      // 每个柱子的宽度
+      const barWidth = width / len / 1
+      for (let i = 0; i < len; i++) {
+        const data = Music.audio.dataArray[i] // <256
+        const barHeight = (data / 250) * height
+        // 二个 x 点画出对称图形
+        const x1 = i * barWidth + width / 2
+        const x2 = width / 2 - i * barWidth
+        const y = height - barHeight
+        ctx.fillStyle = '#00ffd9'
+        ctx.fillRect(x1, y, barWidth - 0, barHeight)
+        ctx.fillRect(x2, y, barWidth - 0, barHeight)
+      }
+    }
+    draw()
   }
 }
 </script>

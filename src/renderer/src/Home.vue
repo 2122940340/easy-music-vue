@@ -98,15 +98,17 @@
           <div v-if="searchCode" ref="searchBox" class="searchBox">
             <ul class="historyList">
               <p class="title">联想搜索</p>
-              <li @mousedown="searchPush" v-for="i in historyList" v-bind:key="i">
+              <li
+                @mousedown="searchPush(i.name +' '+ i.artists[0].name)"
+                v-for="i in historyList"
+                v-bind:key="i"
+              >
                 <p>{{ i.name }}</p>
                 <p>{{ i.artists[0].name }}</p>
               </li>
             </ul>
             <ul class="historyList">
               <p class="title">搜索历史</p>
-              <li>空</li>
-              <li>空</li>
             </ul>
           </div>
         </div>
@@ -229,18 +231,12 @@ export default {
     }
   },
   methods: {
-    searchPush() {
-      // router.push({
-      // 	path: '/search',
-      // 	state: {
-      // 		value: this.searchValue
-      // 	}
-      // })
-      this.search()
+    searchPush(value) {
+      this.searchValue = value
+      this.search(value)
     },
     // 搜索推荐
     searchRecommended() {
-      // console.log(this.searchValue)
       fetch(window.APIURL + 'search/suggest?keywords=' + this.searchValue)
         .then((response) => response.json())
         .then((response) => {
@@ -248,7 +244,7 @@ export default {
         })
     },
     // 开始搜索
-    search() {
+    search(value = this.searchValue) {
       if (this.searchValue != '' || this.searchValue != null) {
         this.$refs.searchBox.blur()
         this.$nextTick(function () {
@@ -257,25 +253,20 @@ export default {
         router.push({
           path: '/search',
           state: {
-            value: this.searchValue
+            value: value
           },
           query: {
             id: Math.ceil(Math.random() * 100)
           }
         })
-        // this.$router.go(0)
       }
     },
     //搜索隐藏
     recommendedListNone() {
-      // setTimeout(() => {
-      // this.$refs.searchBox.style.display = 'none'
       this.searchCode = false
-      // }, 1000)
     },
     //搜索显示
     recommendedList() {
-      // this.$refs.searchBox.style.display = 'flex'
       this.searchCode = true
     },
     nextSong() {
@@ -308,15 +299,11 @@ export default {
       })
         .then((response) => response.json())
         .then((response) => {
-          console.log(response)
           Music.play(response.data[0], {})
         })
     }
   },
-  mounted() {
-    console.log(window)
-    console.log(this)
-  }
+  mounted() {}
 }
 </script>
 <style>

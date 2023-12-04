@@ -1,18 +1,6 @@
 const routes = [
-    // {
-    //     path: '/',
-    //     name: 'index',
-    //     title: '主页',
-    //     component: () => import('../Home.vue'),
-    //     children:[
-    //         {
-    //             path:'/'
-    //         }
-    //     ]
-    // },
     {
         path: '/',
-        name: 'home',
         title: '主页',
         component: () => import('../Home.vue'),
         meta: {
@@ -42,12 +30,40 @@ const routes = [
             },
             {
                 path: 'search', // 搜索
-                component: () => import('../views/Search/Search.vue')
+                component: () => import('../views/Search/Search.vue'),
+                children:[
+                    {
+                        path:'',
+                        component:()=> import('/src/views/Search/SearchMusic.vue')
+                    },
+                    {
+                        path:'music',
+                        component:()=> import('/src/views/Search/SearchMusic.vue')
+                    },
+                    {
+                        path:'song',
+                        component:()=> import('/src/views/Search/Songlist.vue')
+                    }
+                ]
+
             },
             {
                 path:'like', // 喜欢
-                component:()=> import('/src/views/Index/Like/Like.vue')
-
+                component:()=> import('/src/views/Index/Like/Like.vue'),
+                children:[
+                    {
+                        path:'',
+                        component:()=> import('/src/views/Index/Like/LikeMusic.vue')
+                    },
+                    {
+                        path:'music',
+                        component:()=> import('/src/views/Index/Like/LikeMusic.vue')
+                    },
+                    {
+                        path:'song',
+                        component:()=> import('/src/views/Index/Like/LikeSong.vue')
+                    }
+                ]
             }
         ]
     },
