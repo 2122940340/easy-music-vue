@@ -1,7 +1,17 @@
+/*
+ * @Author: '天空' '2122940340@qq.com'
+ * @Date: 2023-12-03 18:59:36
+ * @LastEditors: '天空' '2122940340@qq.com'
+ * @LastEditTime: 2023-12-05 20:08:28
+ * @FilePath: \easy-music-vue-edition\src\main\index.js
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+ */
 "use strict";
-import { contextBridge, ipcRenderer,ipcMain,app, shell, BrowserWindow } from 'electron'
+import { contextBridge, Notification, ipcRenderer, ipcMain, app, shell, BrowserWindow, nativeImage } from 'electron'
 import { join } from 'path'
+const path = require('node:path')
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
+import { array } from 'yargs';
 
 require('../../api/app.js')
 
@@ -31,6 +41,32 @@ function createWindow() {
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
   })
+  // 监听渲染进程发出的download事件
+  ipcMain.on('download', async (evt, args) => {
+    var code = false
+    console.log('cishu')
+    mainWindow.webContents.downloadURL(args.url) // 触发 will-download 事件
+    mainWindow.webContents.session.on('will-download', (event, item, webContents) => {
+      const filePath = path.join(process.cwd(), 'user', 'download', args.path, args.array.title + '-' + args.array.author + '.mp3');
+      item.setSavePath(filePath);
+      item.on('done', (evt, state) => {
+        if (code == true) {
+
+        } else {
+          code = true
+          mainWindow.webContents.send('Notification', {
+            icon: args.array.pic,
+            body: `音乐 ${args.array.title} - ${args.array.author} 下载成功`,
+            image: args.array.pic
+          })
+          console.log(code)
+        }
+
+
+      })
+    })
+  });
+
 
   mainWindow.webContents.setWindowOpenHandler((details) => {
     shell.openExternal(details.url)

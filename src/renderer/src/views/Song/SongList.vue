@@ -74,11 +74,8 @@
 </template>
 
 <script>
-import router from '../../router/index'
-import { useRoute } from 'vue-router'
 
 export default {
-  setup() {},
   data() {
     return {
       title: '正在加载中',

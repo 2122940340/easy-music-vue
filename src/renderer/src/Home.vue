@@ -99,7 +99,7 @@
             <ul class="historyList">
               <p class="title">联想搜索</p>
               <li
-                @mousedown="searchPush(i.name +' '+ i.artists[0].name)"
+                @mousedown="searchPush(i.name + ' ' + i.artists[0].name)"
                 v-for="i in historyList"
                 v-bind:key="i"
               >
@@ -303,7 +303,9 @@ export default {
         })
     }
   },
-  mounted() {}
+  mounted() {
+   
+  }
 }
 </script>
 <style>

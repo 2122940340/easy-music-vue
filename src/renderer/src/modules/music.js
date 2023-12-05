@@ -1,14 +1,13 @@
+
 import router from '../router/index'
 import { MusicTool } from './musicTool';
-
-
-export class Music extends MusicTool{
+export class Music extends MusicTool {
     constructor(audio, $refs) {
-        super() 
+        super()
         this.audio = audio
         this.dataArray = {};
     }
-    // 下一首
+    // 初始化
     start() {
         this.listPath = './user/data/playlist.json'
         this.platListPath = './user/data/playlist.json'
@@ -32,9 +31,21 @@ export class Music extends MusicTool{
         // 绑定事件
         this.click()
     }
-
+    // 下载
+    download() {
+        window.electron.ipcRenderer.send('download', {
+            url: this._url,
+            path: 'music',
+            array: this.array
+        });
+       
+    }
     // 按钮事件
     click() {
+        //下载按钮
+        this.downloadIcon.addEventListener('click', () => {
+            this.download()
+        })
         // 播放
         this.play_.addEventListener('click', () => {
             this.resume()
@@ -63,8 +74,11 @@ export class Music extends MusicTool{
             this.like.style.display = 'block'
             this.likes.style.display = 'none'
         })
+        // 监听下载回调
+        window.electron.ipcRenderer.on('Notification', (event, data) => {
+            const n = new Notification('下载完成', data)
+        })
     }
-    
     // 歌词
     lyric() {
 
@@ -125,7 +139,6 @@ export class Music extends MusicTool{
             return num1 + ":" + num2;
         }
     }
-
     async play(array, isAnalysis = false) {
         if (array.songid == null || array.songid == undefined) {
             this.getURL(array)

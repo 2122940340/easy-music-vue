@@ -28,6 +28,7 @@
     "pac-proxy-agent": "^7.0.0",
     "pnpm": "^8.10.5",
     "qrcode": "^1.4.4",
+    "request": "^2.88.2",
     "safe-decode-uri-component": "^1.2.1",
     "tunnel": "^0.0.6",
     "vue-lazyload": "^3.0.0",

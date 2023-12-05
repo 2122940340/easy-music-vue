@@ -50,6 +50,11 @@ export default {
   },
   mounted() {
     console.log(window);
+    fetch(window.APIURL + 'register/anonimous')
+    .then(data => data.json())
+    .then(json =>{
+      console.log(json)
+    })
     // 推荐歌单
     fetch(window.APIURL + "personalized?limit=8")
       .then((response) => response.json())
