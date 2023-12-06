@@ -1,3 +1,11 @@
+<!--
+ * @Author: '天空' '2122940340@qq.com'
+ * @Date: 2023-12-04 20:40:45
+ * @LastEditors: '天空' '2122940340@qq.com'
+ * @LastEditTime: 2023-12-06 21:02:22
+ * @FilePath: \undefinedf:\electron\easy-music-vue-edition\README.md
+ * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
+-->
 # 轻松音乐 v1.1.2
 
 基于electron-vite+ vue 开发桌面端免费音乐软件替代方案
@@ -15,6 +23,7 @@
 | 💖歌单        | 12月01日 | 已完成🟢 |
 | 🎵沉浸弹幕评论    | 12月04日 | 已完成🟢 |
 | 🎶沉浸式播放     | 12月04日 | 已完成🟢 |
+| 🎶下载     | 12月05日 | 已完成🟢 |
 | 🌏音质选择      | 12月15日 | 进行中🟡 |
 | 🔴评论（查看，发表） | 12月10日 | 进行中🟡 |
 | 📁登录        | --     | --    |
