@@ -61,7 +61,7 @@
         </svg>
       </li> -->
 
-      <li @click="play($event, i, true)" :ref="i.id" v-for="(i, key) in list" :key="i">
+      <li @click="play($event, i, true)" :ref="id(i)" v-for="(i, key) in list" :key="i">
         <p>{{ title(i) }}</p>
         <p>{{ name(i) }}</p>
         <svg
@@ -158,6 +158,13 @@ export default {
         return i.author
       } else {
         return i.ar[0].name
+      }
+    },
+    id(i){
+      if (i.id == undefined) {
+        return i.songid
+      } else {
+        return i.id
       }
     }
   }

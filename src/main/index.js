@@ -49,6 +49,7 @@ function createWindow() {
     mainWindow.webContents.session.on('will-download', (event, item, webContents) => {
       const filePath = path.join(process.cwd(), 'user', 'download', args.path, args.array.title + '-' + args.array.author + '.mp3');
       item.setSavePath(filePath);
+      args.array.path = filePath
       item.on('done', (evt, state) => {
         if (code == true) {
 
@@ -58,11 +59,8 @@ function createWindow() {
             icon: args.array.pic,
             body: `音乐 ${args.array.title} - ${args.array.author} 下载成功`,
             image: args.array.pic
-          })
-          console.log(code)
+          },args.array)
         }
-
-
       })
     })
   });

@@ -8,7 +8,7 @@
 -->
 <template>
   <div class="like">
-    <p class="title">我喜欢&&收藏</p>
+    <p class="title">我喜欢&收藏</p>
     <div ref="tab" class="tab">
       <p data-path="/like/music" @click="Tag($event)" class="a">歌曲</p>
       <p data-path="/like/song" @click="Tag($event)">歌单</p>

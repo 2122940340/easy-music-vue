@@ -1,11 +1,3 @@
-<!--
- * @Author: '天空' '2122940340@qq.com'
- * @Date: 2023-12-04 20:40:45
- * @LastEditors: '天空' '2122940340@qq.com'
- * @LastEditTime: 2023-12-06 21:02:22
- * @FilePath: \undefinedf:\electron\easy-music-vue-edition\README.md
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
 # 轻松音乐 v1.1.2
 
 基于electron-vite+ vue 开发桌面端免费音乐软件替代方案

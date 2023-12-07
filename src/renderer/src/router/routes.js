@@ -72,6 +72,10 @@ const routes = [
                         component:()=> import('/src/views/Index/Like/LikeSong.vue')
                     }
                 ]
+            },
+            {
+                path:'download', //下载
+                component:()=>import('/src/views/Index/Download/download.vue')
             }
         ]
     },

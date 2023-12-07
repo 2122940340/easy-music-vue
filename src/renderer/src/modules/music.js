@@ -12,11 +12,14 @@ export class Music extends MusicTool {
         this.listPath = './user/data/playlist.json'
         this.platListPath = './user/data/playlist.json'
         this.likeListPath = './user/data/likelist.json'
+        this.downloadListPath = './user/download/downloadList.json'
         this.likeSongListPath = './user/data/likesonglist.json'
         this.items = document.querySelector(".MusicStatusBar");
         this.duration = this.items.querySelector('.right p:nth-child(3)');
         this.currentTime = this.items.querySelector('.right p:nth-child(1)');
+        this.scheduleBox = this.items.querySelector('.scheduleBox');
         this.schedule = this.items.querySelector('.scheduleBox p');
+        this.schedules = this.items.querySelector('.scheduleBox #schedules');
         this.icon = this.items.querySelector('#icon');
         this.name = this.items.querySelector('#name');
         this.title = this.items.querySelector('#title');
@@ -26,22 +29,27 @@ export class Music extends MusicTool {
         this.playListIcon = this.items.querySelector('.playListIcon')
         this.like = this.items.querySelector('.likes')
         this.likes = this.items.querySelector('.islike')
-        this.downloadIcon = this.items.querySelector('.download')
+        this.downloadIcon = this.items.querySelector('.downloadIcon')
         this.inception()
         // 绑定事件
         this.click()
     }
     // 下载
     download() {
+        let array = JSON.parse(JSON.stringify(this.array))
+        console.log(this._url, this.array, array)
+
         window.electron.ipcRenderer.send('download', {
             url: this._url,
             path: 'music',
-            array: this.array
+            array: array
         });
-       
+
     }
     // 按钮事件
     click() {
+        //拖动
+        this.pace()
         //下载按钮
         this.downloadIcon.addEventListener('click', () => {
             this.download()
@@ -75,8 +83,27 @@ export class Music extends MusicTool {
             this.likes.style.display = 'none'
         })
         // 监听下载回调
-        window.electron.ipcRenderer.on('Notification', (event, data) => {
-            const n = new Notification('下载完成', data)
+        window.electron.ipcRenderer.on('Notification', (event, msg, array) => {
+            const n = new Notification('下载完成', msg)
+            console.log(array)
+            const datas = fs.readFileSync(this.downloadListPath, 'utf-8', err => { })
+            let data = JSON.parse(datas)
+            if (typeof data === String) {
+                data = JSON.parse(data)
+            }
+            if (data.data.length != 0) {
+                for (let i in data.data) {
+                    if (data.data[i].songid == array.songid) {
+                        data.data[i] = array
+                        break
+                    } else {
+                        data.data.unshift(array)
+                    }
+                }
+            } else {
+                data.data.unshift(array)
+            }
+            fs.writeFile(this.downloadListPath, JSON.stringify(data), err => { })
         })
     }
     // 歌词
@@ -101,8 +128,8 @@ export class Music extends MusicTool {
         this.lyricList()
         this.timer = setInterval(() => {
             //总
-            let duration = audio_size(this.audio.duration);
-            let currentTime = audio_size(this.audio.currentTime);
+            let duration = this.audio_size(this.audio.duration);
+            let currentTime = this.audio_size(this.audio.currentTime);
 
             if (isNaN(this.audio.duration)) {
                 currentTime = '00:00'
@@ -119,25 +146,25 @@ export class Music extends MusicTool {
 
             const value = (this.audio.currentTime / this.audio.duration * 100) * (this.schedule.parentNode.clientWidth / 100)
             this.schedule.style.width = value + 'px'
-
+            this.schedules.style.left = value + 'px'
             this.lrcList.forEach(item => {
                 if (item.time == currentTime) {
                     this.lrc = item
                 }
             })
         }, 1000)
-        // 时间转换
-        function audio_size(num) {
-            let num1 = Math.trunc(Math.trunc(num) / 60);
-            let num2 = Math.trunc(Math.trunc(num) % 60);
-            if (num1 < 10) {
-                num1 = "0" + Math.trunc(Math.trunc(num) / 60);
-            }
-            if (num2 < 10) {
-                num2 = "0" + Math.trunc(Math.trunc(num) % 60);
-            }
-            return num1 + ":" + num2;
+    }
+    // 时间转换
+    audio_size(num) {
+        let num1 = Math.trunc(Math.trunc(num) / 60);
+        let num2 = Math.trunc(Math.trunc(num) % 60);
+        if (num1 < 10) {
+            num1 = "0" + Math.trunc(Math.trunc(num) / 60);
         }
+        if (num2 < 10) {
+            num2 = "0" + Math.trunc(Math.trunc(num) % 60);
+        }
+        return num1 + ":" + num2;
     }
     async play(array, isAnalysis = false) {
         if (array.songid == null || array.songid == undefined) {
@@ -150,7 +177,7 @@ export class Music extends MusicTool {
         this._name = array.author
         this.array = array
         this._songid = array.songid;
-        this.pause();
+        // this.pause();
         this.icon.src = this._pic
         this.title.innerHTML = this._title
         this.name.innerHTML = this._name
@@ -174,25 +201,37 @@ export class Music extends MusicTool {
         this.audio.src = this._url;
         this.audio.load();
         this.audio.play(); //开始播放
-
-        this.resume();
-        // 添加播放列表
-        this.songAdd()
-        //记时
-        this.time();
-        // 歌单更新
-        // this.inception()
-        //是否收藏
-        this.isLike(this._songid)
-
-        setTimeout(() => {
-            console.log(this.audio.duration)
-            if (isNaN(this.audio.duration)) {
+        this.audio.addEventListener('error', () => {
+            setTimeout(() => {
                 this.nextSong()
+            }, 3000)
+            console.log(111)
+            const n = new Notification('播放失败', {
+                icon: this._pic,
+                body: `音乐 ${this._title} - ${this._name} 播放失败，可能是音乐 已经被下架 或者 音乐文件被删除。已删除对应的记录`,
+                image: this._pic,
+            })
+            n.onclick = () => {
+                router.push({
+                    path: '/search',
+                    state: {
+                        value: `${this._title} - ${this._name}`
+                    }
+                })
             }
-        }, 3000)
+        });
+        this.audio.addEventListener('canplaythrough', () => {
+            this.resume();
+            // 添加播放列表
+            this.songAdd()
+            //记时
+            this.time();
+            // 歌单更新
+            // this.inception()
+            //是否收藏
+            this.isLike(this._songid)
+        })
 
-        //音频可视化
 
     }
     getURL(i) {

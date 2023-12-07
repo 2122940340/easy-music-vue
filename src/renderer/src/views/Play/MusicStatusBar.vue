@@ -2,6 +2,7 @@
   <div class="MusicStatusBar">
     <div class="scheduleBox">
       <p id="schedule"></p>
+      <div id="schedules"></div>
     </div>
     <div class="left">
       <img id="icon" src="/src/assets/icon.png" alt="" />
@@ -44,7 +45,7 @@
 
           <svg
             t="1701419408624"
-            class="download"
+            class="downloadIcon"
             viewBox="0 0 1024 1024"
             version="1.1"
             xmlns="http://www.w3.org/2000/svg"
@@ -229,7 +230,6 @@ export default {
       setTimeout(() => {
         this.$refs.playList.$el.style.transform = " translateX(0vw)";
         setTimeout(() => {
-          this.$refs.playList.$el.focus();
         }, 500);
       }, 100);
     },
@@ -375,5 +375,14 @@ export default {
 
 .MusicStatusBar .playListIcon {
   margin-left: 15px;
+}
+.MusicStatusBar #schedules{
+  width: 10px;
+  height: 10px;
+  background-color: #12d4bd;
+  border-radius: 50%;
+  position: absolute;
+  top: -3px;
+  transition: all 1s;
 }
 </style>

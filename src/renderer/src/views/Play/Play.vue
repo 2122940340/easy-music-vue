@@ -102,6 +102,7 @@ export default {
         list.forEach((item, index) => {
           if (item.getAttribute('data-time') == window.Music.lrc.time) {
             item.classList.add('selected')
+            console.log(item,window.Music.lrc.time)
             ul.scrollTo(0, item.getBoundingClientRect().height * index)
           } else {
             item.classList.remove('selected')
@@ -118,7 +119,6 @@ export default {
               .then((response) => response.json())
               .then((json) => {
                 this.hotList = json.hotComments
-                console.log(json)
               })
           }
           this.time()

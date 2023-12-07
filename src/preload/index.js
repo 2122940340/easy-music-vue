@@ -62,6 +62,15 @@ const fileList = [
       data: [],
       id: -1,
     })
+  },
+  {
+    path: './user/download',
+    name: 'downloadList.json',
+    content: JSON.stringify({
+      code: 1,
+      data: [],
+      id: -1,
+    })
   }
 ]
 

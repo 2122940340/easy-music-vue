@@ -7,6 +7,59 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 export class MusicTool {
+    //进度条拖动
+    pace() {
+        this.schedules.onmousedown = (event) => {
+            // 元素距离最左边的位置，理解为：你的 left 值是多少
+            let offsetLeft = this.schedules.offsetLeft
+            let offsetTop = this.schedules.offsetTop
+
+            // 元素距离最左边的位置（注意：这个位置是鼠标点下去距离浏览器左边的位置，是包含 div 元素的）
+            let x = event.clientX - offsetLeft
+            let y = event.clientY - offsetTop
+            this.schedules.style.transition = 'all 0s'
+            this.schedule.style.transition = 'all 0s'
+            document.onmousemove = (event) => {
+                this.pause()
+                let left = event.clientX - x
+                this.schedules.style.left = left + 'px'
+                this.schedule.style.width = left + 'px'
+                this.schedules.style.top = top + 'px'
+                document.onmouseup = (event) => {
+                    let time = (event.clientX / window.innerWidth * 100) * (this.audio.duration / 100)
+                    this.audio.currentTime = time
+
+                    this.lrc.time = this.audio_size(this.audio.currentTime)
+                    document.onmousemove = null
+                    this.schedules.style.transition = 'all 1s'
+                    this.schedules.style.transition = 'all 1s'
+                    document.onmouseup = null
+                }
+            }
+
+        }
+    }
+    // 删除下载
+    downloadDelete(id) {
+        const datas = fs.readFileSync(this.downloadListPath, 'utf-8', err => { })
+        let data = JSON.parse(datas)
+        if (typeof data === String) {
+            data = JSON.parse(data)
+        }
+        window.fs.unlinkSync(data.data[id].path)
+        data.data.splice(data.data[id], 1)
+        window.fs.writeFile(this.downloadListPath, JSON.stringify(data), (err) => { })
+        return data
+    }
+    // 下载列表
+    downloadList() {
+        const datas = fs.readFileSync(this.downloadListPath, 'utf-8', err => { })
+        let data = JSON.parse(datas)
+        if (typeof data === String) {
+            data = JSON.parse(data)
+        }
+        return data
+    }
     // 是否收藏
     isLike(id) {
         const datas = fs.readFileSync(this.likeListPath, 'utf-8', err => { })
