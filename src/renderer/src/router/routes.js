@@ -39,43 +39,59 @@ const routes = [
             {
                 path: 'search', // 搜索
                 component: () => import('/src/views/Search/Search.vue'),
-                children:[
+                children: [
                     {
-                        path:'',
-                        component:()=> import('/src/views/Search/SearchMusic.vue')
+                        path: '',
+                        component: () => import('/src/views/Search/SearchMusic.vue')
                     },
                     {
-                        path:'music',
-                        component:()=> import('/src/views/Search/SearchMusic.vue')
+                        path: 'music',
+                        component: () => import('/src/views/Search/SearchMusic.vue')
                     },
                     {
-                        path:'song',
-                        component:()=> import('/src/views/Search/Songlist.vue')
+                        path: 'song',
+                        component: () => import('/src/views/Search/Songlist.vue')
                     }
                 ]
 
             },
             {
-                path:'like', // 喜欢
-                component:()=> import('/src/views/Index/Like/Like.vue'),
-                children:[
+                path: 'like', // 喜欢
+                component: () => import('/src/views/Index/Like/Like.vue'),
+                children: [
                     {
-                        path:'',
-                        component:()=> import('/src/views/Index/Like/LikeMusic.vue')
+                        path: '',
+                        component: () => import('/src/views/Index/Like/LikeMusic.vue')
                     },
                     {
-                        path:'music',
-                        component:()=> import('/src/views/Index/Like/LikeMusic.vue')
+                        path: 'music',
+                        component: () => import('/src/views/Index/Like/LikeMusic.vue')
                     },
                     {
-                        path:'song',
-                        component:()=> import('/src/views/Index/Like/LikeSong.vue')
+                        path: 'song',
+                        component: () => import('/src/views/Index/Like/LikeSong.vue')
                     }
                 ]
             },
             {
-                path:'download', //下载
-                component:()=>import('/src/views/Index/Download/download.vue')
+                path: 'download', //下载
+                component: () => import('/src/views/Index/Download/download.vue')
+            },
+            {
+                path: 'musicHall', //音乐馆
+                component: () => import('/src/views/Index/MusicHall/MusicHall.vue')
+            },
+            {
+                path: 'radar', //雷达
+                component: () => import('/src/views/Index/Radar/Radar.vue')
+            },
+            {
+                path: 'recentlyPlayedSongs', //最近
+                component: () => import('/src/views/Index/RecentlyPlayedSongs/RecentlyPlayedSongs.vue')
+            },
+            {
+                path: 'about', //关于
+                component: () => import('/src/views/Index/About/About.vue')
             }
         ]
     },

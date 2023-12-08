@@ -1,9 +1,9 @@
 {
-  "name": "music",
+  "name": "esay-music",
   "version": "1.0.0",
   "description": "An Electron application with Vue",
   "main": "./out/main/index.js",
-  "author": "example.com",
+  "author": "tiank",
   "homepage": "https://www.electronjs.org",
   "scripts": {
     "format": "prettier --write .",

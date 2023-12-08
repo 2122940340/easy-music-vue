@@ -230,6 +230,7 @@ export default {
       setTimeout(() => {
         this.$refs.playList.$el.style.transform = " translateX(0vw)";
         setTimeout(() => {
+          this.$refs.playList.$el.focus()
         }, 500);
       }, 100);
     },

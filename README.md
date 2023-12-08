@@ -71,6 +71,10 @@ $ npm run build:linux
 播放页(沉浸)
 ![输入图片说明](src/renderer/src/assets/b5.png)
 歌单
-![输入图片说明](src/renderer/src/assets/b3.png)
+![输入图片说明](src/renderer/src/assets/b9.png)
 搜索
 ![输入图片说明](src/renderer/src/assets/b4.png)
+下载
+![输入图片说明](src/renderer/src/assets/b7.png)
+收藏
+![输入图片说明](src/renderer/src/assets/b8.png)

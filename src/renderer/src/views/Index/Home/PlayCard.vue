@@ -1,9 +1,10 @@
 <template>
-  <div class="playcard">
+  <div @click="songlist()" class="playcard">
     <p class="title">{{ title }}</p>
     <img v-lazy="icon" alt="" class="icon" />
     <div v-bind:style="{ backgroundColor: backdrop }" class="back"></div>
     <svg
+      @click.stop="play"
       class="play"
       t="1700460162725"
       viewBox="0 0 1024 1024"
@@ -26,23 +27,59 @@
 </template>
 
 <script>
+import { Music } from '../../../modules/music'
+import router from '../../../router'
 export default {
-  name: "playCard",
+  name: 'playCard',
+  data() {
+    return {
+      icon: 'http://p1.music.126.net/7RJ2J312jRV-2-k3wx97w==/109951163632812955.jpg?param=100y100'
+    }
+  },
   props: {
     title: {
       type: String,
-      default: "暂无标题",
-    },
-    icon: {
-      type: String,
+      default: '暂无标题'
     },
     backdrop: {
       type: String,
-      default: "#ee99b7",
-    },
+      default: '#ee99b7'
+    }
   },
-};
+  mounted() {
+    fetch(
+      `${window.APIURL}personalized?limit=1&timestamp=${
+        new Date().getTime() / 1000 + Math.floor(Math.random() * 10)
+      }`
+    )
+      .then((response) => response.json())
+      .then((json) => {
+        this.icon = json.result[0].picUrl
+        this.songid = json.result[0].id
+      })
+  },
+  methods: {
+    play() {
+      fetch(APIURL + 'playlist/track/all?id=' + this.songid)
+        .then((response) => response.json())
+        .then((json) => {
+          this.list = json.songs
+          window.Music.addSongList(this.list)
+          window.Music.play(this.list[0])
+        })
+    },
+    songlist(){
+      router.push({
+        path:'/songlist',
+        state:{
+          id: this.songid 
+        }
+      })
+    }
+  }
+}
 </script>
+
 <style scoped>
 .playcard {
   background-image: linear-gradient(to top left, #85eebf, #00eaee);
@@ -63,7 +100,7 @@ export default {
   z-index: 2;
 }
 .playcard .back {
-  content: "";
+  content: '';
   width: 100px;
   height: 100px;
   background-color: #ee99b7;
@@ -76,6 +113,9 @@ export default {
 .playcard img {
   width: 100%;
   height: 100%;
+}
+.playcard img:hover {
+  zoom: 1.2;
 }
 .playcard .play {
   width: 50px;

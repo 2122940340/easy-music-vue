@@ -23,6 +23,8 @@ function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 1080,
     height: 700,
+    minWidth:1080,
+    minHeight:700,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
@@ -44,7 +46,6 @@ function createWindow() {
   // 监听渲染进程发出的download事件
   ipcMain.on('download', async (evt, args) => {
     var code = false
-    console.log('cishu')
     mainWindow.webContents.downloadURL(args.url) // 触发 will-download 事件
     mainWindow.webContents.session.on('will-download', (event, item, webContents) => {
       const filePath = path.join(process.cwd(), 'user', 'download', args.path, args.array.title + '-' + args.array.author + '.mp3');

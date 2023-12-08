@@ -85,7 +85,11 @@ export class Music extends MusicTool {
         // 监听下载回调
         window.electron.ipcRenderer.on('Notification', (event, msg, array) => {
             const n = new Notification('下载完成', msg)
-            console.log(array)
+            n.onclick = () => {
+                router.push({
+                    path: '/download',
+                })
+            }
             const datas = fs.readFileSync(this.downloadListPath, 'utf-8', err => { })
             let data = JSON.parse(datas)
             if (typeof data === String) {
@@ -197,28 +201,31 @@ export class Music extends MusicTool {
         this.audio.crossOrigin = 'anonymous';
         this.audio.title = array.title;
         this.audio.author = array.author;
-
+        this.codePlay = true
         this.audio.src = this._url;
         this.audio.load();
         this.audio.play(); //开始播放
         this.audio.addEventListener('error', () => {
-            setTimeout(() => {
-                this.nextSong()
-            }, 3000)
-            console.log(111)
-            const n = new Notification('播放失败', {
-                icon: this._pic,
-                body: `音乐 ${this._title} - ${this._name} 播放失败，可能是音乐 已经被下架 或者 音乐文件被删除。已删除对应的记录`,
-                image: this._pic,
-            })
-            n.onclick = () => {
-                router.push({
-                    path: '/search',
-                    state: {
-                        value: `${this._title} - ${this._name}`
-                    }
+            if (this.codePlay) {
+                setTimeout(() => {
+                    this.nextSong()
+                }, 3000)
+                this.codePlay = false
+                const n = new Notification('播放失败', {
+                    icon: this._pic,
+                    body: `音乐 ${this._title} - ${this._name} 播放失败，可能是音乐 已经被下架 或者 音乐文件被删除。已删除对应的记录`,
+                    image: this._pic,
                 })
+                n.onclick = () => {
+                    router.push({
+                        path: '/search',
+                        state: {
+                            value: `${this._title} - ${this._name}`
+                        }
+                    })
+                }
             }
+
         });
         this.audio.addEventListener('canplaythrough', () => {
             this.resume();

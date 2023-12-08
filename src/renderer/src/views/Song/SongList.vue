@@ -56,7 +56,7 @@
       <ul>
         <li @click="play(i)" v-for="i in list" v-bind:key="i">
           <span>
-            <img :src="i.al.picUrl" alt="" />
+            <img  v-lazy="i.al.picUrl" alt="" />
             <p>{{ i.name }}</p>
           </span>
           <span>
@@ -74,7 +74,6 @@
 </template>
 
 <script>
-
 export default {
   data() {
     return {
@@ -95,18 +94,23 @@ export default {
       window.Music.play(this.list[0])
     },
     likeSongLike() {
+      console.log(this.list)
       window.Music.likeSongLike(this.data)
-      console.log(this.data)
     }
   },
   mounted() {
     const id = history.state.id
     if (id != undefined || id != '') {
+      fetch(APIURL + 'playlist/track/all?id=' + id)
+        .then((response) => response.json())
+        .then((json) => {
+          this.list = json.songs
+        })
+
       fetch(APIURL + 'playlist/detail?id=' + id)
         .then((response) => response.json())
         .then((json) => {
           this.data = json.playlist
-          this.list = json.playlist.tracks
           this.title = json.playlist.name
           this.icon = json.playlist.coverImgUrl
           this.content = json.playlist.description

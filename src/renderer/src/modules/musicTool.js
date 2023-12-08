@@ -46,8 +46,13 @@ export class MusicTool {
         if (typeof data === String) {
             data = JSON.parse(data)
         }
-        window.fs.unlinkSync(data.data[id].path)
         data.data.splice(data.data[id], 1)
+        try {
+            window.fs.unlinkSync(data.data[id].path)
+        }
+        catch (e) {
+            
+        }
         window.fs.writeFile(this.downloadListPath, JSON.stringify(data), (err) => { })
         return data
     }
@@ -62,22 +67,25 @@ export class MusicTool {
     }
     // 是否收藏
     isLike(id) {
-        const datas = fs.readFileSync(this.likeListPath, 'utf-8', err => { })
-        let data = JSON.parse(datas)
-        if (typeof data === String) {
-            data = JSON.parse(data)
-        }
-        for (let i in data.data) {
-            if (data.data[i].songid == id) {
-                this.like.style.display = 'none'
-                this.likes.style.display = 'block'
-                break
-            } else {
-                this.like.style.display = 'block'
-                this.likes.style.display = 'none'
-                this.songLikeDelete(this._songid)
+        const datas = fs.readFileSync(this.likeListPath, 'utf-8', (err, content) => {
+            console.log(content)
+            let data = JSON.parse(content)
+            if (typeof data === String) {
+                data = JSON.parse(data)
             }
-        }
+            for (let i in data.data) {
+                if (data.data[i].songid == id) {
+                    this.like.style.display = 'none'
+                    this.likes.style.display = 'block'
+                    break
+                } else {
+                    this.like.style.display = 'block'
+                    this.likes.style.display = 'none'
+                    this.songLikeDelete(this._songid)
+                }
+            }
+        })
+
     }
     // 取消收藏歌曲
     songLikeDelete(id) {
@@ -159,8 +167,6 @@ export class MusicTool {
         if (typeof data === String) {
             data = JSON.parse(data)
         }
-        // this.play(data.data[data.id])
-        // this.pause()
         this.list = data
     }
     // 删除歌单的歌

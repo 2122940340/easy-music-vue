@@ -1,8 +1,7 @@
 <template>
   <div class="home">
     <div class="top">
-      <playcard title="随便听点" backdrop="rgba(0, 0, 0, 0.5)" :icon="PlayCard[0]">
-      </playcard>
+      <playcard title="随便听点" backdrop="rgba(0, 0, 0, 0.5)" :icon="PlayCard[0]"> </playcard>
       <playcard title="每日必听" backdrop="#0148ee" :icon="PlayCard[1]"> </playcard>
       <playcard title="随机歌单" backdrop="#00b7ee" :icon="PlayCard[2]"> </playcard>
     </div>
@@ -10,10 +9,7 @@
     <div class="center">
       <hotsearch @setValue="play" :array="HotSearchList" class="hot_search"></hotsearch>
       <div>
-        <RecommendedPlaylist
-          title="热门歌单"
-          :array="RecommendedPlayList"
-        ></RecommendedPlaylist>
+        <RecommendedPlaylist title="热门歌单" :array="RecommendedPlayList"></RecommendedPlaylist>
         <HotSearchList title="心动歌曲推荐" :array="HitSongList"></HotSearchList>
       </div>
     </div>
@@ -22,65 +18,66 @@
 </template>
 
 <script>
-import playcard from "./PlayCard.vue"; //头部卡片
-import hotsearch from "./HotSearch.vue"; //热门歌曲
-import RecommendedPlaylist from "./RecommendedPlaylist.vue"; //推荐歌单
-import HotSearchList from "./HotSongList.vue"; //热门歌曲
+import playcard from './PlayCard.vue' //头部卡片
+import hotsearch from './HotSearch.vue' //热门歌曲
+import RecommendedPlaylist from './RecommendedPlaylist.vue' //推荐歌单
+import HotSearchList from './HotSongList.vue' //热门歌曲
 export default {
-  name: "app",
+  name: 'app',
   components: {
     playcard,
     hotsearch,
     RecommendedPlaylist,
-    HotSearchList,
+    HotSearchList
   },
   data() {
     return {
       HotSearchList: [],
       RecommendedPlayList: [],
       PlayCard: [null, null, null],
-      HitSongList: [],
-    };
+      HitSongList: []
+    }
   },
   methods: {
     play(value) {
-      console.log(value);
+      console.log(value)
       // this.$emit('play', i)
-    },
+    }
   },
   mounted() {
-    console.log(window);
+    console.log(window)
     fetch(window.APIURL + 'register/anonimous')
-    .then(data => data.json())
-    .then(json =>{
-      console.log(json)
-    })
+      .then((data) => data.json())
+      .then((json) => {
+        console.log(json)
+      })
     // 推荐歌单
-    fetch(window.APIURL + "personalized?limit=8")
+    fetch(`${window.APIURL}personalized?limit=8`)
       .then((response) => response.json())
       .then((json) => {
-        this.RecommendedPlayList = json.result;
-      });
+        console.log(json)
+        this.RecommendedPlayList = json.result
+      })
     // 推荐歌曲
-    fetch(window.APIURL + "personalized/newsong?limit=32")
+    fetch(window.APIURL + 'personalized/newsong?limit=32')
       .then((response) => response.json())
       .then((json) => {
-        console.log(json);
-        this.HitSongList = json.result;
+        console.log(json)
+        this.HitSongList = json.result
       })
-      .catch((err) => console.log("Request Failed", err));
-    fetch(window.APIURL + "recommend/songs")
+      .catch((err) => console.log('Request Failed', err))
+    fetch(window.APIURL + 'recommend/songs')
       .then((response) => response.json())
       .then((json) => {
-        console.log(json);
-        this.HotSearchList = json.data.dailySongs;
-        this.PlayCard[0] = this.HotSearchList[6].al.picUrl;
-        this.PlayCard[1] = this.HotSearchList[7].al.picUrl;
-        this.PlayCard[2] = this.HotSearchList[8].al.picUrl;
+        console.log(json)
+        this.HotSearchList = json.data.dailySongs
+        // this.PlayCard[0] = this.HotSearchList[6].al.picUrl
+        // this.PlayCard[1] = this.HotSearchList[7].al.picUrl
+        // this.PlayCard[2] = this.HotSearchList[8].al.picUrl
       })
-      .catch((err) => console.log("Request Failed", err));
-  },
-};
+      .catch((err) => console.log('Request Failed', err))
+  }
+}
 </script>
 <style>
 .home {

@@ -1,5 +1,5 @@
-appId: com.electron.app
-productName: music
+appId: com.esay-music.app
+productName: 轻松音乐
 directories:
   buildResources: build
 files:
@@ -11,12 +11,15 @@ files:
 asarUnpack:
   - resources/**
 win:
-  executableName: music
+  executableName: 轻松音乐
 nsis:
   artifactName: ${name}-${version}-setup.${ext}
   shortcutName: ${productName}
   uninstallDisplayName: ${productName}
   createDesktopShortcut: always
+  oneClick: false
+  allowElevation: true
+  allowToChangeInstallationDirectory: true
 mac:
   entitlementsInherit: build/entitlements.mac.plist
   extendInfo:
