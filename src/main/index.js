@@ -7,13 +7,18 @@
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
 "use strict";
-import { contextBridge, Notification, ipcRenderer, ipcMain, app, shell, BrowserWindow, nativeImage } from 'electron'
+import { dialog, contextBridge, Notification, ipcRenderer, ipcMain, app, shell, BrowserWindow, nativeImage } from 'electron'
 import { join } from 'path'
 const path = require('node:path')
 import { electronApp, optimizer, is } from '@electron-toolkit/utils'
-import { array } from 'yargs';
+import {
+  autoUpdater
+} from 'electron-updater'
 
-require('../../api/app.js')
+
+
+require('../../api/app.js');
+
 
 // contextBridge.exposeInMainWorld('electron', {
 //   ping: () => ipcRenderer.invoke('ping')
@@ -23,8 +28,8 @@ function createWindow() {
   const mainWindow = new BrowserWindow({
     width: 1080,
     height: 700,
-    minWidth:1080,
-    minHeight:700,
+    minWidth: 1080,
+    minHeight: 700,
     autoHideMenuBar: true,
     ...(process.platform === 'linux' ? { icon } : {}),
     webPreferences: {
@@ -43,6 +48,8 @@ function createWindow() {
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
   })
+
+  dow()
   // 监听渲染进程发出的download事件
   ipcMain.on('download', async (evt, args) => {
     var code = false
@@ -60,7 +67,7 @@ function createWindow() {
             icon: args.array.pic,
             body: `音乐 ${args.array.title} - ${args.array.author} 下载成功`,
             image: args.array.pic
-          },args.array)
+          }, args.array)
         }
       })
     })
@@ -115,3 +122,27 @@ app.on('window-all-closed', () => {
 
 // In this file you can include the rest of your app"s specific main process
 // code. You can also put them in separate files and require them here.
+
+
+function dow() {
+  const uploadUrl = "https://download.tiank.top/"
+  // new Notification({ title: autoUpdater.setFeedURL(uploadUrl), body: '1111' }).show()
+
+  autoUpdater.setFeedURL(uploadUrl)
+  autoUpdater.checkForUpdates()
+  autoUpdater.on('checking-for-update', function () {
+
+  });
+  autoUpdater.on('error', function (error) {
+    new Notification({ title: '更新失败', body: '你可能已经与服务器失联，请点击访问官方下载最新版' + error }).show()
+  });
+  autoUpdater.on('update-available', function (info) {
+    new Notification({ title: '发现新版本', body: '正在后台下载或单击前往官网下载' }).show()
+  });
+  autoUpdater.on('update-not-available', function (info) {
+    new Notification({ title: '最新', body: '最新' }).show()
+  })
+  autoUpdater.on('update-downloaded', function (info) {
+    new Notification({ title: '下载完成', body: '下一次启动软件会自动更新' }).show()
+  })
+}

@@ -16,6 +16,7 @@
           :icon="i.icon"
           v-for="i in tagList[0].data"
           v-bind:key="i"
+          class="tag"
         ></tag>
         <p class="title">{{ tagList[1].title }}</p>
         <tag
@@ -24,6 +25,7 @@
           :icon="i.icon"
           v-for="i in tagList[1].data"
           v-bind:key="i"
+          class="tag"
         ></tag>
       </div>
     </div>
@@ -127,7 +129,6 @@
 import tag from './views/Index/Home/tag.vue'
 import home from './views/Index/Home/Home.vue'
 import Play from './views/Play/Play.vue'
-import MusicStatusBar from './views/Play/MusicStatusBar.vue' //播放条
 // import { Music } from './modules/music'
 import router from './router/index'
 export default {
@@ -135,7 +136,6 @@ export default {
   components: {
     tag,
     home,
-    MusicStatusBar,
     Play
   },
   setup() {},

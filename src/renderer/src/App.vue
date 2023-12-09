@@ -23,26 +23,34 @@ export default {
   components: {
     MusicStatusBar
   },
-  methods: {},
-  activated() {
-    if (!this.$route.meta.keepAlive) {
-      // 如果该页面不需要缓存，则在页面激活时销毁缓存
-      this.$destroy()
-    }
-    console.log(this.destroy)
+  data() {
+    return {}
   },
+  methods: {},
+  activated() {},
   mounted() {
     this.home = this.$refs.Main
     window.Music.start()
-
-    setTimeout(() => {
-      router.push({
-        path: '/home'
+    fetch(window.APIURL + 'register/anonimous')
+      .then((data) => data.json())
+      .then((json) => {})
+    router.push({
+      path: '/home'
+    })
+  },
+  methods: {
+    tagActive(path) {
+      // 标签激活
+      document.querySelectorAll('.tag').forEach((item) => {
+        if (path == item.getAttribute('data-path')) item.classList.add('active')
+        else item.classList.remove('active')
       })
-    }, 100)
+    }
   },
   watch: {
     async $route(to, from) {
+      this.tagActive(to.path)
+
       if (to.path != '/play') {
         this.$refs.MusicStatusBar.styleColor = {
           color: '#000',
@@ -91,7 +99,7 @@ export default {
 * {
   margin: 0;
   padding: 0;
-  box-sizing: content-box;
+  box-sizing: border-box;
   outline: none;
 }
 

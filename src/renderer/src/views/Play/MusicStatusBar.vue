@@ -10,7 +10,8 @@
         <p id="title">轻松音乐</p>
         <div>
           <p id="name">未知歌手</p>
-          <svg class="likes"
+          <svg
+            class="likes"
             t="1701419140569"
             viewBox="0 0 1024 1024"
             version="1.1"
@@ -207,49 +208,53 @@
 </template>
 
 <script>
-import playList from "./PlayList.vue";
+import playList from './PlayList.vue'
 export default {
   components: {
-    playList,
+    playList
   },
   data() {
     return {
       isActive: false,
       code: false,
       styleColor: {
-        color: "#000",
-        fill: "#000",
+        color: '#000',
+        fill: '#000'
       },
-      Music: window.Music,
-    };
+      Music: window.Music
+    }
   },
   methods: {
     Code() {
-      this.code = true;
-      window.Music.inception();
+      this.code = true
+      window.Music.inception()
       setTimeout(() => {
-        this.$refs.playList.$el.style.transform = " translateX(0vw)";
+        this.$refs.playList.$el.style.transform = ' translateX(0vw)'
         setTimeout(() => {
           this.$refs.playList.$el.focus()
-        }, 500);
-      }, 100);
+        }, 500)
+      }, 100)
     },
     playListBlur() {
-      this.$refs.playList.$el.style.transform = " translateX(100vw)";
+      this.$refs.playList.$el.style.transform = ' translateX(100vw)'
       setTimeout(() => {
-        this.code = false;
-      }, 500);
+        this.code = false
+      }, 500)
     },
-    playLists() {},
-  },
-};
+    playLists() {}
+  }
+}
 </script>
 
 <style>
 .MusicStatusBar {
-  position: relative;
+  width: 100vw;
+  height: 80px;
   display: flex;
   align-items: center;
+  justify-content: space-between;
+  position: absolute;
+  bottom: 0;
 }
 
 .MusicStatusBar .left {
@@ -286,8 +291,8 @@ export default {
   display: flex;
   align-items: center;
 }
-.MusicStatusBar .left > div div .islike{
-    display: none;
+.MusicStatusBar .left > div div .islike {
+  display: none;
 }
 .MusicStatusBar .play {
   width: 100%;
@@ -377,7 +382,7 @@ export default {
 .MusicStatusBar .playListIcon {
   margin-left: 15px;
 }
-.MusicStatusBar #schedules{
+.MusicStatusBar #schedules {
   width: 10px;
   height: 10px;
   background-color: #12d4bd;

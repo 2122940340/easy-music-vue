@@ -49,7 +49,7 @@ export default {
   mounted() {
     fetch(
       `${window.APIURL}personalized?limit=1&timestamp=${
-        new Date().getTime() / 1000 + Math.floor(Math.random() * 10)
+        new Date().getTime() / 1000+Math.floor(Math.random() * 1000)
       }`
     )
       .then((response) => response.json())

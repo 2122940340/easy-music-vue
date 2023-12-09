@@ -52,12 +52,12 @@ export default {
   align-items: center;
 }
 
-.nav:hover {
+.nav:hover,.nav.active {
   background-image: linear-gradient(to left top, #42ffaa, #12d4bd);
   color: #fff;
 }
 
-.nav:hover >>> svg path {
+.nav:hover :deep(svg path),.nav.active :deep(svg path){
   fill: #fff;
 }
 

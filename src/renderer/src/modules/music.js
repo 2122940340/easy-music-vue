@@ -207,9 +207,6 @@ export class Music extends MusicTool {
         this.audio.play(); //开始播放
         this.audio.addEventListener('error', () => {
             if (this.codePlay) {
-                setTimeout(() => {
-                    this.nextSong()
-                }, 3000)
                 this.codePlay = false
                 const n = new Notification('播放失败', {
                     icon: this._pic,
@@ -224,6 +221,8 @@ export class Music extends MusicTool {
                         }
                     })
                 }
+                this.nextSong()
+
             }
 
         });
