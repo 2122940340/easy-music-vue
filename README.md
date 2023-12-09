@@ -75,7 +75,7 @@ $ npm run build:linux
 ```
 
 ### 图片介绍
-欢迎下载[已打包的版本](https://gitee.com/tiankongskya/easy-music-vue-edition/releases/new)体验，有问题欢迎反馈谢谢
+欢迎下载[已打包的版本](https://gitee.com/tiankongskya/easy-music-vue-edition/releases/)体验，有问题欢迎反馈谢谢
 
 主页
 ![输入图片说明](src/renderer/src/assets/b6.png)
