@@ -40,6 +40,7 @@ cd easy-music-vue-edition
 ```
 ### 自动更新配置
 1.源码需要提交GitHub
+
 2.[vercel](https://vercel.com/)绑定GitHub账号
 
 3.选择仓库，开始部署
