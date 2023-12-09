@@ -1,4 +1,4 @@
-# 轻松音乐 v1.1.2
+# 轻松音乐 v0.9.0
 
 基于electron-vite+ vue 开发桌面端免费音乐软件替代方案
 
@@ -38,6 +38,14 @@ git  clone https://github.com/2122940340/easy-music-vue-edition.git (github)
 完成后
 cd easy-music-vue-edition
 ```
+### 自动更新配置
+1.源码需要提交GitHub
+2.[vercel](https://vercel.com/)绑定GitHub账号
+3.选择仓库，开始部署
+4.绑定自己的域名
+5.上传文件，成功
+
+不懂的百度
 
 **安装依赖** 
 ```bash
