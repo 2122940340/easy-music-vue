@@ -13,7 +13,7 @@
         <HotSearchList title="心动歌曲推荐" :array="HitSongList"></HotSearchList>
       </div>
     </div>
-    <img class="load" src="/src/assets/lo.gif" alt="" />
+    <p @click="Bottom()" class="scrollBottom">😫到底了，搜搜看吧</p>
   </div>
 </template>
 
@@ -39,18 +39,12 @@ export default {
     }
   },
   methods: {
-    play(value) {
-      console.log(value)
-      // this.$emit('play', i)
+    play(value) {},
+    Bottom() {
+
     }
   },
   mounted() {
-    console.log(window)
-    fetch(window.APIURL + 'register/anonimous')
-      .then((data) => data.json())
-      .then((json) => {
-        console.log(json)
-      })
     // 推荐歌单
     fetch(`${window.APIURL}personalized?limit=8`)
       .then((response) => response.json())
@@ -59,7 +53,7 @@ export default {
         this.RecommendedPlayList = json.result
       })
     // 推荐歌曲
-    fetch(window.APIURL + 'personalized/newsong?limit=32')
+    fetch(window.APIURL + 'personalized/newsong?limit=20')
       .then((response) => response.json())
       .then((json) => {
         console.log(json)
@@ -118,5 +112,12 @@ export default {
   width: 150px;
   height: 150px;
   margin: auto;
+}
+.scrollBottom {
+  width: 100%;
+  height: 100px;
+  line-height: 100px;
+  text-align: center;
+  color: #717171;
 }
 </style>

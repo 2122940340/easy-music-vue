@@ -86,13 +86,73 @@ export default {
       const cvs = document.querySelector('canvas')
       this.list = window.Music.lrcList
       if (window.Music.lrcList != undefined || window.Music.lrcList != '') {
-        this.time()
+        this.times()
         this.icon = window.Music._pic
         this.name = window.Music._name
         this.title = window.Music._title
       }
     },
+    times() {
+      Music.audio.addEventListener('timeupdate', () => {
+        this.song()
+      })
+      Music.audio.addEventListener('play', () => {
+        this.start()
+      })
+    },
+    song() {
+      const ul = this.$refs.scroll
+      let list = document.querySelectorAll('li')
+      list.forEach((item, index) => {
+        if (item.getAttribute('data-time') == window.Music.lrc.time) {
+          item.classList.add('selected')
+          ul.scrollTo(0, item.getBoundingClientRect().height * index)
+        } else {
+          item.classList.remove('selected')
+        }
+      })
+    },
+    canvas() {
+      const cvs = document.querySelector('canvas')
+      const ctx = cvs.getContext('2d')
+      // 初始化 canvas 尺寸
+      function initCvs() {
+        cvs.width = (window.innerWidth / 2) * devicePixelRatio
+        cvs.height = (window.innerHeight / 2) * devicePixelRatio
+      }
+      initCvs()
+      const audioCtx = new AudioContext()
+      const source = audioCtx.createMediaElementSource(Music.audio) // 创建音频源节点
+      let analyser = audioCtx.createAnalyser() // 创建分析器
+      analyser.fftSize = 512 // 设置分析器的 fft 大小
+      Music.audio.dataArray = new Uint8Array(analyser.frequencyBinCount)
+      source.connect(analyser) // 连接分析器
+      analyser.connect(audioCtx.destination) // 连接音频上下文和分析器
+      const draw = () => {
+        requestAnimationFrame(draw)
+        const { width, height } = cvs
+        ctx.clearRect(0, 0, width, height)
+        analyser.getByteFrequencyData(Music.audio.dataArray)
+
+        const len = Music.audio.dataArray.length / 2
+        // 每个柱子的宽度
+        const barWidth = width / len / 1
+        for (let i = 0; i < len; i++) {
+          const data = Music.audio.dataArray[i] // <256
+          const barHeight = (data / 250) * height
+          // 二个 x 点画出对称图形
+          const x1 = i * barWidth + width / 2
+          const x2 = width / 2 - i * barWidth
+          const y = height - barHeight
+          ctx.fillStyle = '#00ffd9'
+          ctx.fillRect(x1, y, barWidth - 0, barHeight)
+          ctx.fillRect(x2, y, barWidth - 0, barHeight)
+        }
+      }
+      draw()
+    },
     time(lrc) {
+      console.log('调用')
       const ul = this.$refs.scroll
       let list
       clearInterval(window.set)
@@ -102,13 +162,14 @@ export default {
         list.forEach((item, index) => {
           if (item.getAttribute('data-time') == window.Music.lrc.time) {
             item.classList.add('selected')
-            console.log(item,window.Music.lrc.time)
+            console.log('有')
             ul.scrollTo(0, item.getBoundingClientRect().height * index)
           } else {
             item.classList.remove('selected')
           }
         })
         if (ul != null) {
+          console.log('重回')
           let chang = ul.scrollHeight / list.length
           //无视性能，拥抱结果  by tiank 11.28
           this.list = window.Music.lrcList
@@ -129,45 +190,8 @@ export default {
     }
   },
   mounted() {
-    // console.log(window)
-    const cvs = document.querySelector('canvas')
-    const ctx = cvs.getContext('2d')
-    // 初始化 canvas 尺寸
-    function initCvs() {
-      cvs.width = (window.innerWidth / 2) * devicePixelRatio
-      cvs.height = (window.innerHeight / 2) * devicePixelRatio
-    }
-    initCvs()
-
-    const audioCtx = new AudioContext()
-    const source = audioCtx.createMediaElementSource(Music.audio) // 创建音频源节点
-    let analyser = audioCtx.createAnalyser() // 创建分析器
-    analyser.fftSize = 512 // 设置分析器的 fft 大小
-    Music.audio.dataArray = new Uint8Array(analyser.frequencyBinCount)
-    source.connect(analyser) // 连接分析器
-    analyser.connect(audioCtx.destination) // 连接音频上下文和分析器
-    const draw = () => {
-      requestAnimationFrame(draw)
-      const { width, height } = cvs
-      ctx.clearRect(0, 0, width, height)
-      analyser.getByteFrequencyData(Music.audio.dataArray)
-
-      const len = Music.audio.dataArray.length / 2
-      // 每个柱子的宽度
-      const barWidth = width / len / 1
-      for (let i = 0; i < len; i++) {
-        const data = Music.audio.dataArray[i] // <256
-        const barHeight = (data / 250) * height
-        // 二个 x 点画出对称图形
-        const x1 = i * barWidth + width / 2
-        const x2 = width / 2 - i * barWidth
-        const y = height - barHeight
-        ctx.fillStyle = '#00ffd9'
-        ctx.fillRect(x1, y, barWidth - 0, barHeight)
-        ctx.fillRect(x2, y, barWidth - 0, barHeight)
-      }
-    }
-    draw()
+    this.canvas()
+    this.start()
   }
 }
 </script>

@@ -42,15 +42,24 @@ const routes = [
                 children: [
                     {
                         path: '',
-                        component: () => import('/src/views/Search/SearchMusic.vue')
+                        component: () => import('/src/views/Search/SearchMusic.vue'),
+                        meta: {
+                            keepAlive: false
+                        },
                     },
                     {
                         path: 'music',
-                        component: () => import('/src/views/Search/SearchMusic.vue')
+                        component: () => import('/src/views/Search/SearchMusic.vue'),
+                        meta: {
+                            keepAlive: false
+                        },
                     },
                     {
                         path: 'song',
-                        component: () => import('/src/views/Search/Songlist.vue')
+                        component: () => import('/src/views/Search/Songlist.vue'),
+                        meta: {
+                            keepAlive: false
+                        },
                     }
                 ]
 
@@ -58,40 +67,67 @@ const routes = [
             {
                 path: 'like', // 喜欢
                 component: () => import('/src/views/Index/Like/Like.vue'),
+                meta: {
+                    keepAlive: false
+                },
                 children: [
                     {
                         path: '',
-                        component: () => import('/src/views/Index/Like/LikeMusic.vue')
+                        component: () => import('/src/views/Index/Like/LikeMusic.vue'),
+                        meta: {
+                            keepAlive: false
+                        },
                     },
                     {
                         path: 'music',
-                        component: () => import('/src/views/Index/Like/LikeMusic.vue')
+                        component: () => import('/src/views/Index/Like/LikeMusic.vue'),
+                        meta: {
+                            keepAlive: false
+                        },
                     },
                     {
                         path: 'song',
-                        component: () => import('/src/views/Index/Like/LikeSong.vue')
+                        component: () => import('/src/views/Index/Like/LikeSong.vue'),
+                        meta: {
+                            keepAlive: false
+                        },
                     }
                 ]
             },
             {
                 path: 'download', //下载
-                component: () => import('/src/views/Index/Download/download.vue')
+                component: () => import('/src/views/Index/Download/download.vue'),
+                meta: {
+                    keepAlive: false
+                },
             },
             {
                 path: 'musicHall', //音乐馆
-                component: () => import('/src/views/Index/MusicHall/MusicHall.vue')
+                component: () => import('/src/views/Index/MusicHall/MusicHall.vue'),
+                meta: {
+                    keepAlive: false
+                },
             },
             {
                 path: 'radar', //雷达
-                component: () => import('/src/views/Index/Radar/Radar.vue')
+                component: () => import('/src/views/Index/Radar/Radar.vue'),
+                meta: {
+                    keepAlive: false
+                },
             },
             {
                 path: 'recentlyPlayedSongs', //最近
-                component: () => import('/src/views/Index/RecentlyPlayedSongs/RecentlyPlayedSongs.vue')
+                component: () => import('/src/views/Index/RecentlyPlayedSongs/RecentlyPlayedSongs.vue'),
+                meta: {
+                    keepAlive: false
+                },
             },
             {
                 path: 'about', //关于
-                component: () => import('/src/views/Index/About/About.vue')
+                component: () => import('/src/views/Index/About/About.vue'),
+                meta: {
+                    keepAlive: false
+                },
             }
         ]
     },
@@ -100,6 +136,9 @@ const routes = [
         name: 'play',
         title: '主页',
         component: () => import('../views/Play/Play.vue'),
+        meta: {
+            keepAlive: true
+        },
     },
 
 ]

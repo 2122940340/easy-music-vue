@@ -47,15 +47,15 @@ export default {
     }
   },
   mounted() {
-    fetch(
-      `${window.APIURL}personalized?limit=1&timestamp=${
-        new Date().getTime() / 1000+Math.floor(Math.random() * 1000)
-      }`
+    let num = Math.floor(Math.random() * 10000)
+    console.log(
+      `${window.APIURL}top/playlist?limit=1&timestamp=${new Date().getTime() / 1000 + num}`
     )
+    fetch(`${window.APIURL}top/playlist?limit=1&timestamp=${new Date().getTime() / 1000 + num}`)
       .then((response) => response.json())
       .then((json) => {
-        this.icon = json.result[0].picUrl
-        this.songid = json.result[0].id
+        this.icon = json.playlists[0].coverImgUrl
+        this.songid = json.playlists[0].id
       })
   },
   methods: {
@@ -68,11 +68,11 @@ export default {
           window.Music.play(this.list[0])
         })
     },
-    songlist(){
+    songlist() {
       router.push({
-        path:'/songlist',
-        state:{
-          id: this.songid 
+        path: '/songlist',
+        state: {
+          id: this.songid
         }
       })
     }

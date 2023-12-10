@@ -117,9 +117,19 @@
       </div>
       <div class="main">
         <router-view v-slot="{ Component }">
-          <Transition name="fade">
-            <component ref="Main" :is="Component"></component>
-          </Transition>
+          <keep-alive>
+            <component
+              ref="Main"
+              :is="Component"
+              :key="$route.name"
+              v-if="$route.meta.keepAlive"
+            ></component>
+          </keep-alive>
+          <component
+            :is="Component"
+            :key="$route.name"
+            v-if="!$route.meta.keepAlive"
+          ></component>
         </router-view>
       </div>
     </div>
@@ -298,7 +308,7 @@ export default {
         page: 1
       }
       const formData = new FormData()
-      Object.keys(data).map((key) => {
+      Object.keys(data).l((key) => {
         formData.append(key, data[key])
       })
       // myHeaders.append("Hm_lpvt_50027a9c88cdde04a70f5272a88a10fa", "1587636659");
@@ -317,7 +327,7 @@ export default {
         })
     }
   },
-  mounted() {}
+  async mounted() {}
 }
 </script>
 <style>

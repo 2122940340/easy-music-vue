@@ -6,13 +6,13 @@
  * @FilePath: \easy-music-vue-edition\src\preload\index.js
  * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
  */
-import { contextBridge, ipcRenderer, ipcMain, } from 'electron'
+import { app, contextBridge, ipcRenderer, ipcMain, } from 'electron'
 import { electronAPI } from '@electron-toolkit/preload'
 // import { Music } from '../renderer/src/modules/music.js'
 // const Music = require('./music.js')
 const fs = require('fs');
 const path = require("path");
-
+const APPDATA = electronAPI.process.env.APPDATA + '\\esay-music'
 // Custom APIs for renderer
 const api = {
 }
@@ -25,10 +25,9 @@ const api = {
 // just add to the DOM global.
 
 
-
 const fileList = [
   {
-    path: './user/data',
+    path:  APPDATA + '/user/data',
     name: 'playlist.json',
     content: JSON.stringify({
       code: 1,
@@ -37,7 +36,7 @@ const fileList = [
     })
   },
   {
-    path: './user/data',
+    path: APPDATA + '/user/data',
     name: 'songlist.json',
     content: JSON.stringify({
       code: 1,
@@ -46,7 +45,7 @@ const fileList = [
     })
   },
   {
-    path: './user/data',
+    path:  APPDATA + '/user/data',
     name: 'likelist.json',
     content: JSON.stringify({
       code: 1,
@@ -55,7 +54,7 @@ const fileList = [
     })
   },
   {
-    path: './user/data',
+    path:  APPDATA + '/user/data',
     name: 'likesonglist.json',
     content: JSON.stringify({
       code: 1,
@@ -64,7 +63,7 @@ const fileList = [
     })
   },
   {
-    path: './user/download',
+    path:  APPDATA + '/user/download',
     name: 'downloadList.json',
     content: JSON.stringify({
       code: 1,
@@ -94,8 +93,6 @@ fileList.forEach(item => {
 })
 
 
-
-console.log(ipcRenderer)
 // 暴露接口
 if (process.contextIsolated) {
   try {
@@ -103,11 +100,10 @@ if (process.contextIsolated) {
     contextBridge.exposeInMainWorld('api', api)
     contextBridge.exposeInMainWorld('fs', fs)
     contextBridge.exposeInMainWorld('path', path)
-    contextBridge.exposeInMainWorld('ipcRenderer',ipcRenderer)
-    contextBridge.exposeInMainWorld('ipcRendererOn',ipcRenderer.on)
-    contextBridge.exposeInMainWorld('ipcMain',ipcMain)
-
+    contextBridge.exposeInMainWorld('ipcRenderer', ipcRenderer)
+    contextBridge.exposeInMainWorld('ipcRendererOn', ipcRenderer.on)
     contextBridge.exposeInMainWorld('APIURL', 'http://localhost:3000/')
+    contextBridge.exposeInMainWorld('APPDATA',APPDATA)
   } catch (error) {
     console.error(error)
   }
@@ -118,7 +114,6 @@ if (process.contextIsolated) {
   window.fs = fs
   window.ipcMain = ipcMain
   window.APPURL = 'http://localhost:3000/'
-
 
   contextBridge.exposeInMainWorld('electron', {
     ping: () => ipcRenderer.invoke('ping')

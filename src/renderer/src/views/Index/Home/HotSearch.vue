@@ -15,22 +15,22 @@
 
 <script>
 export default {
-  name: "hotSearch",
+  name: 'hotSearch',
   props: {
-    array: Array,
+    array: Array
   },
   data() {
     return {
-      list: [],
-    };
+      list: []
+    }
   },
   methods: {
     play(i) {
-      window.Music.getURL(i);
-    },
+      window.Music.getURL(i)
+    }
   },
-  mounted() {},
-};
+  mounted() {}
+}
 </script>
 
 <style>
@@ -56,7 +56,10 @@ export default {
 .HotSearch ul {
   list-style: none;
   overflow: scroll;
-  /* width: 270px; */
+  max-height: 1300px;
+  scroll-behavior: smooth;
+  scroll-snap-type: y mandatory;
+  scroll-snap-align: end;
 }
 
 .HotSearch li {
@@ -102,6 +105,7 @@ export default {
 .HotSearch .title {
   font-size: 1.1em;
   color: #000000;
+  width: 70%;
   white-space: nowrap;
   text-overflow: ellipsis;
   overflow: hidden;

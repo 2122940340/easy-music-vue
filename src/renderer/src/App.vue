@@ -9,7 +9,6 @@
   </router-view>
   <MusicStatusBar ref="MusicStatusBar" class="MusicStatusBar"></MusicStatusBar>
 </template>
-
 <script>
 import { Music } from './modules/music'
 import router from './router/index'
@@ -28,19 +27,21 @@ export default {
   },
   methods: {},
   activated() {},
-  mounted() {
+  async mounted() {
+     await router.push({
+      path: '/home'
+    })
+    this.tagActive('/home')
     this.home = this.$refs.Main
     window.Music.start()
     fetch(window.APIURL + 'register/anonimous')
       .then((data) => data.json())
       .then((json) => {})
-    router.push({
-      path: '/home'
-    })
   },
   methods: {
     tagActive(path) {
       // 标签激活
+      console.log(document.querySelectorAll('.tag'))
       document.querySelectorAll('.tag').forEach((item) => {
         if (path == item.getAttribute('data-path')) item.classList.add('active')
         else item.classList.remove('active')
@@ -63,11 +64,6 @@ export default {
             color: '#fff',
             fill: '#fff'
           }
-          let Main = await this.$refs
-          let home = this.$refs
-          const Play = Main.Main
-          window.Play = Play
-          if (window.Music.lrcList != undefined) Play.start(window.Music.lrcList)
           SvgColor(window.Music.like.querySelectorAll('path'), '#fff')
           SvgColor(window.Music.likes.querySelectorAll('path'), '##fff')
           SvgColor(window.Music.playListIcon.querySelectorAll('path'), '#fff')

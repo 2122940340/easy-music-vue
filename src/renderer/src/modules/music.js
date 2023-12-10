@@ -9,11 +9,11 @@ export class Music extends MusicTool {
     }
     // 初始化
     start() {
-        this.listPath = './user/data/playlist.json'
-        this.platListPath = './user/data/playlist.json'
-        this.likeListPath = './user/data/likelist.json'
-        this.downloadListPath = './user/download/downloadList.json'
-        this.likeSongListPath = './user/data/likesonglist.json'
+        this.listPath = APPDATA + '/user/data/playlist.json'
+        this.platListPath = APPDATA + '/user/data/playlist.json'
+        this.likeListPath = APPDATA + '/user/data/likelist.json'
+        this.downloadListPath = APPDATA + '/user/download/downloadList.json'
+        this.likeSongListPath = APPDATA + '/user/data/likesonglist.json'
         this.items = document.querySelector(".MusicStatusBar");
         this.duration = this.items.querySelector('.right p:nth-child(3)');
         this.currentTime = this.items.querySelector('.right p:nth-child(1)');
@@ -31,8 +31,7 @@ export class Music extends MusicTool {
         this.likes = this.items.querySelector('.islike')
         this.downloadIcon = this.items.querySelector('.downloadIcon')
         this.inception()
-        // 绑定事件
-        this.click()
+
     }
     // 下载
     download() {
@@ -125,38 +124,32 @@ export class Music extends MusicTool {
     }
     // 播放时间
     time() {
-        clearInterval(this.timer);
+        // clearInterval(this.timer);
         this.lrcList = [
 
         ]
         this.lyricList()
-        this.timer = setInterval(() => {
-            //总
-            let duration = this.audio_size(this.audio.duration);
-            let currentTime = this.audio_size(this.audio.currentTime);
+        //总
+        let duration = this.audio_size(this.audio.duration);
+        let currentTime = this.audio_size(this.audio.currentTime);
 
-            if (isNaN(this.audio.duration)) {
-                currentTime = '00:00'
-                duration = '00:00'
+        if (isNaN(this.audio.duration)) {
+            currentTime = '00:00'
+            duration = '00:00'
+        }
+
+        this.currentTime.innerHTML = currentTime;
+        this.duration.innerHTML = duration;
+
+
+        const value = (this.audio.currentTime / this.audio.duration * 100) * (this.schedule.parentNode.clientWidth / 100)
+        this.schedule.style.width = value + 'px'
+        this.schedules.style.left = value + 'px'
+        this.lrcList.forEach(item => {
+            if (item.time == currentTime) {
+                this.lrc = item
             }
-
-            this.currentTime.innerHTML = currentTime;
-            this.duration.innerHTML = duration;
-
-            if (this.audio.currentTime >= this.audio.duration) {
-                this.nextSong()
-            }
-
-
-            const value = (this.audio.currentTime / this.audio.duration * 100) * (this.schedule.parentNode.clientWidth / 100)
-            this.schedule.style.width = value + 'px'
-            this.schedules.style.left = value + 'px'
-            this.lrcList.forEach(item => {
-                if (item.time == currentTime) {
-                    this.lrc = item
-                }
-            })
-        }, 1000)
+        })
     }
     // 时间转换
     audio_size(num) {
@@ -186,16 +179,6 @@ export class Music extends MusicTool {
         this.title.innerHTML = this._title
         this.name.innerHTML = this._name
 
-        // 模拟播放
-        const AudioTime = async () => {
-            while (isNaN(this.audio.duration) || this.audio.duration === Infinity) {
-                {
-                    await new Promise(resolve => setTimeout(resolve, 200));
-                    audio.currentTime = 1 * Math.random();
-                }
-            }
-        }
-
 
         // 写入链接
         this.audio.crossOrigin = 'anonymous';
@@ -205,6 +188,7 @@ export class Music extends MusicTool {
         this.audio.src = this._url;
         this.audio.load();
         this.audio.play(); //开始播放
+        // 监听播放失败
         this.audio.addEventListener('error', () => {
             if (this.codePlay) {
                 this.codePlay = false
@@ -226,6 +210,7 @@ export class Music extends MusicTool {
             }
 
         });
+        //监听开始播放
         this.audio.addEventListener('canplaythrough', () => {
             this.resume();
             // 添加播放列表
@@ -236,9 +221,18 @@ export class Music extends MusicTool {
             // this.inception()
             //是否收藏
             this.isLike(this._songid)
+
+            // 绑定事件
+            this.click()
         })
 
-
+        this.audio.addEventListener('timeupdate', () => {
+            // console.log('播放')
+            this.time()
+        })
+        this.audio.addEventListener('ended', () => {
+            this.nextSong()
+        })
     }
     getURL(i) {
         let data = {

@@ -15,7 +15,7 @@ import {
   autoUpdater
 } from 'electron-updater'
 
-
+console.log(app.getPath('userData'))
 
 require('../../api/app.js');
 
@@ -35,8 +35,8 @@ function createWindow() {
     webPreferences: {
       preload: join(__dirname, '../preload/index.js'),
       sandbox: false,
-      webSecurity: false
-
+      webSecurity: false,
+      nodeIntegration: true,
     },
     nodeIntegration: true,
     enableRemoteModule: true,
@@ -134,13 +134,12 @@ function dow() {
 
   });
   autoUpdater.on('error', function (error) {
-    new Notification({ title: '更新失败', body: '你可能已经与服务器失联，请点击访问官方下载最新版' + error }).show()
+    new Notification({ title: '更新失败', body: '你可能已经与服务器失联，请访问官方:http://tiank.top 下载最新版' + error }).show()
   });
   autoUpdater.on('update-available', function (info) {
     new Notification({ title: '发现新版本', body: '正在后台下载或单击前往官网下载' }).show()
   });
   autoUpdater.on('update-not-available', function (info) {
-    new Notification({ title: '最新', body: '最新' }).show()
   })
   autoUpdater.on('update-downloaded', function (info) {
     new Notification({ title: '下载完成', body: '下一次启动软件会自动更新' }).show()
