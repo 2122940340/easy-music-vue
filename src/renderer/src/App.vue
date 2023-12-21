@@ -1,4 +1,5 @@
 <template>
+  <updateVue></updateVue>
   <div class="region"></div>
   <router-view ref="Plays" class="App" v-slot="{ Component }">
     <Transition name="fade">
@@ -10,17 +11,18 @@
   <MusicStatusBar ref="MusicStatusBar" class="MusicStatusBar"></MusicStatusBar>
 </template>
 <script>
-import { Music } from './modules/music'
 import router from './router/index'
 import MusicStatusBar from './views/Play/MusicStatusBar.vue'
 import { ref } from 'vue'
-import { useRouter, useRoute } from 'vue-router'
+import { Music } from './modules/music'
+import updateVue from './components/update.vue'
 
 let audio = new Audio()
 window.Music = new Music(audio)
 export default {
   components: {
-    MusicStatusBar
+    MusicStatusBar,
+    updateVue
   },
   data() {
     return {}
@@ -28,15 +30,17 @@ export default {
   methods: {},
   activated() {},
   async mounted() {
-     await router.push({
-      path: '/home'
-    })
-    this.tagActive('/home')
-    this.home = this.$refs.Main
-    window.Music.start()
+    //游客登录
     fetch(window.APIURL + 'register/anonimous')
       .then((data) => data.json())
-      .then((json) => {})
+      .then(async (json) => {
+        await router.push({
+          path: '/home'
+        })
+        this.tagActive('/home')
+        this.home = this.$refs.Main
+        window.Music.start()
+      })
   },
   methods: {
     tagActive(path) {
@@ -82,7 +86,7 @@ export default {
             fill: '#000'
           }
           SvgColor(window.Music.like.querySelectorAll('path'), '#717171')
-          SvgColor(window.Music.likes.querySelectorAll('path'), '#717171')
+          SvgColor(window.Music.likes.querySelectorAll('path'), '#f00000')
           SvgColor(window.Music.playListIcon.querySelectorAll('path'), '#717171')
           SvgColor(window.Music.downloadIcon.querySelectorAll('path'), '#717171')
           break

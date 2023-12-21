@@ -53,7 +53,7 @@ export default {
         this.RecommendedPlayList = json.result
       })
     // 推荐歌曲
-    fetch(window.APIURL + 'personalized/newsong?limit=20')
+    fetch(window.APIURL + 'personalized/newsong?limit=100')
       .then((response) => response.json())
       .then((json) => {
         console.log(json)
@@ -65,11 +65,7 @@ export default {
       .then((json) => {
         console.log(json)
         this.HotSearchList = json.data.dailySongs
-        // this.PlayCard[0] = this.HotSearchList[6].al.picUrl
-        // this.PlayCard[1] = this.HotSearchList[7].al.picUrl
-        // this.PlayCard[2] = this.HotSearchList[8].al.picUrl
       })
-      .catch((err) => console.log('Request Failed', err))
   }
 }
 </script>

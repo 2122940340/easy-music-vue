@@ -3,7 +3,7 @@
     <p class="title">关于软件</p>
     <div class="content">
       <img class="icon" src="/src/assets/icon.png" alt="" />
-      <p class="name">轻松音乐 v1.1.3</p>
+      <p class="name">轻松音乐</p>
       <p>软件作者：<b>tiankong</b></p>
       <p><br /><br />本软件是 <b>轻松</b> 应用系列的第一款桌面端应用，如果你觉得它很好!你可以：</p>
       <span>
@@ -17,7 +17,7 @@
       <p>如果你觉得软件有问题，欢迎反馈给我，谢谢！</p>
       <p>交流群：818749846</p>
       <img class="qq" src="/src/assets/qq.jpg" alt="" srcset="" />
-      <p>欢迎下载 轻松音乐 v1.1.3 移动端，体验更佳！</p>
+      <p>欢迎下载 轻松音乐 v1.0.0 移动端，体验更佳！</p>
       <p>下载地址：http://a.ruansky.com</p>
       <p><br />本项目已经开源，如果你感兴趣，可以在以下链接获得源码</p>
       <p>Gitee: https://gitee.com/tiankongskya/easy-music-vue-edition</p>

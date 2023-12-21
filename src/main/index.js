@@ -125,7 +125,7 @@ app.on('window-all-closed', () => {
 
 
 function dow() {
-  const uploadUrl = "https://download.tiank.top/"
+  const uploadUrl = "https://download.tiank.top/download/"
   // new Notification({ title: autoUpdater.setFeedURL(uploadUrl), body: '1111' }).show()
 
   autoUpdater.setFeedURL(uploadUrl)

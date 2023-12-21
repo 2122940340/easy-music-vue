@@ -1,6 +1,6 @@
 {
   "name": "esay-music",
-  "version": "0.9.9",
+  "version": "0.9.11",
   "description": "An Electron application with Vue",
   "main": "./out/main/index.js",
   "author": "tiank",

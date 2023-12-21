@@ -1,121 +1,93 @@
-/*
- * @Author: '天空' '2122940340@qq.com'
- * @Date: 2023-12-03 18:59:36
- * @LastEditors: '天空' '2122940340@qq.com'
- * @LastEditTime: 2023-12-05 19:31:41
- * @FilePath: \easy-music-vue-edition\src\preload\index.js
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
-import { app, contextBridge, ipcRenderer, ipcMain, } from 'electron'
-import { electronAPI } from '@electron-toolkit/preload'
-// import { Music } from '../renderer/src/modules/music.js'
-// const Music = require('./music.js')
-const fs = require('fs');
+"use strict";
+const electron = require("electron");
+const preload = require("@electron-toolkit/preload");
+const fs = require("fs");
 const path = require("path");
-const APPDATA = electronAPI.process.env.APPDATA + '\\esay-music'
-// Custom APIs for renderer
-const api = {
-}
-// const music = new Music(new Audio())
-// contextBridge.exposeInMainWorld('electron', {
-//   ping: () => ipcRenderer.invoke('ping')
-// })
-// Use `contextBridge` APIs to expose Electron APIs to
-// renderer only if context isolation is enabled, otherwise
-// just add to the DOM global.
-
-
+const APPDATA = preload.electronAPI.process.env.APPDATA + "\\esay-music";
+const api = {};
 const fileList = [
   {
-    path:  APPDATA + '/user/data',
-    name: 'playlist.json',
+    path: APPDATA + "/user/data",
+    name: "playlist.json",
     content: JSON.stringify({
       code: 1,
       data: [],
-      id: -1,
+      id: -1
     })
   },
   {
-    path: APPDATA + '/user/data',
-    name: 'songlist.json',
+    path: APPDATA + "/user/data",
+    name: "songlist.json",
     content: JSON.stringify({
       code: 1,
       data: [],
-      id: -1,
+      id: -1
     })
   },
   {
-    path:  APPDATA + '/user/data',
-    name: 'likelist.json',
+    path: APPDATA + "/user/data",
+    name: "likelist.json",
     content: JSON.stringify({
       code: 1,
       data: [],
-      id: -1,
+      id: -1
     })
   },
   {
-    path:  APPDATA + '/user/data',
-    name: 'likesonglist.json',
+    path: APPDATA + "/user/data",
+    name: "likesonglist.json",
     content: JSON.stringify({
       code: 1,
       data: [],
-      id: -1,
+      id: -1
     })
   },
   {
-    path:  APPDATA + '/user/download',
-    name: 'downloadList.json',
+    path: APPDATA + "/user/download",
+    name: "downloadList.json",
     content: JSON.stringify({
       code: 1,
       data: [],
-      id: -1,
+      id: -1
     })
   }
-]
-
-// 文件检测
-fileList.forEach(item => {
-  fs.access(item.path + '/' + item.name, err => {
+];
+fileList.forEach((item) => {
+  fs.access(item.path + "/" + item.name, (err) => {
     if (err) {
-      fs.mkdir(item.path, { recursive: true }, err => {
-        if (err) {
-          console.log(err)
+      fs.mkdir(item.path, { recursive: true }, (err2) => {
+        if (err2) {
+          console.log(err2);
         } else {
-          fs.writeFileSync(item.path + '/' + item.name, item.content, err = {
-            if(err) {
-              error('文件错误,请尝试重装软件');
+          fs.writeFileSync(item.path + "/" + item.name, item.content, err2 = {
+            if(err3) {
+              error("文件错误,请尝试重装软件");
             }
-          })
+          });
         }
-      })
+      });
     }
-  })
-})
-
-
-// 暴露接口
+  });
+});
 if (process.contextIsolated) {
   try {
-    contextBridge.exposeInMainWorld('electron', electronAPI)
-    contextBridge.exposeInMainWorld('api', api)
-    contextBridge.exposeInMainWorld('fs', fs)
-    contextBridge.exposeInMainWorld('path', path)
-    contextBridge.exposeInMainWorld('ipcRenderer', ipcRenderer)
-    contextBridge.exposeInMainWorld('ipcRendererOn', ipcRenderer.on)
-    contextBridge.exposeInMainWorld('APIURL', 'http://localhost:3000/')
-    contextBridge.exposeInMainWorld('APPDATA',APPDATA)
-  } catch (error) {
-    console.error(error)
+    electron.contextBridge.exposeInMainWorld("electron", preload.electronAPI);
+    electron.contextBridge.exposeInMainWorld("api", api);
+    electron.contextBridge.exposeInMainWorld("fs", fs);
+    electron.contextBridge.exposeInMainWorld("shell", electron.shell);
+    electron.contextBridge.exposeInMainWorld("ipcRendererOn", electron.ipcRenderer.on);
+    electron.contextBridge.exposeInMainWorld("APIURL", "http://localhost:3000/");
+    electron.contextBridge.exposeInMainWorld("APPDATA", APPDATA);
+  } catch (error2) {
+    console.error(error2);
   }
-
 } else {
-  window.electron = electronAPI
-  window.api = api
-  window.fs = fs
-  window.ipcMain = ipcMain
-  window.APPURL = 'http://localhost:3000/'
-
-  contextBridge.exposeInMainWorld('electron', {
-    ping: () => ipcRenderer.invoke('ping')
-  })
+  window.electron = preload.electronAPI;
+  window.api = api;
+  window.fs = fs;
+  window.shell = electron.shell;
+  window.APPURL = "http://localhost:3000/";
+  electron.contextBridge.exposeInMainWorld("electron", {
+    ping: () => electron.ipcRenderer.invoke("ping")
+  });
 }

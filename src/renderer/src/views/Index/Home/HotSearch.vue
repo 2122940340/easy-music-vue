@@ -26,7 +26,7 @@ export default {
   },
   methods: {
     play(i) {
-      window.Music.getURL(i)
+      Music.getURL(i)
     }
   },
   mounted() {}
@@ -56,7 +56,6 @@ export default {
 .HotSearch ul {
   list-style: none;
   overflow: scroll;
-  max-height: 1300px;
   scroll-behavior: smooth;
   scroll-snap-type: y mandatory;
   scroll-snap-align: end;
