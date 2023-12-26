@@ -14,18 +14,16 @@ import { electronApp, optimizer, is } from '@electron-toolkit/utils'
 import {
   autoUpdater
 } from 'electron-updater'
-
-console.log(app.getPath('userData'))
-
+// import click from './click.js'
 require('../../api/app.js');
 
-
+var mainWindow;
 // contextBridge.exposeInMainWorld('electron', {
 //   ping: () => ipcRenderer.invoke('ping')
 // })
 function createWindow() {
   // Create the browser window.
-  const mainWindow = new BrowserWindow({
+  mainWindow = new BrowserWindow({
     width: 1080,
     height: 700,
     minWidth: 1080,
@@ -48,8 +46,15 @@ function createWindow() {
   mainWindow.on('ready-to-show', () => {
     mainWindow.show()
   })
-
   dow()
+  //接收关闭命令
+  ipcMain.on('window-close', function () {
+    mainWindow.close();
+  })
+  //接收最小化命令
+  ipcMain.on('window-min', function () {
+    mainWindow.minimize();
+  })
   // 监听渲染进程发出的download事件
   ipcMain.on('download', async (evt, args) => {
     var code = false
@@ -144,4 +149,16 @@ function dow() {
   autoUpdater.on('update-downloaded', function (info) {
     new Notification({ title: '下载完成', body: '下一次启动软件会自动更新' }).show()
   })
+
+
 }
+
+
+//接收最大化命令
+ipcMain.on('window-max', function () {
+  if (mainWindow.isMaximized()) {
+    mainWindow.restore();
+  } else {
+    mainWindow.maximize();
+  }
+})

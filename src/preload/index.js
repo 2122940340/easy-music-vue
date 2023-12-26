@@ -76,7 +76,7 @@ if (process.contextIsolated) {
     electron.contextBridge.exposeInMainWorld("fs", fs);
     electron.contextBridge.exposeInMainWorld("shell", electron.shell);
     electron.contextBridge.exposeInMainWorld("ipcRendererOn", electron.ipcRenderer.on);
-    electron.contextBridge.exposeInMainWorld("APIURL", "http://localhost:3000/");
+    electron.contextBridge.exposeInMainWorld("APIURL", "http://api.tiank.top/");
     electron.contextBridge.exposeInMainWorld("APPDATA", APPDATA);
   } catch (error2) {
     console.error(error2);
@@ -86,7 +86,7 @@ if (process.contextIsolated) {
   window.api = api;
   window.fs = fs;
   window.shell = electron.shell;
-  window.APPURL = "http://localhost:3000/";
+  window.APPURL = "http://api.tiank.top/";
   electron.contextBridge.exposeInMainWorld("electron", {
     ping: () => electron.ipcRenderer.invoke("ping")
   });

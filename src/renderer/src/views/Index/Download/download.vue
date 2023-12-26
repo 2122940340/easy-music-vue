@@ -1,7 +1,7 @@
 <template>
   <div class="download">
     <p class="title">我的下载</p>
-    <p class="tip">下载保存在 应用安装目录下 的 user/download/ 目录下</p>
+    <p class="tip">下载保存在 C:\Users\Administrator\AppData\Roaming\esay-music\user\download 目录下</p>
     <ul class="list">
       <li @click="play($event, i)" v-for="(i, key) in list" :key="i">
         <svg

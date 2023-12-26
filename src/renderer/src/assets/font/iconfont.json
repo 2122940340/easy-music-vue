@@ -1,0 +1,65 @@
+{
+  "id": "4388505",
+  "name": "轻松音乐",
+  "font_family": "iconfont",
+  "css_prefix_text": "icon-",
+  "description": "",
+  "glyphs": [
+    {
+      "icon_id": "9526741",
+      "name": "未收藏",
+      "font_class": "weishoucang",
+      "unicode": "e603",
+      "unicode_decimal": 58883
+    },
+    {
+      "icon_id": "9526824",
+      "name": "已收藏",
+      "font_class": "yishoucang",
+      "unicode": "e614",
+      "unicode_decimal": 58900
+    },
+    {
+      "icon_id": "8341780",
+      "name": "暂停大",
+      "font_class": "zantingda",
+      "unicode": "e639",
+      "unicode_decimal": 58937
+    },
+    {
+      "icon_id": "8341779",
+      "name": "播放大",
+      "font_class": "bofangda",
+      "unicode": "e638",
+      "unicode_decimal": 58936
+    },
+    {
+      "icon_id": "8341784",
+      "name": "上一首",
+      "font_class": "shangyishou",
+      "unicode": "e63c",
+      "unicode_decimal": 58940
+    },
+    {
+      "icon_id": "8341786",
+      "name": "下一首",
+      "font_class": "xiayishou",
+      "unicode": "e63e",
+      "unicode_decimal": 58942
+    },
+    {
+      "icon_id": "16421529",
+      "name": "下载",
+      "font_class": "xiazai",
+      "unicode": "e632",
+      "unicode_decimal": 58930
+    },
+    {
+      "icon_id": "8288858",
+      "name": "列表",
+      "font_class": "liebiao",
+      "unicode": "e850",
+      "unicode_decimal": 59472
+    }
+  ]
+}

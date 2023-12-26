@@ -30,6 +30,11 @@ export class Music extends MusicTool {
         this.like = this.items.querySelector('.likes')
         this.likes = this.items.querySelector('.islike')
         this.downloadIcon = this.items.querySelector('.downloadIcon')
+        this.up = this.items.querySelector('#up')
+        this.next = this.items.querySelector('#nextSong')
+        this.left = this.items.querySelector('.left')
+        this.speeds = this.items.querySelector('.speed>p')
+        this.speedSize = 1.0
         this.inception()
 
     }
@@ -188,6 +193,7 @@ export class Music extends MusicTool {
         this.audio.src = this._url;
         this.audio.load();
         this.audio.play(); //开始播放
+        this.audio.playbackRate = this.speedSize
         // 监听播放失败
         this.audio.addEventListener('error', () => {
             if (this.codePlay) {

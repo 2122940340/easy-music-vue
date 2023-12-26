@@ -8,14 +8,16 @@
       </keep-alive>
     </Transition>
   </router-view>
-  <MusicStatusBar ref="MusicStatusBar" class="MusicStatusBar"></MusicStatusBar>
+  <div>
+    <MusicStatusBar ref="MusicStatusBar" class="MusicStatusBar"></MusicStatusBar>
+  </div>
 </template>
 <script>
 import router from './router/index'
 import MusicStatusBar from './views/Play/MusicStatusBar.vue'
 import { ref } from 'vue'
 import { Music } from './modules/music'
-import updateVue from './components/update.vue'
+import updateVue from './components/update.vue' //更新模块
 
 let audio = new Audio()
 window.Music = new Music(audio)
@@ -23,6 +25,9 @@ export default {
   components: {
     MusicStatusBar,
     updateVue
+  },
+  props: {
+    blur: Object
   },
   data() {
     return {}
@@ -68,27 +73,35 @@ export default {
             color: '#fff',
             fill: '#fff'
           }
-          SvgColor(window.Music.like.querySelectorAll('path'), '#fff')
-          SvgColor(window.Music.likes.querySelectorAll('path'), '##fff')
-          SvgColor(window.Music.playListIcon.querySelectorAll('path'), '#fff')
-          SvgColor(window.Music.downloadIcon.querySelectorAll('path'), '#fff')
+          window.Music.up.style.color = '#fff'
+          window.Music.next.style.color = '#fff'
+          window.Music.like.style.color = '#fff'
+          window.Music.likes.style.color = '#fff'
+          window.Music.playListIcon.style.color = '#fff'
+          window.Music.downloadIcon.style.color = '#fff'
+          window.Music.speeds.style.color = '#fff'
+          window.Music.speeds.style.border = '1px solid #fff'
 
-          function SvgColor(item, color) {
-            item.forEach((items) => {
-              items.style.fill = color
-              items.style.color = color
-            })
-          }
+          console.log(window.Music.speeds)
           break
         case '/home':
           this.$refs.MusicStatusBar.styleColor = {
             color: '#000',
             fill: '#000'
           }
-          SvgColor(window.Music.like.querySelectorAll('path'), '#717171')
-          SvgColor(window.Music.likes.querySelectorAll('path'), '#f00000')
-          SvgColor(window.Music.playListIcon.querySelectorAll('path'), '#717171')
-          SvgColor(window.Music.downloadIcon.querySelectorAll('path'), '#717171')
+          window.Music.up.style.color = '#000'
+          window.Music.next.style.color = '#000'
+          window.Music.like.style.color = '#717171'
+          window.Music.likes.style.color = '#f00000'
+          window.Music.playListIcon.style.color = '#717171'
+          window.Music.downloadIcon.style.color = '#717171'
+          window.Music.speeds.style.color = '#717171'
+          window.Music.speeds.style.border = '1px solid #717171'
+
+          // SvgColor(window.Music.like.querySelectorAll('path'), '#717171')
+          // SvgColor(window.Music.likes.querySelectorAll('path'), '#f00000')
+          // SvgColor(window.Music.playListIcon.querySelectorAll('path'), '#717171')
+          // SvgColor(window.Music.downloadIcon.querySelectorAll('path'), '#717171')
           break
       }
     }
@@ -102,7 +115,20 @@ export default {
   box-sizing: border-box;
   outline: none;
 }
-
+/* 在线链接服务仅供平台体验和调试使用，平台不承诺服务的稳定性，企业客户需下载字体包自行发布使用并做好备份。 */
+@font-face {
+  font-family: 'iconfont'; /* Project id 4388505 */
+  src:
+    url('./assets/font/iconfont.woff2') format('woff2'),
+    url('./assets/font/iconfont.woff') format('woff'),
+    url('./assets/font/iconfont.ttf') format('truetype');
+}
+i {
+  font-family: 'iconfont' !important;
+  font-style: normal;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
 svg:hover path {
   fill: #0ccfb1;
 }

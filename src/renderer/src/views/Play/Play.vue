@@ -1,5 +1,5 @@
 <template>
-  <div class="Play">
+  <div @wheel="songlistScroll()" class="Play">
     <svg
       class="end icon"
       @click="$router.go(-1)"
@@ -74,6 +74,17 @@ export default {
     }
   },
   methods: {
+    songlistScroll() {
+      //歌词滚动{
+      if (this.songlistScrollCode) {
+      } else {
+        this.songlistScrollCode = true
+        console.log(this.songlistScrollCode)
+        setTimeout(() => {
+          this.songlistScrollCode = false
+        }, 2000)
+      }
+    },
     immerse() {
       this.$refs.mask.classList.add('masks')
       this.$refs.canvas.style.display = 'block'
@@ -102,11 +113,15 @@ export default {
     },
     song() {
       const ul = this.$refs.scroll
+      this.ul = ul
       let list = document.querySelectorAll('li')
       list.forEach((item, index) => {
         if (item.getAttribute('data-time') == window.Music.lrc.time) {
           item.classList.add('selected')
-          ul.scrollTo(0, item.getBoundingClientRect().height * index)
+          if (this.songlistScrollCode == false) {
+            // ul.style.scrollBehavior = 'auto'
+            ul.scrollTo(0, item.getBoundingClientRect().height * index)
+          }
         } else {
           item.classList.remove('selected')
         }

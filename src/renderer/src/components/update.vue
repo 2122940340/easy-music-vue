@@ -12,7 +12,6 @@
 </template>
 <script>
 import config from '../../../../package.json'
-console.log(config.version)
 export default {
   data() {
     return {
@@ -28,6 +27,7 @@ export default {
       this.code = false
     },
     compareVersion(v1, v2) {
+      console.log(v1)
       if (v1 == v2) {
         return 0
       }
@@ -53,8 +53,14 @@ export default {
   },
   mounted() {
     fetch('https://download.tiank.top/api/update.json')
+    .then((res)=>res.text())
+    .then(res =>{
+      console.log(res)
+    })
+    fetch('https://download.tiank.top/api/update.json')
       .then((res) => res.json())
       .then((res) => {
+        console.log(res)
         this.data = res
         if (this.compareVersion(res.version, config.version)) {
           // 更新

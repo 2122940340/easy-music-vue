@@ -1,6 +1,7 @@
 <template>
+    <endMinVue v-show="endMainCode"></endMinVue>
   <div class="index">
-    <img id="end" src="../src/assets/end.png" alt="" />
+    <img id="end" @click="end()" src="../src/assets/end.png" alt="" />
     <div class="left">
       <div class="icon">
         <img src="./assets/icon.png" alt="" />
@@ -125,11 +126,7 @@
               v-if="$route.meta.keepAlive"
             ></component>
           </keep-alive>
-          <component
-            :is="Component"
-            :key="$route.name"
-            v-if="!$route.meta.keepAlive"
-          ></component>
+          <component :is="Component" :key="$route.name" v-if="!$route.meta.keepAlive"></component>
         </router-view>
       </div>
     </div>
@@ -139,6 +136,8 @@
 import tag from './views/Index/Home/tag.vue'
 import home from './views/Index/Home/Home.vue'
 import Play from './views/Play/Play.vue'
+import endMinVue from './components/endMin.vue'
+
 // import { Music } from './modules/music'
 import router from './router/index'
 export default {
@@ -146,15 +145,15 @@ export default {
   components: {
     tag,
     home,
-    Play
+    Play,
+    endMinVue
   },
-  setup() {},
-  activated() {},
   data() {
     return {
       apptitle: '轻松音乐',
       historyList: {},
       searchCode: false,
+      endMainCode: false,
       tagList: [
         {
           title: '在线音乐',
@@ -255,6 +254,12 @@ export default {
     }
   },
   methods: {
+    end() {
+      this.endMainCode = true
+      setTimeout(() => {
+        this.endMainCode = false
+      }, 2000)
+    },
     searchPush(value) {
       this.searchValue = value
       this.search(value)
@@ -332,6 +337,15 @@ export default {
 </script>
 <style>
 @import url('./Home.css');
+.end-enter,
+.end-leave-to {
+  opacity: 0;
+  transform: translateX(80px);
+}
+.end-enter-active,
+.end-leave-active {
+  transition: all 0.5s ease;
+}
 .fade-enter-active,
 .fade-leave-active {
   transition: all 0.1s ease;
