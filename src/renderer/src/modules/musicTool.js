@@ -1,16 +1,44 @@
-/*
- * @Author: '天空' '2122940340@qq.com'
- * @Date: 2023-12-04 19:03:39
- * @LastEditors: '天空' '2122940340@qq.com'
- * @LastEditTime: 2023-12-04 19:08:39
- * @FilePath: \easy-music-vue-edition\src\renderer\src\modules\musicTool.js
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
- */
-export class MusicTool {
 
+export class MusicTool {
+    //导入歌单
+    toLeadInto(list) {
+        return new Promise((resolve, reject) => {
+            this.readFile(this.likeListPath)
+                .then((res) => {
+                    let data = JSON.parse(res)
+                    data.data = [...list]
+                    console.log(data)
+                    this.writeFile(this.likeListPath, JSON.stringify(data))
+                        .then((res) => {
+                            resolve(res)
+                        })
+                })
+        })
+    }
+    writeFile(path, content) {
+        return new Promise((resolve, reject) => {
+           
+            fs.writeFile(path, content, (err) => {
+                if (err) {
+                    reject(err)
+                }
+                resolve('导入成功')
+            })
+        })
+    }
+    readFile(path) {
+        return new Promise((resolve, reject) => {
+            fs.readFile(path, 'utf-8', (err, data) => {
+                if (err) {
+                    reject(err)
+                }
+                resolve(data)
+            })
+        })
+    }
     //倍速播放
-    speed(size = 1.0){
-        this.audio.playbackRate  = size
+    speed(size = 1.0) {
+        this.audio.playbackRate = size
     }
     //进度条拖动
     pace() {
@@ -56,7 +84,7 @@ export class MusicTool {
             window.fs.unlinkSync(data.data[id].path)
         }
         catch (e) {
-            
+
         }
         window.fs.writeFile(this.downloadListPath, JSON.stringify(data), (err) => { })
         return data

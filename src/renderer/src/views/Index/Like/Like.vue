@@ -1,14 +1,13 @@
-<!--
- * @Author: '天空' '2122940340@qq.com'
- * @Date: 2023-12-03 18:59:38
- * @LastEditors: '天空' '2122940340@qq.com'
- * @LastEditTime: 2023-12-04 18:37:23
- * @FilePath: \easy-music-vue-edition\src\renderer\src\views\Index\Like\Like.vue
- * @Description: 这是默认设置,请设置`customMade`, 打开koroFileHeader查看配置 进行设置: https://github.com/OBKoro1/koro1FileHeader/wiki/%E9%85%8D%E7%BD%AE
--->
+
 <template>
   <div class="like">
     <p class="title">我喜欢&收藏</p>
+    <div class="toLeadInto" @click="$router.push({
+      path:'/toLeadInto',
+    })">
+      <i class="icon">&#xe7c8;</i>
+      <p>导入</p>
+    </div>
     <div ref="tab" class="tab">
       <p data-path="/like/music" @click="Tag($event)" class="a">歌曲</p>
       <p data-path="/like/song" @click="Tag($event)">歌单</p>
@@ -24,19 +23,18 @@ export default {
       list: []
     }
   },
-  methods:{
-    Tag(event){
+  methods: {
+    Tag(event) {
       this.$refs.tab.querySelector('.a').classList.remove('a')
       event.currentTarget.classList.add('a')
       router.push({
-        path:event.currentTarget.dataset.path
+        path: event.currentTarget.dataset.path
       })
-
     }
   }
 }
 </script>
-<style>
+<style lang="less">
 .like {
   width: 100%;
   height: 100%;
@@ -47,6 +45,21 @@ export default {
   font-size: 2em;
   font-weight: bold;
   padding: 0px 15px;
+}
+.like {
+  .toLeadInto {
+    margin: 15px 0 0 15px;
+    width: 120px;
+    height: 35px;
+    border-radius: 20px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #eeeeee;
+    i {
+      margin-right: 15px;
+    }
+  }
 }
 .like .tab {
   width: 100%;

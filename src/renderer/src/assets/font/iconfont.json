@@ -6,6 +6,20 @@
   "description": "",
   "glyphs": [
     {
+      "icon_id": "5387553",
+      "name": "搜索",
+      "font_class": "sousuo",
+      "unicode": "eafe",
+      "unicode_decimal": 60158
+    },
+    {
+      "icon_id": "25537473",
+      "name": "导入",
+      "font_class": "daoru",
+      "unicode": "e7c8",
+      "unicode_decimal": 59336
+    },
+    {
       "icon_id": "9526741",
       "name": "未收藏",
       "font_class": "weishoucang",

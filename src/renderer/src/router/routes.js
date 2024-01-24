@@ -79,19 +79,19 @@ const routes = [
                         },
                     },
                     {
-                        path: 'music',
+                        path: 'music',//歌曲
                         component: () => import('/src/views/Index/Like/LikeMusic.vue'),
                         meta: {
                             keepAlive: false
                         },
                     },
                     {
-                        path: 'song',
+                        path: 'song',//歌单
                         component: () => import('/src/views/Index/Like/LikeSong.vue'),
                         meta: {
                             keepAlive: false
                         },
-                    }
+                    },
                 ]
             },
             {
@@ -125,6 +125,13 @@ const routes = [
             {
                 path: 'about', //关于
                 component: () => import('/src/views/Index/About/About.vue'),
+                meta: {
+                    keepAlive: false
+                },
+            },
+            {
+                path: 'toLeadInto',//导入
+                component: () => import('/src/views/Index/Like/ToLeadInto.vue'),
                 meta: {
                     keepAlive: false
                 },

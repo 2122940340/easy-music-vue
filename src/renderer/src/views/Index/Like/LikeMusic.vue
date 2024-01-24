@@ -8,9 +8,9 @@
 -->
 <template>
   <ul class="list">
-    <li @click="play(i)" :ref="i.songid" v-for="(i, key) in list" :key="i">
+    <li @click="play(i)" :ref="i.songid || i.id" v-for="(i, key) in list" :key="i">
       <svg
-        @click.stop="songLikeDelete($event, i.songid)"
+        @click.stop="songLikeDelete($event, i.songid || i.id)"
         t="1701419350343"
         class="islike"
         viewBox="0 0 1024 1024"
@@ -43,8 +43,8 @@
           p-id="2587"
         ></path>
       </svg>
-      <p class="title">{{ i.title }}</p>
-      <p class="name">{{ i.author }}</p>
+      <p class="title">{{ i.title || i.name }}</p>
+      <p class="name">{{ i.author || i.ar[0].name }}</p>
       <svg
         @click="elRemove($event, key)"
         t="1701340255394"
@@ -93,7 +93,13 @@ export default {
       for (let i in this.$refs) {
         this.$refs[i][0].classList.remove('a')
       }
-      this.$refs[i.songid][0].classList.add('a')
+      if (this.$refs[i.songid]) {
+        this.$refs[i.songid][0].classList.add('a')
+      }else{
+        console.log(i.id)
+        this.$refs[i.id][0].classList.add('a')
+
+      }
     },
     songLikeDelete(event, id) {
       event.currentTarget.nextElementSibling.style.display = 'block'
